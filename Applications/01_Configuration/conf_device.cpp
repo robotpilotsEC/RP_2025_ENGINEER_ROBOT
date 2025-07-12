@@ -53,7 +53,7 @@ EAppStatus InitAllDevice(){
     static CDevReferee referee;
     CDevReferee::SDevInitParam_Referee referee_initparam;
     referee_initparam.deviceID = EDeviceID::DEV_RM_REFEREE;
-    referee_initparam.interfaceID = EInterfaceID::INF_UART10;
+    referee_initparam.interfaceID = EInterfaceID::INF_UART1;
     referee.InitDevice(&referee_initparam);
 
     // 视觉系统
@@ -67,8 +67,15 @@ EAppStatus InitAllDevice(){
     static CDevControllerLink controllerLink;
     CDevControllerLink::SDevInitParam_ControllerLink controllerLink_initparam;
     controllerLink_initparam.deviceID = EDeviceID::DEV_CONTROLLER_LINK;
-    controllerLink_initparam.interfaceID = EInterfaceID::INF_UART7;
+    controllerLink_initparam.interfaceID = EInterfaceID::INF_UART10;
     controllerLink.InitDevice(&controllerLink_initparam);
+
+    // ESP32
+    static CDevESP32 esp32;
+    CDevESP32::SDevInitParam_ESP32 esp32_initparam;
+    esp32_initparam.deviceID = EDeviceID::DEV_ESP32;
+    esp32_initparam.interfaceID = EInterfaceID::INF_UART7;
+    esp32.InitDevice(&esp32_initparam);
 
     /******************************************
     * 子龙门电机
@@ -149,7 +156,7 @@ EAppStatus InitAllDevice(){
      *****************************************/
     static CDevMtrM2006 gimbalMotor_Lift;
     CDevMtrM2006::SMtrInitParam_M2006 gimbalMotor_Lift_initparam;
-    gimbalMotor_Lift_initparam.deviceID = EDeviceID::DEV_GIMBAL_MTR_LIFT;
+    gimbalMotor_Lift_initparam.deviceID = EDeviceID::DEV_GIMBAL_MTR;
     gimbalMotor_Lift_initparam.interfaceID = EInterfaceID::INF_CAN1;
     gimbalMotor_Lift_initparam.djiMtrID = CDevMtrDJI::EDjiMtrID::ID_5;
     gimbalMotor_Lift_initparam.useAngleToPosit = true;

@@ -73,6 +73,7 @@ public:
         DEV_REFEREE,    ///< 裁判系统
         DEV_VISION,     ///< 视觉系统
         DEV_LED,        ///< LED灯
+        DEV_ESP32,      ///< ESP32设备
         DEV_BOARD_LINK, ///< 板间通信设备
         DEV_CONTROLLER_LINK, ///< 控制器通信设备
         DEV_OTHER,      ///< 其他设备

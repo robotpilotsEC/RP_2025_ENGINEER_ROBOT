@@ -18,6 +18,7 @@
 #include "sys_vision.hpp"
 #include "sys_referee.hpp"
 #include "sys_controller_link.hpp"
+#include "sys_esp32.hpp"
 
 
 namespace my_engineer {

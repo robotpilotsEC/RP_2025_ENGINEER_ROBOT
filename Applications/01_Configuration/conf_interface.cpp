@@ -33,18 +33,6 @@ namespace my_engineer {
  */
 EAppStatus InitAllInterface(){
     
-    /* REFEREE (UART10) */
-    static CInfUART inf_board_link;
-    CInfUART::SInfInitParam_Uart inf_board_link_initparam;
-    inf_board_link_initparam.interfaceID = EInterfaceID::INF_UART10;
-    inf_board_link_initparam.halUartHandle = &huart10;
-    inf_board_link_initparam.useTxDma = true;
-    inf_board_link_initparam.txDmaQueueNum = 4;
-    inf_board_link_initparam.txDmaBuffSize = 512;
-    inf_board_link_initparam.useRxDma = true;
-    inf_board_link_initparam.rxDmaQueueNum = 2;
-    inf_board_link_initparam.rxDmaBuffSize = 512;
-    inf_board_link.InitInterface(&inf_board_link_initparam);
 
     /* DBUS (UART5) */
     static CInfUART inf_dbus;
@@ -56,7 +44,7 @@ EAppStatus InitAllInterface(){
     inf_dbus_initparam.rxDmaBuffSize = 64;
     inf_dbus.InitInterface(&inf_dbus_initparam);
 
-    /* BOARD_LINK (UART1) */
+    /* REFEREE (UART1) */
     static CInfUART inf_referee;
     CInfUART::SInfInitParam_Uart inf_referee_initparam;
     inf_referee_initparam.interfaceID = EInterfaceID::INF_UART1;
@@ -69,11 +57,11 @@ EAppStatus InitAllInterface(){
     inf_referee_initparam.txDmaBuffSize = 512;
     inf_referee.InitInterface(&inf_referee_initparam);
 
-    /* Custom Controller (UART7) */
+    /* Custom Controller (UART10) */
     static CInfUART inf_vision;
     CInfUART::SInfInitParam_Uart inf_vision_initparam;
-    inf_vision_initparam.interfaceID = EInterfaceID::INF_UART7;
-    inf_vision_initparam.halUartHandle = &huart7;
+    inf_vision_initparam.interfaceID = EInterfaceID::INF_UART10;
+    inf_vision_initparam.halUartHandle = &huart10;
     inf_vision_initparam.useRxDma = true;
     inf_vision_initparam.rxDmaQueueNum = 4;
     inf_vision_initparam.rxDmaBuffSize = 512;
@@ -81,6 +69,19 @@ EAppStatus InitAllInterface(){
     inf_vision_initparam.txDmaQueueNum = 2;
     inf_vision_initparam.txDmaBuffSize = 512;
     inf_vision.InitInterface(&inf_vision_initparam);
+
+    /* ESP32 */
+    static CInfUART inf_esp32;
+    CInfUART::SInfInitParam_Uart inf_esp32_initparam;
+    inf_esp32_initparam.interfaceID = EInterfaceID::INF_UART7;
+    inf_esp32_initparam.halUartHandle = &huart7;
+    inf_esp32_initparam.useRxDma = true;
+    inf_esp32_initparam.rxDmaQueueNum = 2;
+    inf_esp32_initparam.rxDmaBuffSize = 512;
+    inf_esp32_initparam.useTxDma = true;
+    inf_esp32_initparam.txDmaQueueNum = 4;
+    inf_esp32_initparam.txDmaBuffSize = 512;
+    inf_esp32.InitInterface(&inf_esp32_initparam);
 
     /* USB CDC (USB) */
     static CInfUSB_CDC inf_usb_cdc;

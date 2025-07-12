@@ -98,6 +98,10 @@ public:
 
     virtual EAppStatus SetMotorOutput(float_t output) { return APP_ERROR; }
 
+    bool IsMotorOnline() const {
+        return (motorStatus != EMotorStatus::OFFLINE && motorStatus != EMotorStatus::RESET);
+    }
+
 };
 
 extern std::map<EDeviceID, CDevMtr *> MotorIDMap; ///< 电机实例映射表

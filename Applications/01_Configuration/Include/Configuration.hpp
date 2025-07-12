@@ -55,6 +55,7 @@ enum class EDeviceID{
     DEV_CONTROLLER_LINK, ///< 控制器通信设备
     DEV_BOARD_LINK,         ///< 板间通信设备
     DEV_RPLINK,           ///< RPLink设备
+    DEV_ESP32,              ///< ESP32设备
     DEV_LASER_L,            ///< 激光雷达左
     DEV_LASER_R,             ///< 激光雷达右
     DEV_MEMS_BMI088,        ///< 6轴MEMS（BMI-088）
@@ -62,7 +63,7 @@ enum class EDeviceID{
     DEV_CHAS_MTR_RF,        ///< 底盘电机前右（M3508）
     DEV_CHAS_MTR_LB,        ///< 底盘电机后左（M3508）
     DEV_CHAS_MTR_RB,        ///< 底盘电机后右（M3508）
-    DEV_GIMBAL_MTR_LIFT,  ///< 云台升降电机（M2006）
+    DEV_GIMBAL_MTR,  ///< 云台电机（M2006）
     DEV_SUBGANTRY_MTR_LIFT_L,   ///< 子龙门升降电机左（M2006）
     DEV_SUBGANTRY_MTR_LIFT_R,   ///< 子龙门升降电机右（M2006）
     DEV_SUBGANTRY_MTR_STRETCH_L,///< 子龙门伸缩电机左（M2006）
@@ -102,6 +103,7 @@ enum class ESystemID{
     SYS_REFEREE,            ///< RoboMaster裁判系统
     SYS_VISION,             ///< RoboPilots视觉系统
     SYS_BOARD_LINK,         ///< 板间通信系统
+    SYS_ESP32,              ///< ESP32系统
     SYS_CONTROLLER_LINK, ///< 控制器通信系统
 };
 
@@ -110,6 +112,8 @@ enum class ESystemID{
  * @return None
  */
 void ApplicationEntryPoint();
+
+void Print(const char *format, ...);
 
 } // namespace my_engineer
 

@@ -50,6 +50,11 @@ EAppStatus CSystemCore::InitSystemCore() {
     controllerLinkInitParam.controllerLinkDevID = EDeviceID::DEV_CONTROLLER_LINK;
     SysControllerLink.InitSystem(&controllerLinkInitParam);
 
+    CSystemESP32::SSystemInitParam_ESP32 esp32InitParam;
+    esp32InitParam.systemID = ESystemID::SYS_ESP32;
+    esp32InitParam.esp32DevID = EDeviceID::DEV_ESP32;
+    SysESP32.InitSystem(&esp32InitParam);
+
     // 获取模块的指针
     pchassis_ = reinterpret_cast<CModChassis *>(ModuleIDMap.at(EModuleID::MOD_CHASSIS));
     pgimbal_ = reinterpret_cast<CModGimbal *>(ModuleIDMap.at(EModuleID::MOD_GIMBAL));

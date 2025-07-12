@@ -89,8 +89,11 @@ if (NOT LINKERSCRIPT)
     message(FATAL_ERROR "Please set linker script file directories in Targets/<CURRENT_TARGET>/target.cmake file!")
 endif ()
 target_link_options(FIRMWARE.elf PUBLIC ${MCU} -specs=nano.specs) # 连接选项，使用nano规格
+# target_link_options(FIRMWARE.elf PUBLIC -u _printf_float) # 使用浮点printf
+# target_link_options(FIRMWARE.elf PUBLIC -u _scanf_float) # 使用浮点scanf
 target_link_options(FIRMWARE.elf PUBLIC -Wl,-gc-sections,--print-memory-usage,-Map=${PROJECT_BINARY_DIR}/${PROJECT_NAME}.map) # 使用节省内存的链接器选项
 target_link_options(FIRMWARE.elf PUBLIC -T ${PROJECT_SOURCE_DIR}/${LINKERSCRIPT}) # 指定链接脚本
+
 
 
 # add_compile_definitions(DLYB_MAX_SELECT=8 DLYB_MAX_UNIT=4)

@@ -198,7 +198,7 @@ EAppStatus CInfUART::FormatTransmit(const char *format, ...){
     // 格式化字符串的标准流程
     va_list args;
     va_start(args, format);
-    char buffer[256];
+    char buffer[512];
     vsnprintf(buffer, sizeof(buffer), format, args);
     va_end(args);
 

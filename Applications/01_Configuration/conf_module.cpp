@@ -129,7 +129,7 @@ EAppStatus InitAllModule() {
     /******初始化云台模块******/
     CModGimbal::SModInitParam_Gimbal gimbalInitParam;
     gimbalInitParam.moduleID = EModuleID::MOD_GIMBAL;
-    gimbalInitParam.liftMotorID = EDeviceID::DEV_GIMBAL_MTR_LIFT;
+    gimbalInitParam.liftMotorID = EDeviceID::DEV_GIMBAL_MTR;
     // 设置can发送节点
     gimbalInitParam.liftMotorTxNode = &TxNode_Can2_1FF;
     // 初始化 liftPosPidParam 的成员

@@ -9,6 +9,7 @@
  */
 
 #include "Configuration.hpp"
+#include "Device.hpp"
 
 namespace my_engineer{
 
@@ -24,8 +25,24 @@ void ApplicationEntryPoint(){
     InitAllDevice();
     InitAllModule();
     InitProcess();
+    
+    Print("Application Entry Point: All configurations initialized successfully.\n");
 
     vTaskStartScheduler(); // 启动任务调度器
+}
+
+void Print(const char *format, ...) {
+    va_list args;
+    va_start(args, format);
+    char buffer[512];
+    vsnprintf(buffer, sizeof(buffer), format, args);
+    va_end(args);
+    
+    auto esp32dev = static_cast<CDevESP32 *>(DeviceIDMap[EDeviceID::DEV_ESP32]);
+    if (esp32dev) {
+        esp32dev->ESP32_Print("print:%s", buffer);
+    }
+
 }
 
 } // namespace my_engineer
