@@ -391,11 +391,11 @@ void CSystemReferee::UI_UpdateCurModeTextDrawing_() {
 			break;
 		}
 
-    case CSystemCore::EAutoCtrlProcess::TURNOVER: {
-      curModeTextMsg.message.figureConfig.details_2 = 8;
-      curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 4);
+    case CSystemCore::EAutoCtrlProcess::SILVER_ORE: {
+      curModeTextMsg.message.figureConfig.details_2 = 6;
+      curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3);
       curModeTextMsg.message.figureConfig.posit_Y = 780;
-      strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "TURNOVER");
+      strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "SILVER");
       break;
     }
 	}

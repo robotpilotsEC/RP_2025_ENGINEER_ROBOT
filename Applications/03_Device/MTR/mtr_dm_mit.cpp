@@ -152,8 +152,7 @@ void CDevMtrDM_MIT::DisableMotor()
  */
 void CDevMtrDM_MIT::UpdateHandler_() {
     // 检查设备状态
-    if (deviceStatus == APP_RESET)
-        return;
+    if (deviceStatus == APP_RESET) return;
 
 	static auto uint_to_float = [](uint16_t x_uint, float xmin, float xmax, uint8_t bits) -> float {
 		float span = xmax - xmin;

@@ -464,6 +464,11 @@
               <FileType>8</FileType>
               <FilePath>..\..\..\Applications\05_System\Controller_Link\sys_controller_link.cpp</FilePath>
             </File>
+            <File>
+              <FileName>sys_esp32.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\Applications\05_System\ESP32\sys_esp32.cpp</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
@@ -510,9 +515,9 @@
               <FilePath>..\..\..\Applications\05_System\Core\process\proc_return_origin.cpp</FilePath>
             </File>
             <File>
-              <FileName>proc_turnover.cpp</FileName>
+              <FileName>proc_silver_ore.cpp</FileName>
               <FileType>8</FileType>
-              <FilePath>..\..\..\Applications\05_System\Core\process\proc_turnover.cpp</FilePath>
+              <FilePath>..\..\..\Applications\05_System\Core\process\proc_silver_ore.cpp</FilePath>
             </File>
           </Files>
         </Group>
@@ -738,6 +743,11 @@
               <FileName>mtr_dm_mit.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\Applications\03_Device\MTR\mtr_dm_mit.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>dev_esp32.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\Applications\03_Device\dev_esp32.cpp</FilePath>
             </File>
           </Files>
         </Group>

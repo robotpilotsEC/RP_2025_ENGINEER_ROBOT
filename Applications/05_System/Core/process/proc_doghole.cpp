@@ -27,21 +27,31 @@ void CSystemCore::StartDogHoleTask(void *arg) {
 	auto cnt = 0;
 	const auto timeout = 60000 / 5; // unit: ms
 
-	while (keyboard.key_Ctrl) {
+	core.parm_->armCmd.isAutoCtrl = true;
+	core.psubgantry_->subGantryCmd.isAutoCtrl = true;
+	core.pgimbal_->gimbalCmd.isAutoCtrl = true;
+	
+	/*Set SubGantry*/
+	core.psubgantry_->subGantryCmd.setStretchPosit_L = 0.0f;
+	core.psubgantry_->subGantryCmd.setLiftPosit_L = 0.0f;
+	core.psubgantry_->subGantryCmd.setStretchPosit_R = 0.0f;
+	core.psubgantry_->subGantryCmd.setLiftPosit_R = 0.0f;
 
-		if (keyboard.mouse_L) {
+	core.psubgantry_->subGantryCmd.setPumpOn_Left = false;
+	core.psubgantry_->subGantryCmd.setPumpOn_Right = false;
+	
+	/*Set Arm*/
+	core.parm_->armCmd.set_angle_Yaw = 0.0f;
+	core.parm_->armCmd.set_angle_Pitch1 = 0.0f;
+	core.parm_->armCmd.set_angle_Pitch2 = 4.0f;
+	core.parm_->armCmd.set_angle_Roll = 0.0f;
+	core.parm_->armCmd.set_angle_end_pitch = -70.0f;
+	core.parm_->armCmd.set_angle_end_roll = 0.0f;
 
-			goto proc_exit;
-		}
+	/*Set Gimbal*/
+	core.pgimbal_->gimbalCmd.set_posit_lift = 0.0f;  ///< Pull down the gimbal
 
-		if (keyboard.mouse_R) {
-
-			goto proc_exit;
-		}
-
-		proc_waitMs(5);
-
-	}
+	proc_waitMs(250);
 
 // 退出
 proc_exit:

@@ -40,11 +40,11 @@ public:
         RETURN_DRIVE,
         DOGHOLE,
         GROUND_ORE,
+        SILVER_ORE,
         GOLD_ORE,
         EXCHANGE,
         PUSH_ORE,
         POP_ORE,
-        TURNOVER,
     } currentAutoCtrlProcess_ = EAutoCtrlProcess::NONE;
 
     EVarStatus use_Controller_ = false; ///< 是否使用控制器

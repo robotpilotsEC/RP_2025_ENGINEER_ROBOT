@@ -880,6 +880,7 @@ dm-mc02/module.o: ..\..\..\Applications\04_Module\Module.cpp \
   ..\..\..\Applications\03_Device\Include\dev_servo.hpp \
   ..\..\..\Applications\03_Device\Include\dev_controller_link.hpp \
   ..\..\..\Applications\00_Algorithm\Include\algo_crc.hpp \
+  ..\..\..\Applications\03_Device\Include\dev_esp32.hpp \
   ..\..\..\Applications\03_Device\Include\dev_vision.hpp \
   ..\..\..\Applications\03_Device\Include\dev_referee.hpp \
   ..\..\..\Applications\01_Configuration\Include\conf_CanTxNode.hpp \

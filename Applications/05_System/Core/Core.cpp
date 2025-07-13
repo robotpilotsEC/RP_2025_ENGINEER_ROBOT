@@ -281,9 +281,9 @@ EAppStatus CSystemCore::StartAutoCtrlTask_(EAutoCtrlProcess process) {
         }
 
 
-        case EAutoCtrlProcess::TURNOVER: {
-            currentAutoCtrlProcess_ = EAutoCtrlProcess::TURNOVER;
-            xTaskCreate(StartTurnoverTask, "Turn Over Task",
+        case EAutoCtrlProcess::SILVER_ORE: {
+            currentAutoCtrlProcess_ = EAutoCtrlProcess::SILVER_ORE;
+            xTaskCreate(StartSilverOreTask, "Silver Ore Task",
                         512, this, proc_ModuleTaskPriority,
                         &autoCtrlTaskHandle_);
             return APP_OK;

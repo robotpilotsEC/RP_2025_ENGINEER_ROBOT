@@ -870,6 +870,7 @@ dm-mc02/conf_device.o: \
   ..\..\..\Applications\03_Device\Include\dev_servo.hpp \
   ..\..\..\Applications\03_Device\Include\dev_controller_link.hpp \
   ..\..\..\Applications\00_Algorithm\Include\algo_crc.hpp \
+  ..\..\..\Applications\03_Device\Include\dev_esp32.hpp \
   ..\..\..\Applications\03_Device\Include\dev_vision.hpp \
   ..\..\..\Applications\02_Interface\Include\inf_usb_cdc.hpp \
   ..\USB_DEVICE\App\usb_device.h \

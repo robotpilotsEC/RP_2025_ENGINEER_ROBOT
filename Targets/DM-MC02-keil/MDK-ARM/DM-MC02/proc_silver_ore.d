@@ -1,10 +1,10 @@
 dm-mc02/proc_silver_ore.o: \
-  ..\..\..\Applications\System\Core\process\proc_silver_ore.cpp \
-  ..\..\..\Applications\System\Include\Core.hpp \
-  ..\..\..\Applications\Interface\Include\Interface.hpp \
-  ..\..\..\Applications\Interface\Include\inf_common.hpp \
-  ..\..\..\Applications\Configuration\Include\Configuration.hpp \
-  ..\..\..\Applications\Configuration\Include\conf_common.hpp \
+  ..\..\..\Applications\05_System\Core\process\proc_silver_ore.cpp \
+  ..\..\..\Applications\05_System\Include\Core.hpp \
+  ..\..\..\Applications\02_Interface\Include\Interface.hpp \
+  ..\..\..\Applications\02_Interface\Include\inf_common.hpp \
+  ..\..\..\Applications\01_Configuration\Include\Configuration.hpp \
+  ..\..\..\Applications\01_Configuration\Include\conf_common.hpp \
   ..\Core\Inc\main.h ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal.h \
   ..\Core\Inc\stm32h7xx_hal_conf.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\stm32h7xx_hal_rcc.h \
@@ -15,12 +15,12 @@ dm-mc02/proc_silver_ore.o: \
   D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\libcxx\stdint.h \
   D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\libcxx\__config \
   D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\stdint.h \
-  D:\1_EE_Docs\2024_XMX-main\ -\ 副本\RM2024-Engineer-V2\Targets\DM-MC02\ -\ keil\Drivers\CMSIS\Include\cmsis_version.h \
-  D:\1_EE_Docs\2024_XMX-main\ -\ 副本\RM2024-Engineer-V2\Targets\DM-MC02\ -\ keil\Drivers\CMSIS\Include\cmsis_compiler.h \
-  D:\1_EE_Docs\2024_XMX-main\ -\ 副本\RM2024-Engineer-V2\Targets\DM-MC02\ -\ keil\Drivers\CMSIS\Include\cmsis_armclang.h \
+  D:\1_EE_Docs\RP_Engineer_robot\RM25_ENGINEER_V3\Robot\Targets\DM-MC02-keil\Drivers\CMSIS\Include\cmsis_version.h \
+  D:\1_EE_Docs\RP_Engineer_robot\RM25_ENGINEER_V3\Robot\Targets\DM-MC02-keil\Drivers\CMSIS\Include\cmsis_compiler.h \
+  D:\1_EE_Docs\RP_Engineer_robot\RM25_ENGINEER_V3\Robot\Targets\DM-MC02-keil\Drivers\CMSIS\Include\cmsis_armclang.h \
   D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\arm_compat.h \
   D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\arm_acle.h \
-  D:\1_EE_Docs\2024_XMX-main\ -\ 副本\RM2024-Engineer-V2\Targets\DM-MC02\ -\ keil\Drivers\CMSIS\Include\mpu_armv7.h \
+  D:\1_EE_Docs\RP_Engineer_robot\RM25_ENGINEER_V3\Robot\Targets\DM-MC02-keil\Drivers\CMSIS\Include\mpu_armv7.h \
   ..\Drivers\CMSIS\Device\ST\STM32H7xx\Include\system_stm32h7xx.h \
   ..\Drivers\STM32H7xx_HAL_Driver\Inc\Legacy\stm32_hal_legacy.h \
   D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\libcxx\stddef.h \
@@ -839,48 +839,62 @@ dm-mc02/proc_silver_ore.o: \
   ..\..\..\Middlewares\FreeRTOS-Kernel\include\task.h \
   ..\..\..\Middlewares\FreeRTOS-Kernel\include\list.h \
   ..\..\..\Middlewares\FreeRTOS-Kernel\include\queue.h \
-  ..\..\..\Applications\Configuration\Include\conf_interface.hpp \
-  ..\..\..\Applications\Configuration\Include\conf_process.hpp \
-  ..\..\..\Applications\Configuration\Include\conf_device.hpp \
-  ..\..\..\Applications\Configuration\Include\conf_module.hpp \
-  ..\..\..\Applications\Interface\Include\inf_can.hpp \
-  ..\..\..\Applications\Interface\Include\inf_spi.hpp \
-  ..\..\..\Applications\Interface\Include\inf_uart.hpp \
-  ..\..\..\Applications\Device\Include\Device.hpp \
-  ..\..\..\Applications\Device\Include\dev_common.hpp \
-  ..\..\..\Applications\Algorithm\Include\Algorithm.hpp \
-  ..\..\..\Applications\Algorithm\Include\algo_common.hpp \
-  ..\..\..\Applications\Algorithm\Include\algo_def.hpp \
-  ..\..\..\Applications\Algorithm\Include\algo_crc.hpp \
-  ..\..\..\Applications\Algorithm\Include\algo_pid.hpp \
-  ..\..\..\Applications\Device\Include\mems\mems.hpp \
-  ..\..\..\Applications\Device\Include\mems\mems_common.hpp \
-  ..\..\..\Applications\Device\Include\mems\mems_bmi088.hpp \
+  ..\..\..\Applications\01_Configuration\Include\conf_process.hpp \
+  ..\..\..\Applications\01_Configuration\Include\conf_interface.hpp \
+  ..\..\..\Applications\01_Configuration\Include\conf_module.hpp \
+  ..\..\..\Applications\01_Configuration\Include\conf_device.hpp \
+  ..\..\..\Applications\02_Interface\Include\inf_uart.hpp \
+  ..\..\..\Applications\02_Interface\Include\inf_can.hpp \
+  ..\..\..\Applications\02_Interface\Include\inf_spi.hpp \
+  ..\..\..\Applications\02_Interface\Include\inf_usb_cdc.hpp \
+  ..\USB_DEVICE\App\usb_device.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h \
+  ..\USB_DEVICE\Target\usbd_conf.h ..\USB_DEVICE\App\usbd_cdc_if.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h \
+  ..\..\..\Applications\03_Device\Include\Device.hpp \
+  ..\..\..\Applications\03_Device\Include\dev_common.hpp \
+  ..\..\..\Applications\03_Device\Include\mtr\motor.hpp \
+  ..\..\..\Applications\03_Device\Include\mtr\mtr_common.hpp \
+  ..\..\..\Applications\03_Device\Include\mtr\mtr_dm.hpp \
+  ..\..\..\Applications\03_Device\Include\mtr\mtr_dm_mit.hpp \
+  ..\..\..\Applications\03_Device\Include\mtr\mtr_dji.hpp \
+  ..\..\..\Applications\03_Device\Include\mtr\mtr_m2006.hpp \
+  ..\..\..\Applications\03_Device\Include\mtr\mtr_m3508.hpp \
+  ..\..\..\Applications\03_Device\Include\mtr\mtr_kt.hpp \
+  ..\..\..\Applications\03_Device\Include\mems\mems.hpp \
+  ..\..\..\Applications\03_Device\Include\mems\mems_common.hpp \
+  ..\..\..\Applications\03_Device\Include\mems\mems_bmi088.hpp \
+  ..\..\..\Applications\00_Algorithm\Include\algo_pid.hpp \
   ..\..\..\Drivers\BMI08x_SensorAPI\bmi08x.h \
   ..\..\..\Drivers\BMI08x_SensorAPI\bmi08.h \
   ..\..\..\Drivers\BMI08x_SensorAPI\bmi08_defs.h \
   D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\libcxx\stdbool.h \
   D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\stdbool.h \
-  ..\..\..\Applications\Device\Include\mtr\motor.hpp \
-  ..\..\..\Applications\Device\Include\mtr\mtr_common.hpp \
-  ..\..\..\Applications\Device\Include\mtr\mtr_dji.hpp \
-  ..\..\..\Applications\Device\Include\mtr\mtr_m2006.hpp \
-  ..\..\..\Applications\Device\Include\mtr\mtr_m3508.hpp \
-  ..\..\..\Applications\Device\Include\mtr\mtr_dm.hpp \
-  ..\..\..\Applications\Device\Include\rc\remote.hpp \
-  ..\..\..\Applications\Device\Include\rc\rc_common.hpp \
-  ..\..\..\Applications\Device\Include\rc\rc_def.hpp \
-  ..\..\..\Applications\Device\Include\rc\rc_dr16.hpp \
-  ..\..\..\Applications\Device\Include\dev_vision.hpp \
-  ..\..\..\Applications\Device\Include\dev_referee.hpp \
-  ..\..\..\Applications\Module\Include\Module.hpp \
-  ..\..\..\Applications\Module\Include\mod_common.hpp \
-  ..\..\..\Applications\Module\Include\mod_gimbal.hpp \
-  ..\..\..\Applications\Module\Include\mod_gantry.hpp \
-  ..\..\..\Applications\Module\Include\mod_chassis.hpp \
-  ..\..\..\Applications\Module\Include\mod_subgantry.hpp \
-  ..\..\..\Applications\System\Include\System.hpp \
-  ..\..\..\Applications\System\Include\sys_common.hpp \
-  ..\..\..\Applications\System\Include\sys_remote.hpp \
-  ..\..\..\Applications\System\Include\sys_vision.hpp \
-  ..\..\..\Applications\System\Include\sys_referee.hpp
+  ..\..\..\Applications\03_Device\Include\rc\remote.hpp \
+  ..\..\..\Applications\03_Device\Include\rc\rc_common.hpp \
+  ..\..\..\Applications\03_Device\Include\rc\rc_def.hpp \
+  ..\..\..\Applications\03_Device\Include\rc\rc_dr16.hpp \
+  ..\..\..\Applications\03_Device\Include\dev_servo.hpp \
+  ..\..\..\Applications\03_Device\Include\dev_controller_link.hpp \
+  ..\..\..\Applications\00_Algorithm\Include\algo_crc.hpp \
+  ..\..\..\Applications\03_Device\Include\dev_esp32.hpp \
+  ..\..\..\Applications\03_Device\Include\dev_vision.hpp \
+  ..\..\..\Applications\03_Device\Include\dev_referee.hpp \
+  ..\..\..\Applications\04_Module\Include\Module.hpp \
+  ..\..\..\Applications\04_Module\Include\mod_common.hpp \
+  ..\..\..\Applications\01_Configuration\Include\conf_CanTxNode.hpp \
+  ..\..\..\Applications\04_Module\Include\mod_chassis.hpp \
+  ..\..\..\Applications\04_Module\Include\mod_gimbal.hpp \
+  ..\..\..\Applications\04_Module\Include\mod_arm.hpp \
+  ..\..\..\Applications\04_Module\Include\mod_subgantry.hpp \
+  ..\..\..\Applications\05_System\Include\System.hpp \
+  ..\..\..\Applications\05_System\Include\sys_common.hpp \
+  ..\..\..\Applications\05_System\Include\sys_remote.hpp \
+  ..\..\..\Applications\05_System\Include\sys_vision.hpp \
+  ..\..\..\Applications\05_System\Include\sys_referee.hpp \
+  ..\..\..\Applications\05_System\Include\sys_controller_link.hpp \
+  ..\..\..\Applications\05_System\Include\sys_esp32.hpp \
+  ..\..\..\Applications\00_Algorithm\Include\algo_other.hpp

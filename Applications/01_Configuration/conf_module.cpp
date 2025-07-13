@@ -26,11 +26,11 @@ EAppStatus InitAllModule() {
     armInitParam.MotorID_End_L = EDeviceID::DEV_ARM_MTR_END_L;
     armInitParam.MotorID_End_R = EDeviceID::DEV_ARM_MTR_END_R;
     // 设置can发送节点
-    armInitParam.MotorTxNode_Pitch1 = &TxNode_Can1_200;
-    armInitParam.MotorTxNode_Pitch2 = &TxNode_Can1_200;
-    armInitParam.MotorTxNode_Roll = &TxNode_Can1_200;
-    armInitParam.MotorTxNode_End_L = &TxNode_Can1_200;
-    armInitParam.MotorTxNode_End_R = &TxNode_Can1_200;
+    armInitParam.MotorTxNode_Pitch1 = &TxNode_Can3_200;
+    armInitParam.MotorTxNode_Pitch2 = &TxNode_Can3_200;
+    armInitParam.MotorTxNode_Roll = &TxNode_Can3_200;
+    armInitParam.MotorTxNode_End_L = &TxNode_Can3_200;
+    armInitParam.MotorTxNode_End_R = &TxNode_Can3_200;
     // 初始化 mitCtrl_Yaw 的成员
     armInitParam.MIT_Yaw_kp = 20.0f;
     armInitParam.MIT_Yaw_kd = 1.0f;
@@ -93,9 +93,9 @@ EAppStatus InitAllModule() {
     subGantryInitParam.stretchMotorID_L = EDeviceID::DEV_SUBGANTRY_MTR_STRETCH_L;
     subGantryInitParam.stretchMotorID_R = EDeviceID::DEV_SUBGANTRY_MTR_STRETCH_R;
     subGantryInitParam.liftMotorTxNode_L = &TxNode_Can2_200;
-    subGantryInitParam.liftMotorTxNode_R = &TxNode_Can1_200;
+    subGantryInitParam.liftMotorTxNode_R = &TxNode_Can2_200;
     subGantryInitParam.stretchMotorTxNode_L = &TxNode_Can2_200;
-    subGantryInitParam.stretchMotorTxNode_R = &TxNode_Can1_200;
+    subGantryInitParam.stretchMotorTxNode_R = &TxNode_Can2_200;
     subGantryInitParam.LeftPumpPort = LeftPump_GPIO_Port;
     subGantryInitParam.LeftPumpPin = LeftPump_Pin;
     subGantryInitParam.RightPumpPort = RightPump_GPIO_Port;
@@ -103,23 +103,23 @@ EAppStatus InitAllModule() {
     subGantryInitParam.ArmPumpPort = ArmPump_GPIO_Port;
     subGantryInitParam.ArmPumpPin = ArmPump_Pin;
     // 设置PID参数
-    subGantryInitParam.liftPosPidParam.kp = 0.1f;
+    subGantryInitParam.liftPosPidParam.kp = 0.3f;
     subGantryInitParam.liftPosPidParam.ki = 0.0f;
     subGantryInitParam.liftPosPidParam.kd = 0.1f;
     subGantryInitParam.liftPosPidParam.maxIntegral = 0.0f;
     subGantryInitParam.liftPosPidParam.maxOutput = 5000.0f;
     subGantryInitParam.liftSpdPidParam.kp = 1.0f;
-    subGantryInitParam.liftSpdPidParam.ki = 0.5f;
+    subGantryInitParam.liftSpdPidParam.ki = 0.3f;
     subGantryInitParam.liftSpdPidParam.kd = 0.0f;
     subGantryInitParam.liftSpdPidParam.maxIntegral = 5000.0f;
     subGantryInitParam.liftSpdPidParam.maxOutput = 8000.f;//8000.0f;
-    subGantryInitParam.stretchPosPidParam.kp = 0.1f;
+    subGantryInitParam.stretchPosPidParam.kp = 0.18f;
     subGantryInitParam.stretchPosPidParam.ki = 0.0f;
     subGantryInitParam.stretchPosPidParam.kd = 0.1f;
     subGantryInitParam.stretchPosPidParam.maxIntegral = 0.0f;
     subGantryInitParam.stretchPosPidParam.maxOutput = 5000.0f;
-    subGantryInitParam.stretchSpdPidParam.kp = 1.2f;
-    subGantryInitParam.stretchSpdPidParam.ki = 0.5f;
+    subGantryInitParam.stretchSpdPidParam.kp = 3.0f;
+    subGantryInitParam.stretchSpdPidParam.ki = 0.3f;
     subGantryInitParam.stretchSpdPidParam.kd = 0.0f;
     subGantryInitParam.stretchSpdPidParam.maxIntegral = 5000.0f;
     subGantryInitParam.stretchSpdPidParam.maxOutput = 8000.0f;
@@ -155,10 +155,10 @@ EAppStatus InitAllModule() {
     chassisInitParam.wheelsetMotorID_LB = EDeviceID::DEV_CHAS_MTR_LB;
     chassisInitParam.wheelsetMotorID_RB = EDeviceID::DEV_CHAS_MTR_RB;
     // 设置can发送节点
-    chassisInitParam.wheelsetMotorTxNode_LF = &TxNode_Can2_200;
-    chassisInitParam.wheelsetMotorTxNode_RF = &TxNode_Can2_200;
-    chassisInitParam.wheelsetMotorTxNode_LB = &TxNode_Can2_200;
-    chassisInitParam.wheelsetMotorTxNode_RB = &TxNode_Can2_200;
+    chassisInitParam.wheelsetMotorTxNode_LF = &TxNode_Can1_200;
+    chassisInitParam.wheelsetMotorTxNode_RF = &TxNode_Can1_200;
+    chassisInitParam.wheelsetMotorTxNode_LB = &TxNode_Can1_200;
+    chassisInitParam.wheelsetMotorTxNode_RB = &TxNode_Can1_200;
     // 设置PID参数
     chassisInitParam.yawCorrectionPidParam.kp = 10.0f;
     chassisInitParam.yawCorrectionPidParam.ki = 20.0f;
@@ -172,10 +172,11 @@ EAppStatus InitAllModule() {
     chassisInitParam.lineCorrectionPidParam.maxIntegral = 0.0f;
     chassisInitParam.lineCorrectionPidParam.maxOutput = 0.0f;
     chassisInitParam.wheelsetSpdPidParam.kp = 8.0f;
-    chassisInitParam.wheelsetSpdPidParam.ki = 5.0f;
+    chassisInitParam.wheelsetSpdPidParam.ki = 1.0f;
     chassisInitParam.wheelsetSpdPidParam.kd = 0.0f;
-    chassisInitParam.wheelsetSpdPidParam.maxIntegral = 1000.0f;
-    chassisInitParam.wheelsetSpdPidParam.maxOutput = 8000.0f;
+    chassisInitParam.wheelsetSpdPidParam.Input_deadband = 1.0f;
+    chassisInitParam.wheelsetSpdPidParam.maxIntegral = 4000.0f;
+    chassisInitParam.wheelsetSpdPidParam.maxOutput = 15000.0f;
     // 使用初始化后的参数创建 chassisModule 实例
     static auto chassisModule = CModChassis(chassisInitParam);
 

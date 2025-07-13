@@ -22,9 +22,29 @@
 #define proc_HeartbeatTaskPriority      4
 #define proc_MonitorTaskPriority        4
 
+template<typename ConditionFunc>
+inline int8_t wait_until_with_timeout(ConditionFunc condition, uint32_t timeout_ms)
+{
+    TickType_t start = xTaskGetTickCount();
+    TickType_t timeout_ticks = pdMS_TO_TICKS(timeout_ms);
+
+    while (!condition()) {
+        if ((xTaskGetTickCount() - start) > timeout_ticks) {
+            return -1;
+        }
+        vTaskDelay(pdMS_TO_TICKS(10));
+    }
+
+    return 0;
+}
+
+
 #define proc_return() vTaskDelete(nullptr) //传递nullptr给vTaskDelete函数，删除当前任务
 #define proc_waitMs(ms) vTaskDelay(pdMS_TO_TICKS(ms))
 #define proc_waitUntil(cond) do { vTaskDelay(pdMS_TO_TICKS(10)); } while (!(cond))
+#define proc_waitUntilWithTimeout(cond, timeout) wait_until_with_timeout([&]() -> bool { return (cond); }, timeout)
+
+
 
 namespace my_engineer {
 

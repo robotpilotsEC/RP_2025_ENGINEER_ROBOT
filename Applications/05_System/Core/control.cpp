@@ -134,13 +134,13 @@ void CSystemCore::ControlFromRemote_() {
     if (remote.switch_L == MID && remote.switch_R == LOW) {
         SysRemote.SetRemoteDeadZone(10.f);
         psubgantry_->subGantryCmd.setStretchPosit_L +=
-            (remote.joystick_LX / 100.f) * 200.f / freq;
+            (remote.joystick_LY / 100.f) * 300.f / freq;
         psubgantry_->subGantryCmd.setStretchPosit_R +=
-            (remote.joystick_RX / 100.f) * 200.f / freq;
+            (remote.joystick_RY / 100.f) * 300.f / freq;
         psubgantry_->subGantryCmd.setLiftPosit_L +=
-            (remote.joystick_LY / 100.f) * 200.f / freq;
+            (remote.joystick_LX / 100.f) * 120.f / freq;
         psubgantry_->subGantryCmd.setLiftPosit_R +=
-            (remote.joystick_RY / 100.f) * 200.f / freq;
+            (remote.joystick_RX / 100.f) * 120.f / freq;
     }
 
 }
@@ -271,7 +271,7 @@ void CSystemCore::ControlFromKeyboard_() {
         }
         if(keyboard.key_E)
         {
-            StartAutoCtrlTask_(EAutoCtrlProcess::GROUND_ORE);
+            StartAutoCtrlTask_(EAutoCtrlProcess::SILVER_ORE);
         }
         if(keyboard.key_Z)
         {
@@ -283,7 +283,7 @@ void CSystemCore::ControlFromKeyboard_() {
         }
         if(keyboard.key_C)
         {
-            StartAutoCtrlTask_(EAutoCtrlProcess::TURNOVER);
+            StartAutoCtrlTask_(EAutoCtrlProcess::GROUND_ORE);
         }
         if(keyboard.key_F)
         {

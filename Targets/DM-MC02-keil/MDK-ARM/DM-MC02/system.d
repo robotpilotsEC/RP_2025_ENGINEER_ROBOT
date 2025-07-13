@@ -872,6 +872,7 @@ dm-mc02/system.o: ..\..\..\Applications\05_System\System.cpp \
   ..\..\..\Applications\03_Device\Include\dev_servo.hpp \
   ..\..\..\Applications\03_Device\Include\dev_controller_link.hpp \
   ..\..\..\Applications\00_Algorithm\Include\algo_crc.hpp \
+  ..\..\..\Applications\03_Device\Include\dev_esp32.hpp \
   ..\..\..\Applications\03_Device\Include\dev_vision.hpp \
   ..\..\..\Applications\02_Interface\Include\inf_usb_cdc.hpp \
   ..\USB_DEVICE\App\usb_device.h \
@@ -885,6 +886,7 @@ dm-mc02/system.o: ..\..\..\Applications\05_System\System.cpp \
   ..\..\..\Applications\05_System\Include\sys_vision.hpp \
   ..\..\..\Applications\05_System\Include\sys_referee.hpp \
   ..\..\..\Applications\05_System\Include\sys_controller_link.hpp \
+  ..\..\..\Applications\05_System\Include\sys_esp32.hpp \
   ..\..\..\Applications\04_Module\Include\Module.hpp \
   ..\..\..\Applications\04_Module\Include\mod_common.hpp \
   ..\..\..\Applications\02_Interface\Include\Interface.hpp \
