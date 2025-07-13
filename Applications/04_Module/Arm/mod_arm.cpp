@@ -67,18 +67,18 @@ void CModArm::UpdateHandler_() {
 	comEnd_.UpdateComponent();
 
 	// 更新模块信息
-	armInfo.angle_Yaw = comYaw_.MtrAngleToPhyAngle(comYaw_.yawInfo.angle);
+	armInfo.angle_Yaw = comYaw_.MtrPositToPhyPosit(comYaw_.yawInfo.posit);
 	armInfo.angle_Pitch1 = comPitch1_.MtrPositToPhyPosit(comPitch1_.pitch1Info.posit);
 	armInfo.angle_Pitch2 = comPitch2_.MtrPositToPhyPosit(comPitch2_.pitch2Info.posit);
-	armInfo.angle_Roll = comRoll_.MtrPositToPhyPosit(comRoll_.rollInfo.posit);
+	armInfo.angle_Roll = comRoll_.MtrAngleToPhyAngle(comRoll_.rollInfo.angle);
 	armInfo.angle_end_pitch =
 		comEnd_.MtrPositToPhyPosit_Pitch(comEnd_.endInfo.posit_Pitch);
 	armInfo.angle_end_roll =
 		comEnd_.MtrPositToPhyPosit_Roll(comEnd_.endInfo.posit_Roll);
-	armInfo.isAngleArrived_Yaw = comYaw_.yawInfo.isAngleArrived;
+	armInfo.isAngleArrived_Yaw = comYaw_.yawInfo.isPositArrived;
 	armInfo.isAngleArrived_Pitch1 = comPitch1_.pitch1Info.isPositArrived;
 	armInfo.isAngleArrived_Pitch2 = comPitch2_.pitch2Info.isPositArrived;
-	armInfo.isAngleArrived_Roll = comRoll_.rollInfo.isPositArrived;
+	armInfo.isAngleArrived_Roll = comRoll_.rollInfo.isAngleArrived;
 	armInfo.isAngleArrived_End_Pitch = comEnd_.endInfo.isPositArrived_Pitch;
 	armInfo.isAngleArrived_End_Roll = comEnd_.endInfo.isPositArrived_Roll;
 
@@ -89,9 +89,9 @@ void CModArm::UpdateHandler_() {
 	CDevMtrDJI::FillCanTxBuffer(comPitch2_.motor,
 								comPitch2_.mtrCanTxNode->dataBuffer,
 								comPitch2_.mtrOutputBuffer[0]);
-	CDevMtrDJI::FillCanTxBuffer(comRoll_.motor,
-								comRoll_.mtrCanTxNode->dataBuffer,
-								comRoll_.mtrOutputBuffer[0]);
+	CDevMtrDJI::FillCanTxBuffer(comYaw_.motor,
+								comYaw_.mtrCanTxNode->dataBuffer,
+								comYaw_.mtrOutputBuffer[0]);
 	CDevMtrDJI::FillCanTxBuffer(comEnd_.motor[CComEnd::L],
 								comEnd_.mtrCanTxNode[CComEnd::L]->dataBuffer,
 								comEnd_.mtrOutputBuffer[CComEnd::L]);

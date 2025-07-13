@@ -79,6 +79,7 @@ private:
     void ControlFromRemote_();
     void ControlFromKeyboard_();
     void ControlFromController_();
+    void ControlFromEsp32_();
 
     // 自动操作(启动与停止)
     EAppStatus StartAutoCtrlTask_(EAutoCtrlProcess process);

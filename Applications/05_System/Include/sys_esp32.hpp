@@ -39,8 +39,8 @@ public:
 		int Pitch1;        ///< Pitch1角度
 		int Pitch2;        ///< Pitch2角度
 		int Roll;          ///< Roll角度
-		int End_L;         ///< 末端左轴位置
-		int End_R;         ///< 末端右轴位置
+		int End_Pitch;         ///< 末端Pitch角度
+		int End_Roll;       ///< 末端Roll角度
 	} BLEInfo; ///< 蓝牙模式信息
 
 	bool BLE_Mode_Open = false; ///< 是否为BLE模式

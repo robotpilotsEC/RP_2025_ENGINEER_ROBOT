@@ -61,8 +61,8 @@ public:
 		int Pitch1;
 		int Pitch2;
 		int Roll;
-		int End_L;
-		int End_R;
+		int End_Pitch;
+		int End_Roll;
 	} armInfo; ///< 机械臂信息
 
 	CDevESP32() {

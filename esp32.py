@@ -38,7 +38,7 @@ class BluetoothControlPanel(QWidget):
 		self.leds = {}
 		self.sliders = []
 		self.slider_labels = []
-		self.slider_names = ["Yaw", "Pitch1", "Pitch2", "Roll", "End_L", "End_R"]
+		self.slider_names = ["Yaw", "Pitch1", "Pitch2", "Roll", "End_Pitch", "End_Roll"]
 		self.slider_mode_open = False
 		
 		# 每个滑块的配置：最小值，最大值，初始值
@@ -47,8 +47,8 @@ class BluetoothControlPanel(QWidget):
 			"Pitch1": {"min": -90, "max": 90, "init": 0},
 			"Pitch2": {"min": -90, "max": 90, "init": 0},
 			"Roll": {"min": -90, "max": 90, "init": 0},
-			"End_L": {"min": 0, "max": 100, "init": 0},
-			"End_R": {"min": 0, "max": 100, "init": 0}
+			"End_Pitch": {"min": 0, "max": 100, "init": 0},
+			"End_Roll": {"min": 0, "max": 100, "init": 0}
 		}
 
 		main_layout = QVBoxLayout()

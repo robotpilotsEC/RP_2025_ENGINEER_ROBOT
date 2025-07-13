@@ -22,20 +22,20 @@
 #define ARM_ROLL_PHYSICAL_RANGE_MAX 180.0f
 #define ARM_END_PITCH_PHYSICAL_RANGE_MIN -90.0f
 #define ARM_END_PITCH_PHYSICAL_RANGE_MAX 90.0f
+#define ARM_YAW_MOTOR_RANGE 65535
 #define ARM_PITCH1_MOTOR_RANGE 65535
 #define ARM_PITCH2_MOTOR_RANGE 65535
-#define ARM_ROLL_MOTOR_RANGE 65535
 #define ARM_END_PITCH_MOTOR_RANGE 100000
 #define ARM_PITCH1_MOTOR_RATIO (ARM_PITCH1_MOTOR_RANGE / (ARM_PITCH1_PHYSICAL_RANGE_MAX - ARM_PITCH1_PHYSICAL_RANGE_MIN))
 #define ARM_PITCH2_MOTOR_RATIO (ARM_PITCH2_MOTOR_RANGE / (ARM_PITCH2_PHYSICAL_RANGE_MAX - ARM_PITCH2_PHYSICAL_RANGE_MIN))
-#define ARM_ROLL_MOTOR_RATIO (ARM_ROLL_MOTOR_RANGE / (ARM_ROLL_PHYSICAL_RANGE_MAX - ARM_ROLL_PHYSICAL_RANGE_MIN))
+#define ARM_YAW_MOTOR_RATIO (ARM_YAW_MOTOR_RANGE / (ARM_YAW_PHYSICAL_RANGE_MAX - ARM_YAW_PHYSICAL_RANGE_MIN))
 #define ARM_END_PITCH_MOTOR_RATIO (ARM_END_PITCH_MOTOR_RANGE / (ARM_END_PITCH_PHYSICAL_RANGE_MAX - ARM_END_PITCH_PHYSICAL_RANGE_MIN))
 #define ARM_END_ROLL_MOTOR_RATIO 2469.4f
 // 这里的offset都是物理的零点相对电机的零点的偏移值，电机的零点在物理的最小值
-#define ARM_YAW_MOTOR_OFFSET 30.0f // 但这个比较特殊，测量这个就是从电机0位置到物理0位置总共的角度
+#define ARM_YAW_MOTOR_OFFSET -ARM_YAW_PHYSICAL_RANGE_MIN * ARM_YAW_MOTOR_RATIO
 #define ARM_PITCH1_MOTOR_OFFSET -ARM_PITCH1_PHYSICAL_RANGE_MIN * ARM_PITCH1_MOTOR_RATIO
 #define ARM_PITCH2_MOTOR_OFFSET -ARM_PITCH2_PHYSICAL_RANGE_MIN * ARM_PITCH2_MOTOR_RATIO
-#define ARM_ROLL_MOTOR_OFFSET -ARM_ROLL_PHYSICAL_RANGE_MIN * ARM_ROLL_MOTOR_RATIO
+#define ARM_ROLL_MOTOR_OFFSET 30.0f // 但这个比较特殊，测量这个就是从电机0位置到物理0位置总共的角度
 #define ARM_END_PITCH_MOTOR_OFFSET -ARM_END_PITCH_PHYSICAL_RANGE_MIN * ARM_END_PITCH_MOTOR_RATIO
 
 #define ARM_YAW_MOTOR_DIR 1
@@ -76,19 +76,19 @@ public:
 		EDeviceID MotorID_Roll = EDeviceID::DEV_NULL;
 		EDeviceID MotorID_End_L = EDeviceID::DEV_NULL;
 		EDeviceID MotorID_End_R = EDeviceID::DEV_NULL;
+		CInfCAN::CCanTxNode *MotorTxNode_Yaw; ///< 机械臂关节Yaw电机发送节点
 		CInfCAN::CCanTxNode *MotorTxNode_Pitch1; ///< 机械臂关节Pitch电机1发送节点
 		CInfCAN::CCanTxNode *MotorTxNode_Pitch2; ///< 机械臂关节Pitch电机2发送节点
-		CInfCAN::CCanTxNode *MotorTxNode_Roll; ///< 机械臂关节Roll电机发送节点
 		CInfCAN::CCanTxNode *MotorTxNode_End_L;
 		CInfCAN::CCanTxNode *MotorTxNode_End_R;
-		float_t MIT_Yaw_kp = 0.0f; ///< MIT控制器比例系数
-		float_t MIT_Yaw_kd = 0.0f; ///< MIT控制器微分系数
+		float_t MIT_Roll_kp = 0.0f; ///< MIT控制器比例系数
+		float_t MIT_Roll_kd = 0.0f; ///< MIT控制器微分系数
+		CAlgoPid::SAlgoInitParam_Pid YawPosPidParam;
+		CAlgoPid::SAlgoInitParam_Pid YawSpdPidParam;
 		CAlgoPid::SAlgoInitParam_Pid Pitch1PosPidParam;
 		CAlgoPid::SAlgoInitParam_Pid Pitch1SpdPidParam;
 		CAlgoPid::SAlgoInitParam_Pid Pitch2PosPidParam;
 		CAlgoPid::SAlgoInitParam_Pid Pitch2SpdPidParam;
-		CAlgoPid::SAlgoInitParam_Pid RollPosPidParam;
-		CAlgoPid::SAlgoInitParam_Pid RollSpdPidParam;
 		CAlgoPid::SAlgoInitParam_Pid endPosPidParam;
 		CAlgoPid::SAlgoInitParam_Pid endSpdPidParam;
 	};
@@ -137,44 +137,47 @@ private:
 	// 定义机械臂Yaw关节组件类并实例化
 	class CComYaw: public CComponentBase {
 	public:
+		const int32_t rangeLimit = ARM_YAW_MOTOR_RANGE; ///< Yaw关节电机范围限制
+		
 		// 定义Yaw关节信息结构体
 		struct SYawInfo {
-			float_t angle = 0.0f;           ///< Yaw关节当前角度
-			bool isAngleArrived = false;    ///< Yaw角度是否到达目标
+			int32_t posit = 0.0f;           ///< Yaw关节当前位置
+			bool isPositArrived = false;    ///< Yaw位置是否到达目标
 		} yawInfo;
 
 		// 定义Yaw关节控制命令结构体
 		struct SYawCmd {
-			float_t setAngle = 0.0f;        ///< Yaw关节目标角度
+			int32_t setPosit = 0.0f;        ///< Yaw关节目标位置
 		} yawCmd;
 
-		// MIT控制结构体
-		struct SMitCtrl {
-			float_t kp = 0.0f;
-			float_t kd = 0.0f;
-			float_t q = 0.0f;
-			float_t dq = 0.0f;
-			float_t tau = 0.0f;
-		} mitCtrl;
+		// PID控制器
+		CAlgoPid pidPosCtrl;
+		CAlgoPid pidSpdCtrl;
+
+		// 电机数据输出缓冲区
+		std::array<int16_t, 1> mtrOutputBuffer = {0};
 
 		// 电机实例指针
 		CDevMtr* motor = nullptr;
 
-		static float_t MtrAngleToPhyAngle(float_t angle) {
-			// 将电机角度转换为物理角度
-			return angle + ARM_YAW_MOTOR_OFFSET;
-		}
+		// 物理位置转换为电机位置
+		static int32_t PhyPositToMtrPosit(float_t phyPosit);
 
-		static float_t PhyAngleToMtrAngle(float_t angle) {
-			// 将物理角度转换为电机角度
-			return angle - ARM_YAW_MOTOR_OFFSET;
-		}
+		// 电机位置转换为物理位置
+		static float_t MtrPositToPhyPosit(int32_t mtrPosit);
 
 		// 初始化组件
 		EAppStatus InitComponent(SModInitParam_Base &param) final;
 
 		// 更新组件
 		EAppStatus UpdateComponent() final;
+
+		// 输出更新函数
+		EAppStatus _UpdateOutput(float_t posit);
+
+		// 电机can发送节点
+		CInfCAN::CCanTxNode* mtrCanTxNode = nullptr;
+
 	} comYaw_;
 
 	// 定义机械臂Pitch1关节组件类并实例化
@@ -270,52 +273,49 @@ private:
 
 	} comPitch2_;
 
-
 	// 定义机械臂Roll关节组件类并实例化
 	class CComRoll: public CComponentBase {
 	public:
-		const int32_t rangeLimit = ARM_ROLL_MOTOR_RANGE; ///< Roll关节电机范围限制
-		
 		// 定义Roll关节信息结构体
 		struct SRollInfo {
-			int32_t posit = 0.0f;           ///< Roll关节当前位置
-			bool isPositArrived = false;    ///< Roll位置是否到达目标
+			float_t angle = 0.0f;           ///< Roll关节当前角度
+			bool isAngleArrived = false;    ///< Roll角度是否到达目标
 		} rollInfo;
 
 		// 定义Roll关节控制命令结构体
 		struct SRollCmd {
-			int32_t setPosit = 0.0f;        ///< Roll关节目标位置
+			float_t setAngle = 0.0f;        ///< Roll关节目标角度
 		} rollCmd;
 
-		// PID控制器
-		CAlgoPid pidPosCtrl;
-		CAlgoPid pidSpdCtrl;
-
-		// 电机数据输出缓冲区
-		std::array<int16_t, 1> mtrOutputBuffer = {0};
+		// MIT控制结构体
+		struct SMitCtrl {
+			float_t kp = 0.0f;
+			float_t kd = 0.0f;
+			float_t q = 0.0f;
+			float_t dq = 0.0f;
+			float_t tau = 0.0f;
+		} mitCtrl;
 
 		// 电机实例指针
 		CDevMtr* motor = nullptr;
 
-		// 物理位置转换为电机位置
-		static int32_t PhyPositToMtrPosit(float_t phyPosit);
+		static float_t MtrAngleToPhyAngle(float_t angle) {
+			// 将电机角度转换为物理角度
+			return angle + ARM_ROLL_MOTOR_OFFSET;
+		}
 
-		// 电机位置转换为物理位置
-		static float_t MtrPositToPhyPosit(int32_t mtrPosit);
+		static float_t PhyAngleToMtrAngle(float_t angle) {
+			// 将物理角度转换为电机角度
+			return angle - ARM_ROLL_MOTOR_OFFSET;
+		}
 
 		// 初始化组件
 		EAppStatus InitComponent(SModInitParam_Base &param) final;
 
 		// 更新组件
 		EAppStatus UpdateComponent() final;
-
-		// 输出更新函数
-		EAppStatus _UpdateOutput(float_t posit);
-
-		// 电机can发送节点
-		CInfCAN::CCanTxNode* mtrCanTxNode = nullptr;
-
 	} comRoll_;
+	
 
 
 	// 定义机械臂末端组件类并实例化

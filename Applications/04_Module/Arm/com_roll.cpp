@@ -4,7 +4,7 @@
  * @file         com_roll.cpp
  * @author       Fish_Joe (2328339747@qq.com)
  * @version      V1.0
- * @date         2025-07-10
+ * @date         2025-07-09
  * 
  * @copyright    Copyright (c) 2025
  * 
@@ -15,26 +15,24 @@
 namespace my_engineer {
 
 /**
- * @brief 初始化机械臂Roll组件
+ * @brief 初始化机械臂关节Roll组件
  * 
  * @param param 
  * @return EAppStatus 
  */
 EAppStatus CModArm::CComRoll::InitComponent(SModInitParam_Base &param) {
+	// 检查param是否正确
 	if (param.moduleID == EModuleID::MOD_NULL) return APP_ERROR;
 
+	// 类型转换
 	auto armParam = static_cast<SModInitParam_Arm &>(param);
 
+	// 保存电机指针
 	motor = MotorIDMap.at(armParam.MotorID_Roll);
-	mtrCanTxNode = armParam.MotorTxNode_Roll;
 
-	armParam.RollPosPidParam.threadNum = 1;
-	pidPosCtrl.InitPID(&armParam.RollPosPidParam);
-
-	armParam.RollSpdPidParam.threadNum = 1;
-	pidSpdCtrl.InitPID(&armParam.RollSpdPidParam);
-
-	mtrOutputBuffer.fill(0);
+	// 初始化PID控制器
+	mitCtrl.kp = armParam.MIT_Roll_kp;
+	mitCtrl.kd = armParam.MIT_Roll_kd;
 
 	Component_FSMFlag_ = FSM_RESET;
 	componentStatus = APP_OK;
@@ -43,61 +41,58 @@ EAppStatus CModArm::CComRoll::InitComponent(SModInitParam_Base &param) {
 }
 
 /**
- * @brief 更新Roll组件
+ * @brief 更新Roll关节组件
  * 
  * @return EAppStatus 
  */
 EAppStatus CModArm::CComRoll::UpdateComponent() {
-	if (componentStatus == APP_RESET) {
-		return APP_ERROR;
+	// 检查组件状态
+	if (componentStatus == APP_RESET) return APP_ERROR;
+
+	CDevMtrDM_MIT *pMtr = static_cast<CDevMtrDM_MIT *>(motor);
+
+	// 更新组件信息
+	rollInfo.angle = rad2deg(pMtr->motorPhyAngle) * ARM_ROLL_MOTOR_DIR;
+	rollInfo.isAngleArrived = (fabs(rollInfo.angle - rollCmd.setAngle) < 0.2f);
+
+	// 缓慢移动控制逻辑
+	static float_t next_angle = 0.0f;
+	static float_t gradual_kp = 0.005f;
+	static float_t gradual_min = 0.03f;
+
+	next_angle += (rollCmd.setAngle - next_angle) * gradual_kp;
+	if (fabs(next_angle - rollCmd.setAngle) < gradual_min) {
+		next_angle = rollCmd.setAngle;
 	}
 
-	rollInfo.posit = motor->motorData[CDevMtr::DATA_POSIT] * ARM_ROLL_MOTOR_DIR;
-	rollInfo.isPositArrived = abs(rollInfo.posit - rollCmd.setPosit) < 1000;
-
 	switch (Component_FSMFlag_) {
-
 		case FSM_RESET: {
-			mtrOutputBuffer.fill(0);
-			pidPosCtrl.ResetPidController();
-			pidSpdCtrl.ResetPidController();
+			pMtr->Control_MIT(0.0f, 0.0f, deg2rad(0.0f) * ARM_ROLL_MOTOR_DIR, 0.0f, 0.0f);
+			rollCmd = SRollCmd();
 			return APP_OK;
 		}
 
 		case FSM_PREINIT: {
-			rollCmd.setPosit = 0;
-			motor->motorData[CDevMtr::DATA_POSIT] = 0;
-			mtrOutputBuffer.fill(0);
-			pidPosCtrl.ResetPidController();
-			pidSpdCtrl.ResetPidController();
+			rollCmd.setAngle = deg2rad(ARM_ROLL_INIT_ANGLE);
 			Component_FSMFlag_ = FSM_INIT;
 			return APP_OK;
 		}
 
 		case FSM_INIT: {
-			if (motor->motorStatus == CDevMtr::EMotorStatus::STALL) {
-				rollCmd.setPosit = ARM_ROLL_MOTOR_OFFSET;
-				motor->motorData[CDevMtr::DATA_POSIT] = (static_cast<int32_t>(0.05 * 8192) + rangeLimit) * ARM_ROLL_MOTOR_DIR;
-				pidPosCtrl.ResetPidController();
-				pidSpdCtrl.ResetPidController();
+			if (rollInfo.isAngleArrived) {
 				Component_FSMFlag_ = FSM_CTRL;
 				componentStatus = APP_OK;
-				return APP_OK;
 			}
-			rollCmd.setPosit += 200;
-			return _UpdateOutput(static_cast<float_t>(rollCmd.setPosit));
+			pMtr->Control_MIT(5.0f, mitCtrl.kd, deg2rad(next_angle) * ARM_ROLL_MOTOR_DIR, 0.0f, 0.0f);
+			return APP_OK;
 		}
 
 		case FSM_CTRL: {
-			rollCmd.setPosit = std::clamp(rollCmd.setPosit, static_cast<int32_t>(0), rangeLimit);
-			return _UpdateOutput(static_cast<float_t>(rollCmd.setPosit));
+			pMtr->Control_MIT(mitCtrl.kp, mitCtrl.kd, deg2rad(next_angle) * ARM_ROLL_MOTOR_DIR, 0.0f, 0.0f);
+			return APP_OK;
 		}
 
 		default: {
-			StopComponent();
-			mtrOutputBuffer.fill(0);
-			pidPosCtrl.ResetPidController();
-			pidSpdCtrl.ResetPidController();
 			componentStatus = APP_ERROR;
 			return APP_ERROR;
 		}
@@ -106,43 +101,5 @@ EAppStatus CModArm::CComRoll::UpdateComponent() {
 	return APP_OK;
 }
 
-// 物理位置转换为电机位置
-int32_t CModArm::CComRoll::PhyPositToMtrPosit(float_t phyPosit) {
-	const int32_t zeroOffset = ARM_ROLL_MOTOR_OFFSET;
-	const float_t scale = ARM_ROLL_MOTOR_RATIO;
-
-	return static_cast<int32_t>((phyPosit * scale) + zeroOffset);
-}
-
-// 电机位置转换为物理位置
-float_t CModArm::CComRoll::MtrPositToPhyPosit(int32_t mtrPosit) {
-	const int32_t zeroOffset = ARM_ROLL_MOTOR_OFFSET;
-	const float_t scale = ARM_ROLL_MOTOR_RATIO;
-
-	return (static_cast<float_t>(mtrPosit - zeroOffset) / scale);
-}
-
-// 输出更新函数
-EAppStatus CModArm::CComRoll::_UpdateOutput(float_t posit) {
-	DataBuffer<float_t> Pos = { 
-		static_cast<float_t>(posit * ARM_ROLL_MOTOR_DIR) 
-	};
-
-	DataBuffer<float_t> PosMeasure = {
-		static_cast<float_t>(motor->motorData[CDevMtr::DATA_POSIT])
-	};
-
-	auto Spd = pidPosCtrl.UpdatePidController(Pos, PosMeasure);
-
-	DataBuffer<float_t> SpdMeasure = {
-		static_cast<float_t>(motor->motorData[CDevMtr::DATA_SPEED])
-	};
-
-	auto output = pidSpdCtrl.UpdatePidController(Spd, SpdMeasure);
-
-	mtrOutputBuffer = { static_cast<int16_t>(output[0]) };
-
-	return APP_OK;
-}
-
 } // namespace my_engineer
+

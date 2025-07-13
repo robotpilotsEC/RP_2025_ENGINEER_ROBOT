@@ -157,8 +157,8 @@ EAppStatus InitAllDevice(){
     static CDevMtrM2006 gimbalMotor_Lift;
     CDevMtrM2006::SMtrInitParam_M2006 gimbalMotor_Lift_initparam;
     gimbalMotor_Lift_initparam.deviceID = EDeviceID::DEV_GIMBAL_MTR;
-    gimbalMotor_Lift_initparam.interfaceID = EInterfaceID::INF_CAN1;
-    gimbalMotor_Lift_initparam.djiMtrID = CDevMtrDJI::EDjiMtrID::ID_5;
+    gimbalMotor_Lift_initparam.interfaceID = EInterfaceID::INF_CAN3;
+    gimbalMotor_Lift_initparam.djiMtrID = CDevMtrDJI::EDjiMtrID::ID_1;
     gimbalMotor_Lift_initparam.useAngleToPosit = true;
     gimbalMotor_Lift_initparam.useStallMonit = true;
     gimbalMotor_Lift_initparam.stallMonitDataSrc = CDevMtr::DATA_TORQUE;
@@ -189,23 +189,24 @@ EAppStatus InitAllDevice(){
     armMotor_End_R_initparam.stallMonitDataSrc = CDevMtr::DATA_TORQUE;
     armMotor_End_R.InitDevice(&armMotor_End_R_initparam);
 
-    static CDevMtrDM_MIT armMotor_Yaw;
-    CDevMtrDM_MIT::SMtrInitParam_DM_MIT armMotor_Yaw_initparam;
+    static CDevMtrKT armMotor_Yaw;
+    CDevMtrKT::SMtrInitParam_KT armMotor_Yaw_initparam;
     armMotor_Yaw_initparam.deviceID = EDeviceID::DEV_ARM_MTR_YAW;
-    armMotor_Yaw_initparam.interfaceID = EInterfaceID::INF_CAN1;
-    armMotor_Yaw_initparam.MasterID = 0x03;
-    armMotor_Yaw_initparam.SlaveID = 0x04;
-    armMotor_Yaw_initparam.Q_MAX = 12.5f;
-    armMotor_Yaw_initparam.DQ_MAX = 30.0f;
-    armMotor_Yaw_initparam.TAU_MAX = 10.0f;
+    armMotor_Yaw_initparam.interfaceID = EInterfaceID::INF_CAN3;
+    armMotor_Yaw_initparam.ktMtrID = CDevMtrKT::EKtMtrID::ID_1;
+    armMotor_Yaw_initparam.encoderResolution = 65535;
     armMotor_Yaw_initparam.useAngleToPosit = true;
+    armMotor_Yaw_initparam.useStallMonit = true;
+    armMotor_Yaw_initparam.stallMonitDataSrc = CDevMtr::DATA_CURRENT;
+    armMotor_Yaw_initparam.stallThreshold = 200;
+    armMotor_Yaw_initparam.stallTime = 200;
     armMotor_Yaw.InitDevice(&armMotor_Yaw_initparam);
 
     static CDevMtrKT armMotor_Pitch1;
     CDevMtrKT::SMtrInitParam_KT armMotor_Pitch1_initparam;
     armMotor_Pitch1_initparam.deviceID = EDeviceID::DEV_ARM_MTR_PITCH1;
     armMotor_Pitch1_initparam.interfaceID = EInterfaceID::INF_CAN3;
-    armMotor_Pitch1_initparam.ktMtrID = CDevMtrKT::EKtMtrID::ID_1;
+    armMotor_Pitch1_initparam.ktMtrID = CDevMtrKT::EKtMtrID::ID_2;
     armMotor_Pitch1_initparam.encoderResolution = 65535;
     armMotor_Pitch1_initparam.useAngleToPosit = true;
     armMotor_Pitch1_initparam.useStallMonit = true;
@@ -218,7 +219,7 @@ EAppStatus InitAllDevice(){
     CDevMtrKT::SMtrInitParam_KT armMotor_Pitch2_initparam;
     armMotor_Pitch2_initparam.deviceID = EDeviceID::DEV_ARM_MTR_PITCH2;
     armMotor_Pitch2_initparam.interfaceID = EInterfaceID::INF_CAN3;
-    armMotor_Pitch2_initparam.ktMtrID = CDevMtrKT::EKtMtrID::ID_2;
+    armMotor_Pitch2_initparam.ktMtrID = CDevMtrKT::EKtMtrID::ID_3;
     armMotor_Pitch2_initparam.encoderResolution = 65535;
     armMotor_Pitch2_initparam.useAngleToPosit = true;
     armMotor_Pitch2_initparam.useStallMonit = true;
@@ -227,20 +228,17 @@ EAppStatus InitAllDevice(){
     armMotor_Pitch2_initparam.stallTime = 200;
     armMotor_Pitch2.InitDevice(&armMotor_Pitch2_initparam);
 
-    static CDevMtrKT armMotor_Roll;
-    CDevMtrKT::SMtrInitParam_KT armMotor_Roll_initparam;
+    static CDevMtrDM_MIT armMotor_Roll;
+    CDevMtrDM_MIT::SMtrInitParam_DM_MIT armMotor_Roll_initparam;
     armMotor_Roll_initparam.deviceID = EDeviceID::DEV_ARM_MTR_ROLL;
     armMotor_Roll_initparam.interfaceID = EInterfaceID::INF_CAN3;
-    armMotor_Roll_initparam.ktMtrID = CDevMtrKT::EKtMtrID::ID_3;
-    armMotor_Roll_initparam.encoderResolution = 65535;
+    armMotor_Roll_initparam.MasterID = 0x30;
+    armMotor_Roll_initparam.SlaveID = 0x31;
+    armMotor_Roll_initparam.Q_MAX = 12.5f;
+    armMotor_Roll_initparam.DQ_MAX = 30.0f;
+    armMotor_Roll_initparam.TAU_MAX = 10.0f;
     armMotor_Roll_initparam.useAngleToPosit = true;
-    armMotor_Roll_initparam.useStallMonit = true;
-    armMotor_Roll_initparam.stallMonitDataSrc = CDevMtr::DATA_CURRENT;
-    armMotor_Roll_initparam.stallThreshold = 200;
-    armMotor_Roll_initparam.stallTime = 200;
     armMotor_Roll.InitDevice(&armMotor_Roll_initparam);
-
-
 
 
     return APP_OK;

@@ -200,6 +200,16 @@
           <WinNumber>1</WinNumber>
           <ItemText>_ZN11my_engineer15pSubGantry_testE,0x0A</ItemText>
         </Ww>
+        <Ww>
+          <count>10</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>_ZN11my_engineer9pArm_testE</ItemText>
+        </Ww>
+        <Ww>
+          <count>11</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>_ZN11my_engineer12pGimbal_testE</ItemText>
+        </Ww>
       </WatchWindow1>
       <WatchWindow2>
         <Ww>

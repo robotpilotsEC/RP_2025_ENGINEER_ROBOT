@@ -93,14 +93,14 @@ EAppStatus CDevESP32::SendPackage(EPackageID packageID) {
 				"Pitch1 = %d\n"
 				"Pitch2 = %d\n"
 				"Roll = %d\n"
-				"End_L = %d\n"
-				"End_R = %d\n",
+				"End_Pitch = %d\n"
+				"End_Roll = %d\n",
 				armInfo.Yaw,
 				armInfo.Pitch1,
 				armInfo.Pitch2,
 				armInfo.Roll,
-				armInfo.End_L,
-				armInfo.End_R
+				armInfo.End_Pitch,
+				armInfo.End_Roll
 			);
 			return ESP32_Print("%s", sendString);
 		}

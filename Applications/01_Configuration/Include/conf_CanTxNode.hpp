@@ -27,6 +27,9 @@ extern CInfCAN::CCanTxNode TxNode_Can3_200;
 extern CInfCAN::CCanTxNode TxNode_Can3_1FF;
 extern CInfCAN::CCanTxNode TxNode_Can3_3FE;
 extern CInfCAN::CCanTxNode TxNode_Can3_7FF;
+extern CInfCAN::CCanTxNode TxNode_Can1_280;
+extern CInfCAN::CCanTxNode TxNode_Can2_280;
+extern CInfCAN::CCanTxNode TxNode_Can3_280;
 
 EAppStatus InitAllCanTxNode();
 

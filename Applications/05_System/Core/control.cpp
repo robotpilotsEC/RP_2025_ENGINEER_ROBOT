@@ -388,5 +388,20 @@ void CSystemCore::ControlFromController_() {
     last_rocker_key_status = controller.Rocker_Key;
 }
 
+void CSystemCore::ControlFromEsp32_() {
+    const auto freq = 1000.f; // 系统核心频率
+
+    auto &esp32 = SysESP32.BLEInfo;
+
+    if (SysESP32.BLE_Mode_Open) {
+        parm_->armCmd.set_angle_Yaw = LowPassFilter(parm_->armCmd.set_angle_Yaw, esp32.Yaw, 0.5f);
+        parm_->armCmd.set_angle_Pitch1 = LowPassFilter(parm_->armCmd.set_angle_Pitch1, esp32.Pitch1, 0.5f);
+        parm_->armCmd.set_angle_Pitch2 = LowPassFilter(parm_->armCmd.set_angle_Pitch2, esp32.Pitch2, 0.5f);
+        parm_->armCmd.set_angle_Roll = LowPassFilter(parm_->armCmd.set_angle_Roll, esp32.Roll, 0.5f);
+        parm_->armCmd.set_angle_end_pitch = LowPassFilter(parm_->armCmd.set_angle_end_pitch, esp32.End_Pitch, 0.5f);
+        parm_->armCmd.set_angle_end_roll = LowPassFilter(parm_->armCmd.set_angle_end_roll, esp32.End_Roll, 0.5f);
+    }
+}
+
 
 }   // namespace my_engineer

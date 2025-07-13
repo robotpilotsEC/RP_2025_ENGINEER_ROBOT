@@ -70,10 +70,14 @@ void StartUpdateTask(void *argument) {
         // 执行can发送
 		TxNode_Can1_200.Transmit();
         TxNode_Can2_200.Transmit();
-        TxNode_Can3_200.Transmit();
-		
-		if(HalfTickRate)
-			TxNode_Can3_1FF.Transmit();
+        
+        TxNode_Can3_280.Transmit();
+
+
+
+		if(HalfTickRate) {
+            TxNode_Can3_200.Transmit();
+        }
         // TxNode_Can2_3FE.Transmit();
         // TxNode_Can1_280.Transmit();
 

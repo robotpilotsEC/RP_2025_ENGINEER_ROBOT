@@ -80,13 +80,14 @@ void CModArm::StartArmModuleTask(void *argument) {
 
 				arm.RestrictArmCommand_();
 
-				arm.comYaw_.yawCmd.setAngle = CComYaw::PhyAngleToMtrAngle(arm.armCmd.set_angle_Yaw);
+				arm.comYaw_.yawCmd.setPosit = 
+					CComYaw::PhyPositToMtrPosit(arm.armCmd.set_angle_Yaw);
 				arm.comPitch1_.pitch1Cmd.setPosit =
 					CComPitch1::PhyPositToMtrPosit(arm.armCmd.set_angle_Pitch1);
 				arm.comPitch2_.pitch2Cmd.setPosit =
 					CComPitch2::PhyPositToMtrPosit(arm.armCmd.set_angle_Pitch2);
-				arm.comRoll_.rollCmd.setPosit = 
-					CComRoll::PhyPositToMtrPosit(arm.armCmd.set_angle_Roll);
+				arm.comRoll_.rollCmd.setAngle =
+					CComRoll::PhyAngleToMtrAngle(arm.armCmd.set_angle_Roll);
 				arm.comEnd_.endCmd.setPosit_Pitch =
 					CComEnd::PhyPositToMtrPosit_Pitch(arm.armCmd.set_angle_end_pitch);
 				arm.comEnd_.endCmd.setPosit_Roll =

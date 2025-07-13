@@ -26,14 +26,23 @@ EAppStatus InitAllModule() {
     armInitParam.MotorID_End_L = EDeviceID::DEV_ARM_MTR_END_L;
     armInitParam.MotorID_End_R = EDeviceID::DEV_ARM_MTR_END_R;
     // 设置can发送节点
-    armInitParam.MotorTxNode_Pitch1 = &TxNode_Can3_200;
-    armInitParam.MotorTxNode_Pitch2 = &TxNode_Can3_200;
-    armInitParam.MotorTxNode_Roll = &TxNode_Can3_200;
-    armInitParam.MotorTxNode_End_L = &TxNode_Can3_200;
-    armInitParam.MotorTxNode_End_R = &TxNode_Can3_200;
-    // 初始化 mitCtrl_Yaw 的成员
-    armInitParam.MIT_Yaw_kp = 20.0f;
-    armInitParam.MIT_Yaw_kd = 1.0f;
+    armInitParam.MotorTxNode_Yaw = &TxNode_Can2_280;
+    armInitParam.MotorTxNode_Pitch1 = &TxNode_Can2_280;
+    armInitParam.MotorTxNode_Pitch2 = &TxNode_Can2_280;
+    armInitParam.MotorTxNode_End_L = &TxNode_Can2_200;
+    armInitParam.MotorTxNode_End_R = &TxNode_Can2_200;
+    // 初始化 YawPosPidParam 的成员
+    armInitParam.YawPosPidParam.kp = 0.15f;
+    armInitParam.YawPosPidParam.ki = 0.0f;
+    armInitParam.YawPosPidParam.kd = 0.2f;
+    armInitParam.YawPosPidParam.maxIntegral = 0.0f;
+    armInitParam.YawPosPidParam.maxOutput = 5000.0f;
+    // 初始化 YawSpdPidParam 的成员
+    armInitParam.YawSpdPidParam.kp = 1.5f;
+    armInitParam.YawSpdPidParam.ki = 0.5f;
+    armInitParam.YawSpdPidParam.kd = 0.0f;
+    armInitParam.YawSpdPidParam.maxIntegral = 6000.0f;
+    armInitParam.YawSpdPidParam.maxOutput = 8000.0f;
     // 初始化 Pitch1PosPidParam 的成员
     armInitParam.Pitch1PosPidParam.kp = 0.15f;
     armInitParam.Pitch1PosPidParam.ki = 0.0f;
@@ -58,18 +67,9 @@ EAppStatus InitAllModule() {
     armInitParam.Pitch2SpdPidParam.kd = 0.0f;
     armInitParam.Pitch2SpdPidParam.maxIntegral = 6000.0f;
     armInitParam.Pitch2SpdPidParam.maxOutput = 8000.0f;
-    // 初始化 RollPosPidParam 的成员
-    armInitParam.RollPosPidParam.kp = 0.15f;
-    armInitParam.RollPosPidParam.ki = 0.0f;
-    armInitParam.RollPosPidParam.kd = 0.2f;
-    armInitParam.RollPosPidParam.maxIntegral = 0.0f;
-    armInitParam.RollPosPidParam.maxOutput = 5000.0f;
-    // 初始化 RollSpdPidParam 的成员
-    armInitParam.RollSpdPidParam.kp = 1.5f;
-    armInitParam.RollSpdPidParam.ki = 0.5f;
-    armInitParam.RollSpdPidParam.kd = 0.0f;
-    armInitParam.RollSpdPidParam.maxIntegral = 6000.0f;
-    armInitParam.RollSpdPidParam.maxOutput = 8000.0f;
+    // 初始化 mitCtrl_Roll 的成员
+    armInitParam.MIT_Roll_kp = 20.0f;
+    armInitParam.MIT_Roll_kd = 1.0f;
     // 初始化 endPosPidParam 的成员
     armInitParam.endPosPidParam.kp = 0.2f;
     armInitParam.endPosPidParam.ki = 0.0f;

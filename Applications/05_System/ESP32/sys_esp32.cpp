@@ -47,16 +47,16 @@ void CSystemESP32::UpdateHandler_() {
 		BLEInfo.Pitch1 = pESP32_->armInfo.Pitch1;
 		BLEInfo.Pitch2 = pESP32_->armInfo.Pitch2;
 		BLEInfo.Roll = pESP32_->armInfo.Roll;
-		BLEInfo.End_L = pESP32_->armInfo.End_L;
-		BLEInfo.End_R = pESP32_->armInfo.End_R;
+		BLEInfo.End_Pitch = pESP32_->armInfo.End_Pitch;
+		BLEInfo.End_Roll = pESP32_->armInfo.End_Roll;
 	} else {
 		BLE_Mode_Open = false;
 		pESP32_->armInfo.Yaw = static_cast<int>(arm->armInfo.angle_Yaw);
 		pESP32_->armInfo.Pitch1 = static_cast<int>(arm->armInfo.angle_Pitch1);
 		pESP32_->armInfo.Pitch2 = static_cast<int>(arm->armInfo.angle_Pitch2);
 		pESP32_->armInfo.Roll = static_cast<int>(arm->armInfo.angle_Roll);
-		pESP32_->armInfo.End_L = static_cast<int>(arm->armInfo.angle_end_pitch);
-		pESP32_->armInfo.End_R = static_cast<int>(arm->armInfo.angle_end_roll);
+		pESP32_->armInfo.End_Pitch = static_cast<int>(arm->armInfo.angle_end_pitch);
+		pESP32_->armInfo.End_Roll = static_cast<int>(arm->armInfo.angle_end_roll);
 		pESP32_->SendPackage(CDevESP32::EPackageID::ID_Motor_Arm_Pkg);
 	}
 

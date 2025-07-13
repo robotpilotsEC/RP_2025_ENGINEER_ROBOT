@@ -118,6 +118,7 @@ void CSystemCore::UpdateHandler_() {
         }
     }
     
+    ControlFromEsp32_(); // ESP32控制
 
     if (use_Controller_ == true)
     {
