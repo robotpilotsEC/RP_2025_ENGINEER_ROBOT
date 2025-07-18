@@ -191,12 +191,12 @@ void CSystemCore::ControlFromKeyboard_() {
             pchassis_->chassisCmd.speed_Y =
             std::clamp(pchassis_->chassisCmd.speed_Y, -100.0f, 100.0f);
         } else {
-            pchassis_->chassisCmd.speed_X += static_cast<float_t>(keyboard.key_D - keyboard.key_A) * 0.8f;
-            pchassis_->chassisCmd.speed_Y += static_cast<float_t>(keyboard.key_W - keyboard.key_S) * 0.8f;
+            pchassis_->chassisCmd.speed_X += static_cast<float_t>(keyboard.key_D - keyboard.key_A) * 1.5f;
+            pchassis_->chassisCmd.speed_Y += static_cast<float_t>(keyboard.key_W - keyboard.key_S) * 1.5f;
             pchassis_->chassisCmd.speed_X =
-            std::clamp(pchassis_->chassisCmd.speed_X, -20.0f, 20.0f);
+            std::clamp(pchassis_->chassisCmd.speed_X, -30.0f, 30.0f);
             pchassis_->chassisCmd.speed_Y =
-            std::clamp(pchassis_->chassisCmd.speed_Y, -30.0f, 30.0f);
+            std::clamp(pchassis_->chassisCmd.speed_Y, -50.0f, 50.0f);
         }
     }
     
@@ -378,6 +378,9 @@ void CSystemCore::ControlFromController_() {
         parm_->armCmd.set_angle_Roll =
             LowPassFilter(parm_->armCmd.set_angle_Roll,
                 Round(-controller.angle_roll), 0.5f);
+        if (controller.angle_pitch1 < 50.0f && controller.angle_pitch2 < 50.0f) {
+            std::clamp(controller.angle_pitch_end, 0.0f, 40.0f);
+        }
         parm_->armCmd.set_angle_end_pitch =
             LowPassFilter(parm_->armCmd.set_angle_end_pitch,
                 Round(controller.angle_pitch_end), 0.5f);

@@ -103,7 +103,7 @@ void CSystemCore::StartPopOreTask(void *arg) {
 			core.psubgantry_->subGantryCmd.setStretchPosit_L = 0.0f;
 			proc_waitMs(500);
 
-			core.use_Controller_ = true;
+			// core.use_Controller_ = true;
 
 			goto proc_exit;
 		}
@@ -111,15 +111,15 @@ void CSystemCore::StartPopOreTask(void *arg) {
 		if (keyboard.mouse_R) {
 
 			/*step 1*/
-			core.psubgantry_->subGantryCmd.setStretchPosit_R = 117.0f;
-			core.psubgantry_->subGantryCmd.setLiftPosit_R = 0.0f;
+			core.psubgantry_->subGantryCmd.setStretchPosit_R = 0.0f;
+			core.psubgantry_->subGantryCmd.setLiftPosit_R = SUB_GANTRY_LIFT_PHYSICAL_RANGE_R;
 			proc_waitMs(250);
-			core.parm_->armCmd.set_angle_Yaw = 0.0f;
-			core.parm_->armCmd.set_angle_Pitch1 = 72.4f;
-			core.parm_->armCmd.set_angle_Pitch2 = 19.81f;
-			core.parm_->armCmd.set_angle_Roll = -90.0f;
-			core.parm_->armCmd.set_angle_end_pitch = -93.0f;
-			core.parm_->armCmd.set_angle_end_roll = -0.0f;
+			core.parm_->armCmd.set_angle_Yaw = 14.235f;
+			core.parm_->armCmd.set_angle_Pitch1 = 55.414f;
+			core.parm_->armCmd.set_angle_Pitch2 = 41.174f;
+			core.parm_->armCmd.set_angle_Roll = -85.052f;
+			core.parm_->armCmd.set_angle_end_pitch = -106.255f;
+			core.parm_->armCmd.set_angle_end_roll = -0.720f;
 			proc_waitMs(250);
 			core.psubgantry_->subGantryCmd.setPumpOn_Arm = false; // 关闭机械臂气泵
 			core.psubgantry_->subGantryCmd.setPumpOn_Right = true; // 启动右气泵
@@ -135,12 +135,7 @@ void CSystemCore::StartPopOreTask(void *arg) {
 			core.psubgantry_->subGantryCmd.setPumpOn_Right = true; // 启动右气泵
 			proc_waitMs(250);
 			
-			core.parm_->armCmd.set_angle_Yaw = 16.5f;
-			core.parm_->armCmd.set_angle_Pitch1 = 72.4f;
-			core.parm_->armCmd.set_angle_Pitch2 = 19.81f;
-			core.parm_->armCmd.set_angle_Roll = -90.0f;
-			core.parm_->armCmd.set_angle_end_pitch = -93.0f;
-			core.parm_->armCmd.set_angle_end_roll = 0.0f;
+			core.parm_->armCmd.set_angle_Yaw = -10.0f;
 			proc_waitMs(250);
 
 			/* Wait for User Confirmation */
@@ -161,21 +156,27 @@ void CSystemCore::StartPopOreTask(void *arg) {
 			core.psubgantry_->subGantryCmd.isAutoCtrl = true;
 			core.parm_->armCmd.isAutoCtrl = true;
 
-			core.psubgantry_->subGantryCmd.setPumpOn_Right = true;
+			core.psubgantry_->subGantryCmd.setPumpOn_Right = false; // 关闭右气泵
 			proc_waitMs(250);
 
-			core.parm_->armCmd.set_angle_Yaw = 0.0f;
-			core.parm_->armCmd.set_angle_Pitch1 = 30.2f;
-			core.parm_->armCmd.set_angle_Pitch2 = 22.0f;
+			core.parm_->armCmd.set_angle_Yaw = -0.585f;
+			proc_waitUntilWithTimeout(
+				core.parm_->armInfo.isAngleArrived_Yaw == true, 5000
+			);
+			core.parm_->armCmd.set_angle_Pitch1 += 10.0f;
+			core.parm_->armCmd.set_angle_Pitch2 += 10.0f;
+			proc_waitUntilWithTimeout(
+				(core.parm_->armInfo.isAngleArrived_Pitch1 == true &&
+				core.parm_->armInfo.isAngleArrived_Pitch2 == true), 5000
+			);
 			core.parm_->armCmd.set_angle_Roll = 0.0f;
-			core.parm_->armCmd.set_angle_end_pitch = -90.0f;
-			core.parm_->armCmd.set_angle_end_roll = 0.0f;
+			core.parm_->armCmd.set_angle_end_pitch = 0.0f;
 
 			proc_waitMs(250);
 			core.psubgantry_->subGantryCmd.setStretchPosit_R = 0.0f;
 			proc_waitMs(500);
 
-			core.use_Controller_ = true;
+			// core.use_Controller_ = true;
 
 			goto proc_exit;
 		}

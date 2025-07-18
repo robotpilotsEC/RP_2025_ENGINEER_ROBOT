@@ -79,7 +79,7 @@ EAppStatus InitAllInterface(){
     inf_esp32_initparam.rxDmaQueueNum = 2;
     inf_esp32_initparam.rxDmaBuffSize = 512;
     inf_esp32_initparam.useTxDma = true;
-    inf_esp32_initparam.txDmaQueueNum = 4;
+    inf_esp32_initparam.txDmaQueueNum = 20;
     inf_esp32_initparam.txDmaBuffSize = 512;
     inf_esp32.InitInterface(&inf_esp32_initparam);
 

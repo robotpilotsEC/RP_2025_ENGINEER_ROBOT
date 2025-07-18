@@ -45,12 +45,12 @@ void CSystemCore::StartReturnDriveTask(void *arg) {
 	core.psubgantry_->subGantryCmd.setLiftPosit_R = 0.0f;
 	
 	/*Set Arm*/
-	core.parm_->armCmd.set_angle_Yaw = 0.0f;
-	core.parm_->armCmd.set_angle_Pitch1 = 30.2f;
-	core.parm_->armCmd.set_angle_Pitch2 = 22.0f;
-	core.parm_->armCmd.set_angle_Roll = 0.0f;
-	core.parm_->armCmd.set_angle_end_pitch = -90.0f;
-	core.parm_->armCmd.set_angle_end_roll = 0.0f;
+	core.parm_->armCmd.set_angle_Yaw = -0.585f;
+	core.parm_->armCmd.set_angle_Pitch1 = 20.644f;
+	core.parm_->armCmd.set_angle_Pitch2 = 29.297f;
+	core.parm_->armCmd.set_angle_Roll = -2.178f;
+	core.parm_->armCmd.set_angle_end_pitch = -60.745f;
+	core.parm_->armCmd.set_angle_end_roll = -0.720f;
 
 	/*Set Gimbal*/
 	core.pgimbal_->gimbalCmd.set_posit_lift = GIMBAL_LIFT_PHYSICAL_RANGE;  ///< Pull up the gimbal

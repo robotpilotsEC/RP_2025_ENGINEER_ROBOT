@@ -36,12 +36,12 @@ void CSystemCore::StartSilverOreTask(void *arg) {
 
 	core.psubgantry_->subGantryCmd.setLiftPosit_L = SUB_GANTRY_LIFT_PHYSICAL_RANGE_L;
 	core.psubgantry_->subGantryCmd.setLiftPosit_R = SUB_GANTRY_LIFT_PHYSICAL_RANGE_R;
-	core.parm_->armCmd.set_angle_Yaw = 0.0f;
-	core.parm_->armCmd.set_angle_Pitch1 = 88.36f;
-	core.parm_->armCmd.set_angle_Pitch2 = 26.8f;
-	core.parm_->armCmd.set_angle_Roll = 0.0f;
-	core.parm_->armCmd.set_angle_end_pitch = -93.0f;
-	core.parm_->armCmd.set_angle_end_roll = 0.0f;
+	core.parm_->armCmd.set_angle_Yaw = 0.f;
+	core.parm_->armCmd.set_angle_Pitch1 = 78.556f;
+	core.parm_->armCmd.set_angle_Pitch2 = 47.594f;
+	core.parm_->armCmd.set_angle_Roll = -2.178f;
+	core.parm_->armCmd.set_angle_end_pitch = -69.355f;
+	core.parm_->armCmd.set_angle_end_roll = 0.000f;
 
 	core.psubgantry_->subGantryCmd.setPumpOn_Arm = true; ///< Set the arm pump on
 
@@ -64,12 +64,12 @@ void CSystemCore::StartSilverOreTask(void *arg) {
 	core.psubgantry_->subGantryCmd.isAutoCtrl = true;
 	core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 	
-	core.parm_->armCmd.set_angle_Yaw = 0.0f;
-	core.parm_->armCmd.set_angle_Pitch1 = 96.0f;
-	core.parm_->armCmd.set_angle_Pitch2 = 18.799f;
-	core.parm_->armCmd.set_angle_Roll = 0.0f;
-	core.parm_->armCmd.set_angle_end_pitch = -93.0f;
-	core.parm_->armCmd.set_angle_end_roll = 0.0f;
+	core.parm_->armCmd.set_angle_Yaw = 0.f;
+	core.parm_->armCmd.set_angle_Pitch1 = 85.396f;
+	core.parm_->armCmd.set_angle_Pitch2 = 44.170f;
+	core.parm_->armCmd.set_angle_Roll = -2.178f;
+	core.parm_->armCmd.set_angle_end_pitch = -53.570f;
+	core.parm_->armCmd.set_angle_end_roll = 0.000f;
 	proc_waitMs(250);
 	
 	// /* Wait for User Confirmation */
@@ -93,13 +93,18 @@ void CSystemCore::StartSilverOreTask(void *arg) {
 
 	do {
 		proc_waitMs(1);
-		if(core.parm_->armInfo.angle_Pitch1 >= 67.0f)
+		if(core.parm_->armInfo.angle_Pitch1 >= 59.f)
 			core.parm_->armCmd.set_angle_Pitch1 -= 30.0f / core.freq;
-		if(core.parm_->armInfo.angle_Pitch2 <= 47.2f)
-			core.parm_->armCmd.set_angle_Pitch2 += 24.0f / core.freq;
-	} while (core.parm_->armCmd.set_angle_Pitch1 >= 67.0f && core.parm_->armCmd.set_angle_Pitch2 <= 47.2f);
-	core.parm_->armCmd.set_angle_Pitch1 = 67.0f;
-	core.parm_->armCmd.set_angle_Pitch2 = 47.2f;
+		if(core.parm_->armInfo.angle_Pitch2 <= 58.298f)
+			core.parm_->armCmd.set_angle_Pitch2 += 12.0f / core.freq;
+		if(core.parm_->armInfo.angle_end_pitch >= -93.75f)
+			core.parm_->armCmd.set_angle_end_pitch -= 30.0f / core.freq;
+	} while (core.parm_->armCmd.set_angle_Pitch1 >= 59.f 
+		&& core.parm_->armCmd.set_angle_Pitch2 <= 58.298f
+		&& core.parm_->armCmd.set_angle_end_pitch >= -93.75f);
+	core.parm_->armCmd.set_angle_Pitch1 = 59.f;
+	core.parm_->armCmd.set_angle_Pitch2 = 58.298f;
+	core.parm_->armCmd.set_angle_end_pitch = -98.750f;
 	// /* Wait for User Confirmation */
 	// cnt = timeout;
 	// core.parm_->armCmd.isAutoCtrl = false;  

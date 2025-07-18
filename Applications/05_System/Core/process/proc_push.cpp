@@ -33,7 +33,7 @@ void CSystemCore::StartPushOreTask(void *arg) {
 
 			/*step 1*/
 			core.psubgantry_->subGantryCmd.setStretchPosit_L = 50.0f;
-			core.psubgantry_->subGantryCmd.setLiftPosit_L = 0.0f;
+			core.psubgantry_->subGantryCmd.setLiftPosit_L = SUB_GANTRY_LIFT_PHYSICAL_RANGE_L;
 			proc_waitMs(250);
 
 			/*Set Arm*/
@@ -55,6 +55,8 @@ void CSystemCore::StartPushOreTask(void *arg) {
 				core.parm_->armCmd.set_angle_Pitch2 = 30.1f;
 				core.parm_->armCmd.set_angle_end_pitch = -98.0f;
 				core.parm_->armCmd.set_angle_end_roll = 0.0f;
+
+				
 			}
 
 			proc_waitMs(250);
@@ -117,47 +119,41 @@ void CSystemCore::StartPushOreTask(void *arg) {
 
 			/*step 1*/
 			core.psubgantry_->subGantryCmd.setStretchPosit_R = 0.0f;
-			core.psubgantry_->subGantryCmd.setLiftPosit_R = 0.0f;
+			core.psubgantry_->subGantryCmd.setLiftPosit_R = SUB_GANTRY_LIFT_PHYSICAL_RANGE_R;
 			proc_waitMs(250);
 
 			/*Set Arm*/
 			if(core.parm_->armInfo.angle_Pitch1 <= 20.0f && core.parm_->armInfo.angle_Pitch2 <= 10.0f) {
-				core.parm_->armCmd.set_angle_Yaw   = 0.0f;
-				core.parm_->armCmd.set_angle_Pitch1 = 67.0f;
-				core.parm_->armCmd.set_angle_Pitch2 = 20.7f;
-				core.parm_->armCmd.set_angle_Roll  = -90.0f;
-				core.parm_->armCmd.set_angle_end_pitch = -100.0f;
-				core.parm_->armCmd.set_angle_end_roll  = 0.0f;
+				core.parm_->armCmd.set_angle_Pitch1 = 59.062f;
+				core.parm_->armCmd.set_angle_Pitch2 = 55.524f;
+				proc_waitUntilWithTimeout(
+					core.parm_->armInfo.isAngleArrived_Pitch1 == true &&
+					core.parm_->armInfo.isAngleArrived_Pitch2 == true, 5000
+				);
 			}
-			else{
-				core.parm_->armCmd.set_angle_end_roll = -90.0f;
-				proc_waitUntil(core.parm_->armInfo.angle_end_roll <= -45.0f);
-				core.parm_->armCmd.set_angle_Yaw   = 0.0f;
-				core.parm_->armCmd.set_angle_Pitch1 = 67.0f;
-				core.parm_->armCmd.set_angle_Pitch2 = 20.7f;
-				core.parm_->armCmd.set_angle_end_pitch = -100.0f;
-				core.parm_->armCmd.set_angle_end_roll  = 0.0f;
-			}
-			proc_waitMs(250);
-			core.psubgantry_->subGantryCmd.setPumpOn_Arm = true; // 启动机械臂气泵
-			core.psubgantry_->subGantryCmd.setPumpOn_Right = false; // 关闭右气泵
 
-			/* Step 2 */
+			do {
+				core.parm_->armCmd.set_angle_Roll -= 120.0f / core.freq;
+				proc_waitMs(1);
+			} while (core.parm_->armCmd.set_angle_Roll > -90.824f);
+			core.parm_->armCmd.set_angle_Pitch1 = 59.062f;
+			core.parm_->armCmd.set_angle_Pitch2 = 46.524f;
+			core.parm_->armCmd.set_angle_Yaw = 0.0f;
+			core.parm_->armCmd.set_angle_end_pitch = -110.970f;
+			core.parm_->armCmd.set_angle_end_roll = -17.280f;
+
 			proc_waitUntilWithTimeout(
 				core.parm_->armInfo.isAngleArrived_Pitch1 == true &&
 				core.parm_->armInfo.isAngleArrived_Pitch2 == true, 5000
 			);
-			core.psubgantry_->subGantryCmd.isAutoCtrl = true;
-			core.parm_->armCmd.isAutoCtrl = true;
-			core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 
 			core.psubgantry_->subGantryCmd.setPumpOn_Arm = true; // 启动机械臂气泵
 			core.psubgantry_->subGantryCmd.setPumpOn_Right = true; // 启动右气泵
 			proc_waitMs(250);
 
-			core.parm_->armCmd.set_angle_Yaw = 11.2f;
+			core.parm_->armCmd.set_angle_Yaw = -6.2f;
 			proc_waitMs(250);
-			core.psubgantry_->subGantryCmd.setStretchPosit_R = 118.36f;
+			core.psubgantry_->subGantryCmd.setStretchPosit_R = 70.00f;
 
 			/* Wait for User Confirmation */
 			cnt = timeout;
@@ -182,15 +178,16 @@ void CSystemCore::StartPushOreTask(void *arg) {
 			proc_waitMs(500);
 
 			/*Set Arm*/
-			core.parm_->armCmd.set_angle_Yaw = 0.0f;
-			proc_waitUntil(core.parm_->armInfo.isAngleArrived_Yaw == true);
-			core.parm_->armCmd.set_angle_Pitch1 = 30.2f;
-			core.parm_->armCmd.set_angle_Pitch2 = 22.0f;
-			core.parm_->armCmd.set_angle_Roll = 0.0f;
-			core.parm_->armCmd.set_angle_end_pitch = -90.0f;
-			core.parm_->armCmd.set_angle_end_roll = 0.0f;
+			core.parm_->armCmd.set_angle_Yaw = 10.f;
 			proc_waitMs(250);
+			core.parm_->armCmd.set_angle_Pitch1 = 50.0f;
+			core.parm_->armCmd.set_angle_Pitch2 = 40.0f;
+			core.parm_->armCmd.set_angle_Roll = -2.178f;
+			core.parm_->armCmd.set_angle_end_pitch = -69.355f;
+			core.parm_->armCmd.set_angle_end_roll = 0.000f;
 			core.psubgantry_->subGantryCmd.setStretchPosit_R = 0.0f;
+			proc_waitMs(250);
+			core.parm_->armCmd.set_angle_Yaw = 0.0f;
 
 			goto proc_exit;
 		}

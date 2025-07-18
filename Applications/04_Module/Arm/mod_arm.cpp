@@ -154,7 +154,7 @@ EAppStatus CModArm::RestrictArmCommand_() {
 	if(armCmd.isCustomCtrl)
 	armCmd.set_angle_Pitch1 =
 		std::clamp(armCmd.set_angle_Pitch1,
-				   18.0, ARM_PITCH1_PHYSICAL_RANGE_MAX);
+				   18.0f, ARM_PITCH1_PHYSICAL_RANGE_MAX);
 
 	// 自动控制启用，则不继续做限制
 	if (armCmd.isAutoCtrl) return APP_OK;

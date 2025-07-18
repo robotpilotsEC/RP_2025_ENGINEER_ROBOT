@@ -42,11 +42,12 @@ void CSystemCore::StartDogHoleTask(void *arg) {
 	
 	/*Set Arm*/
 	core.parm_->armCmd.set_angle_Yaw = 0.0f;
-	core.parm_->armCmd.set_angle_Pitch1 = 0.0f;
-	core.parm_->armCmd.set_angle_Pitch2 = 4.0f;
-	core.parm_->armCmd.set_angle_Roll = 0.0f;
-	core.parm_->armCmd.set_angle_end_pitch = -70.0f;
-	core.parm_->armCmd.set_angle_end_roll = 0.0f;
+	core.parm_->armCmd.set_angle_Pitch1 = 4.000f;
+	core.parm_->armCmd.set_angle_Pitch2 = 11.000f;
+	core.parm_->armCmd.set_angle_Roll = -2.527f;
+	core.parm_->armCmd.set_angle_end_pitch = -60.270f;
+	core.parm_->armCmd.set_angle_end_roll = 0.000f;
+
 
 	/*Set Gimbal*/
 	core.pgimbal_->gimbalCmd.set_posit_lift = 0.0f;  ///< Pull down the gimbal

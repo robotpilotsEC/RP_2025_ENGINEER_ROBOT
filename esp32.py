@@ -3,7 +3,7 @@ import serial
 import serial.tools.list_ports
 from PyQt5.QtWidgets import (
     QApplication, QWidget, QVBoxLayout, QHBoxLayout, QLabel, QPushButton,
-    QComboBox, QFrame, QSlider, QTextEdit, QGridLayout, QLineEdit
+    QComboBox, QFrame, QSlider, QTextEdit, QGridLayout, QLineEdit, QCheckBox
 )
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QColor, QPainter, QBrush, QFont
@@ -59,7 +59,7 @@ class BluetoothControlPanel(QWidget):
 			"Pitch2": {"min": 11.0, "max": 118.0, "init": 18.0},
 			"Roll": {"min": -169, "max": 180, "init": 0},
 			"End_Pitch": {"min": -145.0, "max": 60, "init": 0},
-			"End_Roll": {"min": 0, "max": 360, "init": 180}
+			"End_Roll": {"min": -360, "max": 360, "init": 0}
 		}
 
 		main_layout = QVBoxLayout()
@@ -164,6 +164,11 @@ class BluetoothControlPanel(QWidget):
 		self.slider_mode_btn.clicked.connect(self.toggle_slider_mode)
 		main_layout.addWidget(self.slider_mode_btn, alignment=Qt.AlignCenter)
 
+		# 添加打印选项按钮
+		self.print_checkbox = QCheckBox("启用终端打印")
+		self.print_checkbox.setChecked(False)  # 默认不打印
+		main_layout.addWidget(self.print_checkbox, alignment=Qt.AlignCenter)
+
 		# 串口手动发送
 		send_layout = QHBoxLayout()
 		self.send_input = QLineEdit()
@@ -227,14 +232,22 @@ class BluetoothControlPanel(QWidget):
 				slider_name = self.slider_names[i]
 				cfg = self.slider_configs[slider_name]
 				val = cfg["min"] + (self.sliders[i].value() / 1000.0) * (cfg["max"] - cfg["min"])
-				val_int = int(val * 1000)  # 乘以1000后转为整数
-				values.append(f"{slider_name} = {val_int}")  # 发送整数值
+				val_int = int(val * 1000)
+				values.append(f"{slider_name} = {val_int}")
 			msg = f"slider open. {', '.join(values)}\n"
 			self.serial.write(msg.encode())
-		
-		if not self.slider_mode_open:
+		elif not self.slider_mode_open:
 			msg = "slider close.\n"
 			self.serial.write(msg.encode())
+
+		# ✅ 仅当勾选打印复选框时才输出终端信息
+		if self.print_checkbox.isChecked():
+			for i, slider_name in enumerate(self.slider_names):
+				cfg = self.slider_configs[slider_name]
+				val = cfg["min"] + (self.sliders[i].value() / 1000.0) * (cfg["max"] - cfg["min"])
+				print(f"core.parm_->armCmd.set_angle_{slider_name} = {val:.3f}f;")
+			print("-" * 50)
+
 
 	def send_data(self):
 		msg = self.send_input.text().strip()

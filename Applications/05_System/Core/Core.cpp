@@ -87,6 +87,42 @@ void CSystemCore::UpdateHandler_() {
     static uint8_t zx_count = 0;
     static bool zx_flag = false;
 
+    static uint8_t print_cnt = 0;
+    if (print_cnt-- == 0) {
+        print_cnt = 200;
+        Print("------------------------------\n");
+        Print("Arm_Yaw_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(parm_->armCmd.set_angle_Yaw), static_cast<int>(parm_->armInfo.angle_Yaw),
+              static_cast<int>(parm_->armInfo.angle_Yaw - parm_->armCmd.set_angle_Yaw));
+        Print("Arm_Pitch1_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(parm_->armCmd.set_angle_Pitch1), static_cast<int>(parm_->armInfo.angle_Pitch1),
+              static_cast<int>(parm_->armInfo.angle_Pitch1 - parm_->armCmd.set_angle_Pitch1));
+        Print("Arm_Pitch2_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(parm_->armCmd.set_angle_Pitch2), static_cast<int>(parm_->armInfo.angle_Pitch2),
+              static_cast<int>(parm_->armInfo.angle_Pitch2 - parm_->armCmd.set_angle_Pitch2));
+        Print("Arm_Roll_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(parm_->armCmd.set_angle_Roll), static_cast<int>(parm_->armInfo.angle_Roll),
+              static_cast<int>(parm_->armInfo.angle_Roll - parm_->armCmd.set_angle_Roll));
+        Print("Arm_EndPitch_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(parm_->armCmd.set_angle_end_pitch), static_cast<int>(parm_->armInfo.angle_end_pitch),
+              static_cast<int>(parm_->armInfo.angle_end_pitch - parm_->armCmd.set_angle_end_pitch));
+        Print("Arm_EndRoll_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(parm_->armCmd.set_angle_end_roll), static_cast<int>(parm_->armInfo.angle_end_roll),
+              static_cast<int>(parm_->armInfo.angle_end_roll - parm_->armCmd.set_angle_end_roll));
+        Print("Subgantry_Stretch_L_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(psubgantry_->subGantryCmd.setStretchPosit_L), static_cast<int>(psubgantry_->subGantryInfo.stretchPosit_L),
+              static_cast<int>(psubgantry_->subGantryInfo.stretchPosit_L - psubgantry_->subGantryCmd.setStretchPosit_L));
+        Print("Subgantry_Stretch_R_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(psubgantry_->subGantryCmd.setStretchPosit_R), static_cast<int>(psubgantry_->subGantryInfo.stretchPosit_R),
+              static_cast<int>(psubgantry_->subGantryInfo.stretchPosit_R - psubgantry_->subGantryCmd.setStretchPosit_R));
+        Print("Subgantry_Lift_L_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(psubgantry_->subGantryCmd.setLiftPosit_L), static_cast<int>(psubgantry_->subGantryInfo.liftPosit_L),
+              static_cast<int>(psubgantry_->subGantryInfo.liftPosit_L - psubgantry_->subGantryCmd.setLiftPosit_L));
+        Print("Subgantry_Lift_R_Cmd: %d, Info: %d, Err: %d\n",
+              static_cast<int>(psubgantry_->subGantryCmd.setLiftPosit_R), static_cast<int>(psubgantry_->subGantryInfo.liftPosit_R),
+              static_cast<int>(psubgantry_->subGantryInfo.liftPosit_R - psubgantry_->subGantryCmd.setLiftPosit_R));
+    }
+
     bool zx = SysRemote.remoteInfo.keyboard.key_Z && SysRemote.remoteInfo.keyboard.key_X;
     if (SysRemote.remoteInfo.keyboard.key_Z && SysRemote.remoteInfo.keyboard.key_X) {
         zx_count++;
