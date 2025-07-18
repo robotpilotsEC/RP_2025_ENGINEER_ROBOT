@@ -52,8 +52,13 @@ EAppStatus CModArm::CComRoll::UpdateComponent() {
 	CDevMtrDM_MIT *pMtr = static_cast<CDevMtrDM_MIT *>(motor);
 
 	// 更新组件信息
-	rollInfo.angle = rad2deg(pMtr->motorPhyAngle) * ARM_ROLL_MOTOR_DIR;
-	rollInfo.isAngleArrived = (fabs(rollInfo.angle - rollCmd.setAngle) < 0.2f);
+	rollInfo.angle = rad2deg(pMtr->motorPhyAngle);
+	rollInfo.isAngleArrived = (fabs(rollInfo.angle - rollCmd.setAngle) < 1.0f);
+
+	uint8_t test1 = 0;
+	if(test1 == 1) {
+		pMtr->SetZero();
+	}
 
 	// 缓慢移动控制逻辑
 	static float_t next_angle = 0.0f;
@@ -73,7 +78,7 @@ EAppStatus CModArm::CComRoll::UpdateComponent() {
 		}
 
 		case FSM_PREINIT: {
-			rollCmd.setAngle = deg2rad(ARM_ROLL_INIT_ANGLE);
+			rollCmd.setAngle = ARM_ROLL_INIT_ANGLE;
 			Component_FSMFlag_ = FSM_INIT;
 			return APP_OK;
 		}
@@ -83,12 +88,12 @@ EAppStatus CModArm::CComRoll::UpdateComponent() {
 				Component_FSMFlag_ = FSM_CTRL;
 				componentStatus = APP_OK;
 			}
-			pMtr->Control_MIT(5.0f, mitCtrl.kd, deg2rad(next_angle) * ARM_ROLL_MOTOR_DIR, 0.0f, 0.0f);
+			pMtr->Control_MIT(mitCtrl.kp, mitCtrl.kd, deg2rad(rollCmd.setAngle), 0.0f, 0.0f);
 			return APP_OK;
 		}
 
 		case FSM_CTRL: {
-			pMtr->Control_MIT(mitCtrl.kp, mitCtrl.kd, deg2rad(next_angle) * ARM_ROLL_MOTOR_DIR, 0.0f, 0.0f);
+			pMtr->Control_MIT(mitCtrl.kp, mitCtrl.kd, deg2rad(rollCmd.setAngle), 0.0f, 0.0f);
 			return APP_OK;
 		}
 

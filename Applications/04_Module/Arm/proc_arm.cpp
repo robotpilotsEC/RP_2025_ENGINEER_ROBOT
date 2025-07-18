@@ -36,9 +36,7 @@ void CModArm::StartArmModuleTask(void *argument) {
 			case FSM_RESET: {
 
 				arm.armInfo.isModuleAvailable = false;
-				arm.comYaw_.StopComponent();
-				arm.comPitch1_.StopComponent();
-				arm.comPitch2_.StopComponent();
+				arm.comjoint_.StopComponent();
 				arm.comRoll_.StopComponent();
 				arm.comEnd_.StopComponent();
 
@@ -50,17 +48,14 @@ void CModArm::StartArmModuleTask(void *argument) {
 
 				proc_waitMs(250); // 等待系统稳定
 				
-				arm.comYaw_.StartComponent();
-				proc_waitUntil(arm.comYaw_.componentStatus == APP_OK);
+				arm.comjoint_.StartComponent();
+				proc_waitUntil(arm.comjoint_.componentStatus == APP_OK);
+				
 				
 
 				arm.comEnd_.StartComponent();
-				arm.comPitch1_.StartComponent();
-				arm.comPitch2_.StartComponent();
 				arm.comRoll_.StartComponent();
 				proc_waitUntil(arm.comEnd_.componentStatus == APP_OK &&
-							   arm.comPitch1_.componentStatus == APP_OK &&
-							   arm.comPitch2_.componentStatus == APP_OK &&
 							   arm.comRoll_.componentStatus == APP_OK);
 
 				arm.armCmd = SArmCmd();
@@ -80,12 +75,12 @@ void CModArm::StartArmModuleTask(void *argument) {
 
 				arm.RestrictArmCommand_();
 
-				arm.comYaw_.yawCmd.setPosit = 
-					CComYaw::PhyPositToMtrPosit(arm.armCmd.set_angle_Yaw);
-				arm.comPitch1_.pitch1Cmd.setPosit =
-					CComPitch1::PhyPositToMtrPosit(arm.armCmd.set_angle_Pitch1);
-				arm.comPitch2_.pitch2Cmd.setPosit =
-					CComPitch2::PhyPositToMtrPosit(arm.armCmd.set_angle_Pitch2);
+				arm.comjoint_.jointCmd.setPosit_yaw = 
+					CComJoint::PhyPositToMtrPosit_yaw(arm.armCmd.set_angle_Yaw);
+				arm.comjoint_.jointCmd.setPosit_pitch1 =
+					CComJoint::PhyPositToMtrPosit_pitch1(arm.armCmd.set_angle_Pitch1);
+				arm.comjoint_.jointCmd.setPosit_pitch2 =
+					CComJoint::PhyPositToMtrPosit_pitch2(arm.armCmd.set_angle_Pitch2);
 				arm.comRoll_.rollCmd.setAngle =
 					CComRoll::PhyAngleToMtrAngle(arm.armCmd.set_angle_Roll);
 				arm.comEnd_.endCmd.setPosit_Pitch =

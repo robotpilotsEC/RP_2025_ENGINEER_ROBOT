@@ -86,13 +86,14 @@ void CSystemControllerLink::UpdateControllerLinkInfo_() {
 	// 更新控制器信息
 	controllerInfo.controller_OK = pcontrollerLink_->controllerData_info_pkg.controller_OK;
 	controllerInfo.return_success = pcontrollerLink_->controllerData_info_pkg.return_success;
-	controllerInfo.Rocker_X = pcontrollerLink_->controllerData_info_pkg.rocker_X;
-	controllerInfo.Rocker_Y = pcontrollerLink_->controllerData_info_pkg.rocker_Y;
-	controllerInfo.Rocker_Key = static_cast<KEY_STATUS>(pcontrollerLink_->controllerData_info_pkg.rocker_Key);
-	controllerInfo.posit_stretch = pcontrollerLink_->controllerData_info_pkg.posit_stretch;
-	controllerInfo.posit_traverse = pcontrollerLink_->controllerData_info_pkg.posit_traverse;
-	controllerInfo.angle_yaw = pcontrollerLink_->controllerData_info_pkg.angle_yaw;
-	controllerInfo.speed_roll = pcontrollerLink_->controllerData_info_pkg.speed_roll;
+	// controllerInfo.Rocker_X = pcontrollerLink_->controllerData_info_pkg.rocker_X;
+	// controllerInfo.Rocker_Y = pcontrollerLink_->controllerData_info_pkg.rocker_Y;
+	// controllerInfo.Rocker_Key = static_cast<KEY_STATUS>(pcontrollerLink_->controllerData_info_pkg.rocker_Key);
+	controllerInfo.angle_yaw 				= pcontrollerLink_->controllerData_info_pkg.angle_yaw;
+	controllerInfo.angle_pitch1	 		= pcontrollerLink_->controllerData_info_pkg.angle_pitch1;
+	controllerInfo.angle_pitch2 		= pcontrollerLink_->controllerData_info_pkg.angle_pitch2;
+	controllerInfo.angle_roll 			= pcontrollerLink_->controllerData_info_pkg.angle_roll;
+	controllerInfo.angle_pitch_end = pcontrollerLink_->controllerData_info_pkg.angle_pitch_end;
 }
 
 /**
@@ -106,12 +107,11 @@ void CSystemControllerLink::UpdateRobotInfo_() {
 	robotInfo.ask_reset_flag = pcontrollerLink_->robotData_info_pkg.ask_reset_flag;
 	robotInfo.controlled_by_controller = pcontrollerLink_->robotData_info_pkg.controlled_by_controller;
 	robotInfo.ask_return_flag = pcontrollerLink_->robotData_info_pkg.ask_return_flag;
-	robotInfo.posit_traverse = pcontrollerLink_->robotData_info_pkg.posit_traverse;
-	robotInfo.posit_stretch = pcontrollerLink_->robotData_info_pkg.posit_stretch;
-	robotInfo.posit_lift = pcontrollerLink_->robotData_info_pkg.posit_lift;
 	robotInfo.angle_yaw = pcontrollerLink_->robotData_info_pkg.angle_yaw;
+	robotInfo.angle_pitch1 = pcontrollerLink_->robotData_info_pkg.angle_pitch1;
+	robotInfo.angle_pitch2 = pcontrollerLink_->robotData_info_pkg.angle_pitch2;
 	robotInfo.angle_roll = pcontrollerLink_->robotData_info_pkg.angle_roll;
-	robotInfo.angle_pitch = pcontrollerLink_->robotData_info_pkg.angle_pitch;
+	robotInfo.angle_pitch_end = pcontrollerLink_->robotData_info_pkg.angle_pitch_end;
 
 }
 
@@ -125,12 +125,11 @@ void CSystemControllerLink::UpdateRobotDataPkg_() {
 	pcontrollerLink_->robotData_info_pkg.ask_reset_flag = robotInfo.ask_reset_flag;
 	pcontrollerLink_->robotData_info_pkg.controlled_by_controller = robotInfo.controlled_by_controller;
 	pcontrollerLink_->robotData_info_pkg.ask_return_flag = robotInfo.ask_return_flag;
-	pcontrollerLink_->robotData_info_pkg.posit_traverse = robotInfo.posit_traverse;
-	pcontrollerLink_->robotData_info_pkg.posit_stretch = robotInfo.posit_stretch;
-	pcontrollerLink_->robotData_info_pkg.posit_lift = robotInfo.posit_lift;
-	pcontrollerLink_->robotData_info_pkg.angle_yaw = robotInfo.angle_yaw;
+	pcontrollerLink_->robotData_info_pkg.angle_yaw= robotInfo.angle_yaw;
+	pcontrollerLink_->robotData_info_pkg.angle_pitch1 = robotInfo.angle_pitch1;
+	pcontrollerLink_->robotData_info_pkg.angle_pitch2 = robotInfo.angle_pitch2;
 	pcontrollerLink_->robotData_info_pkg.angle_roll = robotInfo.angle_roll;
-	pcontrollerLink_->robotData_info_pkg.angle_pitch = robotInfo.angle_pitch;
+	pcontrollerLink_->robotData_info_pkg.angle_pitch_end = robotInfo.angle_pitch_end;
 }
 
 /**
@@ -142,13 +141,14 @@ void CSystemControllerLink::UpdateControllerDataPkg_() {
 	// 更新发送包的信息
 	pcontrollerLink_->controllerData_info_pkg.controller_OK = controllerInfo.controller_OK;
 	pcontrollerLink_->controllerData_info_pkg.return_success = controllerInfo.return_success;
-	pcontrollerLink_->controllerData_info_pkg.rocker_X = controllerInfo.Rocker_X;
-	pcontrollerLink_->controllerData_info_pkg.rocker_Y = controllerInfo.Rocker_Y;
-	pcontrollerLink_->controllerData_info_pkg.rocker_Key = static_cast<uint8_t>(controllerInfo.Rocker_Key);
-	pcontrollerLink_->controllerData_info_pkg.posit_stretch = controllerInfo.posit_stretch;
-	pcontrollerLink_->controllerData_info_pkg.posit_traverse = controllerInfo.posit_traverse;
+	// pcontrollerLink_->controllerData_info_pkg.rocker_X = controllerInfo.Rocker_X;
+	// pcontrollerLink_->controllerData_info_pkg.rocker_Y = controllerInfo.Rocker_Y;
+	// pcontrollerLink_->controllerData_info_pkg.rocker_Key = static_cast<uint8_t>(controllerInfo.Rocker_Key);
 	pcontrollerLink_->controllerData_info_pkg.angle_yaw = controllerInfo.angle_yaw;
-	pcontrollerLink_->controllerData_info_pkg.speed_roll = controllerInfo.speed_roll;
+	pcontrollerLink_->controllerData_info_pkg.angle_pitch1 = controllerInfo.angle_pitch1;
+	pcontrollerLink_->controllerData_info_pkg.angle_pitch2 = controllerInfo.angle_pitch2;
+	pcontrollerLink_->controllerData_info_pkg.angle_roll = controllerInfo.angle_roll;
+	pcontrollerLink_->controllerData_info_pkg.angle_pitch_end = controllerInfo.angle_pitch_end;
 }
 
 /**
@@ -160,3 +160,4 @@ void CSystemControllerLink::HeartbeatHandler_() {
 }
 
 } // namespace my_engineer
+

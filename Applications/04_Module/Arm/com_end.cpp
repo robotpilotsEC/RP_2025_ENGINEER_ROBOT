@@ -52,12 +52,9 @@ EAppStatus CModArm::CComEnd::InitComponent(SModInitParam_Base &param) {
 EAppStatus CModArm::CComEnd::UpdateComponent() {
 	if (componentStatus == APP_RESET) return APP_ERROR;
 
-	endInfo.posit_Pitch = 
-		(motor[L]->motorData[CDevMtr::DATA_POSIT] * ARM_END_PITCH_MOTOR_L_DIR +
-		motor[R]->motorData[CDevMtr::DATA_POSIT] * ARM_END_PITCH_MOTOR_R_DIR) / 2;
-	endInfo.posit_Roll = 
-		(motor[L]->motorData[CDevMtr::DATA_POSIT] * ARM_END_ROLL_MOTOR_L_DIR +
-		motor[R]->motorData[CDevMtr::DATA_POSIT] * ARM_END_ROLL_MOTOR_R_DIR) / 2;
+	endInfo.posit_Roll 	=  (motor[L]->motorData[CDevMtr::DATA_POSIT] + motor[R]->motorData[CDevMtr::DATA_POSIT]) / 2;
+	endInfo.posit_Pitch = ((motor[R]->motorData[CDevMtr::DATA_POSIT] - endInfo.posit_Roll) - (motor[L]->motorData[CDevMtr::DATA_POSIT] - endInfo.posit_Roll))/2.0;
+
 	endInfo.isPositArrived_Pitch = (abs(endCmd.setPosit_Pitch - endInfo.posit_Pitch) < 8192 * 2);
 	endInfo.isPositArrived_Roll = (abs(endCmd.setPosit_Roll - endInfo.posit_Roll) < 8192 * 2);
 
@@ -83,9 +80,8 @@ EAppStatus CModArm::CComEnd::UpdateComponent() {
 
 		case FSM_INIT: {
 			if (motor[L]->motorStatus == CDevMtr::EMotorStatus::STALL || motor[R]->motorStatus == CDevMtr::EMotorStatus::STALL) {
-				endCmd.setPosit_Pitch = ARM_END_PITCH_MOTOR_OFFSET;
-				motor[L]->motorData[CDevMtr::DATA_POSIT] = (static_cast<int32_t>(0.5 * 8192) + rangeLimit_Pitch) * ARM_END_PITCH_MOTOR_L_DIR;
-				motor[R]->motorData[CDevMtr::DATA_POSIT] = (static_cast<int32_t>(0.5 * 8192) + rangeLimit_Pitch) * ARM_END_PITCH_MOTOR_R_DIR;
+				motor[L]->motorData[CDevMtr::DATA_POSIT] = -(static_cast<int32_t>(0.5 * 8192) + rangeLimit_Pitch);
+				motor[R]->motorData[CDevMtr::DATA_POSIT] = (static_cast<int32_t>(0.5 * 8192) + rangeLimit_Pitch);
 				pidPosCtrl.ResetPidController();
 				pidSpdCtrl.ResetPidController();
 				componentStatus = APP_OK;
@@ -98,7 +94,7 @@ EAppStatus CModArm::CComEnd::UpdateComponent() {
 		}
 
 		case FSM_CTRL: {
-			endCmd.setPosit_Pitch = std::clamp(endCmd.setPosit_Pitch, static_cast<int32_t>(0), rangeLimit_Pitch);
+			// endCmd.setPosit_Pitch = std::clamp(endCmd.setPosit_Pitch, static_cast<int32_t>(0), rangeLimit_Pitch);
 			return _UpdateOutput(static_cast<float_t>(endCmd.setPosit_Pitch), 
 								static_cast<float_t>(endCmd.setPosit_Roll));
 		}
@@ -124,7 +120,7 @@ EAppStatus CModArm::CComEnd::UpdateComponent() {
  */
 int32_t CModArm::CComEnd::PhyPositToMtrPosit_Pitch(float_t phyPosit) {
 	const int32_t zeroOffset = ARM_END_PITCH_MOTOR_OFFSET;
-	const float_t scale = ARM_END_PITCH_MOTOR_RATIO;
+	const float_t scale = 1590.2117f;
 
 	return (static_cast<int32_t>(phyPosit * scale) + zeroOffset);
 }
@@ -144,7 +140,7 @@ int32_t CModArm::CComEnd::PhyPositToMtrPosit_Roll(float_t phyPosit) {
  */
 float_t CModArm::CComEnd::MtrPositToPhyPosit_Pitch(int32_t mtrPosit) {
 	const int32_t zeroOffset = ARM_END_PITCH_MOTOR_OFFSET;
-	const float_t scale = ARM_END_PITCH_MOTOR_RATIO;
+	const float_t scale = 1590.2117f;
 
 	return (static_cast<float_t>(mtrPosit - zeroOffset) / scale);
 }
@@ -165,8 +161,8 @@ float_t CModArm::CComEnd::MtrPositToPhyPosit_Roll(int32_t mtrPosit) {
  */
 EAppStatus CModArm::CComEnd::_UpdateOutput(float_t posit_Pitch, float_t posit_Roll) {
 	DataBuffer<float_t> endPos = {
-		static_cast<float_t>(posit_Pitch * ARM_END_PITCH_MOTOR_L_DIR + posit_Roll * ARM_END_ROLL_MOTOR_L_DIR),
-		static_cast<float_t>(posit_Pitch * ARM_END_PITCH_MOTOR_R_DIR + posit_Roll * ARM_END_ROLL_MOTOR_R_DIR)
+    posit_Roll - posit_Pitch,
+    posit_Roll + posit_Pitch,
 	};
 
 	DataBuffer<float_t> endPosMeasure = {

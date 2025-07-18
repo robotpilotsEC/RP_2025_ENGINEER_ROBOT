@@ -39,10 +39,12 @@ public:
 		int8_t Rocker_X = 0;
 		int8_t Rocker_Y = 0;
 		KEY_STATUS Rocker_Key = KEY_STATUS::RELEASE;
-		float_t posit_stretch = 0.f;
-		float_t posit_traverse = 0.f;
 		float_t angle_yaw = 0.f;
-		int8_t speed_roll = 0;
+		float_t angle_pitch1 = 0.f;
+		float_t angle_pitch2 = 0.f;
+		float_t angle_roll = 0.0f;
+		float_t angle_pitch_end = 0.0f;
+		float_t angle_roll_end = 0.0f;
 	} controllerInfo;
 
 	// 机器人信息结构体(Robot -> Controller)
@@ -50,12 +52,11 @@ public:
 		bool ask_reset_flag = false; ///< 是否要求复位
 		bool controlled_by_controller = false; ///< 是否被控制器控制
 		bool ask_return_flag = false; ///< 是否要求归位
-		float_t posit_traverse = 0; ///< 横移电机位置
-		float_t posit_stretch = 0; ///< 前伸电机位置
-		float_t posit_lift = 0; ///< 升降电机位置
-		float_t angle_yaw = 0; ///< Yaw轴角度
-		float_t angle_roll = 0; ///< Roll轴角度
-		float_t angle_pitch = 0; ///< Pitch轴角度
+		float_t angle_yaw = 0.f;
+		float_t angle_pitch1 = 0.f;
+		float_t angle_pitch2 = 0.f;
+		float_t angle_roll = 0.0f;
+		float_t angle_pitch_end = 0.0f;
 	} robotInfo;
 
 	// 初始化系统

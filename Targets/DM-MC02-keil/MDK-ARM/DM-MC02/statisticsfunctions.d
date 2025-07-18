@@ -4,14 +4,7 @@ dm-mc02/statisticsfunctions.o: \
   ..\..\..\Drivers\CMSIS\DSP\Include\dsp\statistics_functions.h \
   ..\..\..\Drivers\CMSIS\DSP\Include\arm_math_types.h \
   ..\Drivers\CMSIS\Include\cmsis_compiler.h \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\stdint.h \
   ..\Drivers\CMSIS\Include\cmsis_armclang.h \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\arm_compat.h \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\arm_acle.h \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\string.h \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\math.h \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\float.h \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\limits.h \
   ..\..\..\Drivers\CMSIS\DSP\Include\arm_math_memory.h \
   ..\..\..\Drivers\CMSIS\DSP\Include\dsp\none.h \
   ..\..\..\Drivers\CMSIS\DSP\Include\dsp\utils.h \

@@ -130,6 +130,19 @@ void CDevMtrDM_MIT::EnableMotor()
 	canTxNode_.Transmit();
 }
 
+void CDevMtrDM_MIT::SetZero() {
+	// 检查设备状态
+	if (deviceStatus == APP_RESET)
+		return;
+
+	std::array<uint8_t, 8> data_buf = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfe};
+	Modify_CanTxData(data_buf.data());
+	canTxNode_.Transmit();
+}
+
+void CDevMtrDM_MIT::ClearError() {
+}
+
 /**
  * @brief 禁用电机
  * 

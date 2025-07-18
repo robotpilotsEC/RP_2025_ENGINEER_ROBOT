@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @Author: Sassinak
+ * @version: 
+ * @Date: 2025-07-16 17:10:02
+ * @LastEditors: Sassinak
+ * @LastEditTime: 2025-07-18 03:39:11
+ */
 /******************************************************************************
  * @brief        
  * 
@@ -35,8 +43,6 @@ void CSystemCore::StartReturnDriveTask(void *arg) {
 	core.psubgantry_->subGantryCmd.setLiftPosit_L = 0.0f;
 	core.psubgantry_->subGantryCmd.setStretchPosit_R = 0.0f;
 	core.psubgantry_->subGantryCmd.setLiftPosit_R = 0.0f;
-
-	core.psubgantry_->subGantryCmd.setPumpOn_Arm = true;
 	
 	/*Set Arm*/
 	core.parm_->armCmd.set_angle_Yaw = 0.0f;

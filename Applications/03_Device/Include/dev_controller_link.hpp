@@ -50,14 +50,16 @@ public:
 		SPkgHeader header;
 		bool controller_OK = 0; ///< 控制器状态
 		bool return_success = 0; ///< 归位成功标志
-		int8_t rocker_X = 0; ///< 摇杆X轴值
-		int8_t rocker_Y = 0; ///< 摇杆Y轴值
-		uint8_t rocker_Key = 0; ///< 摇杆按键状态
-		float_t posit_traverse = 0; ///< 横移电机位置
-		float_t posit_stretch = 0; ///< 前伸电机位置
-		float_t angle_yaw = 0; ///< Yaw角度位置
-		int8_t speed_roll = 0; ///< Roll电机速度
-		int8_t reserved[12] = {0}; ///< 保留字段
+		// int8_t rocker_X = 0; ///< 摇杆X轴值
+		// int8_t rocker_Y = 0; ///< 摇杆Y轴值
+		// uint8_t rocker_Key = 0; ///< 摇杆按键状态
+		float_t angle_yaw = 0; ///< yaw角度位置
+		float_t angle_pitch1 = 0; ///< Pitch1角度位置
+		float_t angle_pitch2 = 0; ///< Pitch2角度位置
+		float_t angle_roll = 0; ///< roll电机位置
+		float_t angle_pitch_end = 0; ///< 末端Pitch角度位置
+		float_t angle_roll_end = 0; ///< 末端Roll角度位置
+		int8_t reserved[4] = {0}; ///< 保留字段
 		uint16_t CRC16 = 0x0000; ///< CRC16校验
 	} __packed controllerData_info_pkg = { };
 
@@ -66,13 +68,13 @@ public:
 		bool ask_reset_flag = 0; ///< 要求复位标志
 		bool controlled_by_controller = 0; ///< 是否被控制器控制
 		bool ask_return_flag = 0; ///< 要求归位标志
-		float_t posit_traverse = 0; ///< 横移电机位置
-		float_t posit_stretch = 0; ///< 前伸电机位置
-		float_t posit_lift = 0; ///< 升降电机位置
-		float_t angle_yaw = 0; ///< Yaw电机位置
-		float_t angle_roll = 0; ///< Roll电机位置
-		float_t angle_pitch = 0; ///< Pitch电机位置
-		int8_t reserved[1] = {0}; ///< 保留字段
+		float_t angle_yaw = 0; ///< yaw角度位置
+		float_t angle_pitch1 = 0; ///< Pitch1角度位置
+		float_t angle_pitch2 = 0; ///< Pitch2角度位置
+		float_t angle_roll = 0; ///< roll电机位置
+		float_t angle_pitch_end = 0; ///< 末端Pitch角度位置
+		float_t angle_roll_end = 0; ///< 末端Roll角度位置
+		int8_t reserved[3] = {0}; ///< 保留字段
 		uint16_t CRC16 = 0x0000; ///< CRC16校验
 	} __packed robotData_info_pkg = { };
 

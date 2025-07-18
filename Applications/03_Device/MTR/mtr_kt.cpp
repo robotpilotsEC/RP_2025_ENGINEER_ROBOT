@@ -244,7 +244,7 @@ void CDevMtrKT::UpdateHandler_(){
 	// 读取CAN数据
 	if (canRxNode_.timestamp >= lastHeartbeatTime_){
 		motorData[DATA_TEMP]   = (int8_t)(canRxNode_.dataBuffer[1]);
-		motorData[DATA_ANGLE]  = (int16_t)(canRxNode_.dataBuffer[7] << 8 | canRxNode_.dataBuffer[6]);
+		motorData[DATA_ANGLE]  = (uint16_t)(canRxNode_.dataBuffer[7] << 8 | canRxNode_.dataBuffer[6]);
 		motorData[DATA_SPEED]  = (int16_t)(canRxNode_.dataBuffer[5] << 8 | canRxNode_.dataBuffer[4]);
 		motorData[DATA_CURRENT] = (int16_t)(canRxNode_.dataBuffer[3] << 8 | canRxNode_.dataBuffer[2]);
 		motorData[DATA_POSIT]  = (useAngleToPosit_) ? getPosition_() : 0;

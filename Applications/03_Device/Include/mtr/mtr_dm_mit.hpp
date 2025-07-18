@@ -93,6 +93,10 @@ public:
 	 */
 	void EnableMotor();
 
+	void SetZero();
+
+	void ClearError();
+
 	/**
 	 * @brief 禁用电机
 	 */

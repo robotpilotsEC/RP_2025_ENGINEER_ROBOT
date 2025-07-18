@@ -84,22 +84,22 @@ void CSystemCore::UpdateHandler_() {
     if (SysRemote.systemStatus == APP_RESET) return;
 
     static bool last_use_Controller = false;
-    static uint8_t zxc_count = 0;
-    static bool zxc_flag = false;
+    static uint8_t zx_count = 0;
+    static bool zx_flag = false;
 
-    bool zxc = SysRemote.remoteInfo.keyboard.key_Z && SysRemote.remoteInfo.keyboard.key_X && SysRemote.remoteInfo.keyboard.key_C;
-    if (SysRemote.remoteInfo.keyboard.key_Z && SysRemote.remoteInfo.keyboard.key_X && SysRemote.remoteInfo.keyboard.key_C) {
-        zxc_count++;
+    bool zx = SysRemote.remoteInfo.keyboard.key_Z && SysRemote.remoteInfo.keyboard.key_X;
+    if (SysRemote.remoteInfo.keyboard.key_Z && SysRemote.remoteInfo.keyboard.key_X) {
+        zx_count++;
     }
     // 全部松开之后才清零计数器，否则会因为按下状态的抖动导致自定义控制器模式连续进出
-    else if (SysRemote.remoteInfo.keyboard.key_Z || SysRemote.remoteInfo.keyboard.key_X || SysRemote.remoteInfo.keyboard.key_C == false) {
-        zxc_count = 0;
-        zxc_flag = false;
+    else if (SysRemote.remoteInfo.keyboard.key_Z || SysRemote.remoteInfo.keyboard.key_X == false) {
+        zx_count = 0;
+        zx_flag = false;
     }
 
-    if (zxc_count > 20 && zxc_flag == false) {
-        zxc_flag = true;
-        zxc_count = 0;
+    if (zx_count > 20 && zx_flag == false) {
+        zx_flag = true;
+        zx_count = 0;
         use_Controller_ = !use_Controller_;
         if (use_Controller_ == true) {
             // 根据当前在哪个自动任务中调整臂的初始角度
@@ -209,6 +209,8 @@ EAppStatus CSystemCore::StartAutoCtrlTask_(EAutoCtrlProcess process) {
         return APP_BUSY;
 
     StopAutoCtrlTask_();
+
+    parm_->should_limit_yaw = 0;
 
     switch (process)
     {

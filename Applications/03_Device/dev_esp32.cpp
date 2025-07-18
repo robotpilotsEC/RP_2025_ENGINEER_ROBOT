@@ -145,13 +145,13 @@ EAppStatus CDevESP32::ResolveRxPackage_() {
 	//slider open. Yaw = -74.88, Pitch1 = 0.00, Pitch2 = 55.08, Roll = 0.00, End_L = 0.00, End_R = 0.00
 	if (strstr(string, "slider open")) {
 		armInfo.BlueTooth_Mode = 1; // 设置蓝牙模式为1
-		sscanf(string, "slider open. Yaw = %d, Pitch1 = %d, Pitch2 = %d, Roll = %d, End_L = %d, End_R = %d",
+		sscanf(string, "slider open. Yaw = %d, Pitch1 = %d, Pitch2 = %d, Roll = %d, End_Pitch = %d, End_Roll = %d",
 			&armInfo.Yaw,
 			&armInfo.Pitch1,
 			&armInfo.Pitch2,
 			&armInfo.Roll,
-			&armInfo.End_L,
-			&armInfo.End_R
+			&armInfo.End_Pitch,
+			&armInfo.End_Roll
 		);
 		return APP_OK;
 	}

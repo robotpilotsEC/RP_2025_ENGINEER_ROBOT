@@ -12,35 +12,36 @@
 #ifndef MOD_ARM_HPP
 #define MOD_ARM_HPP
 
-#define ARM_YAW_PHYSICAL_RANGE_MIN -90.0f
-#define ARM_YAW_PHYSICAL_RANGE_MAX 90.0f
-#define ARM_PITCH1_PHYSICAL_RANGE_MIN -90.0f
-#define ARM_PITCH1_PHYSICAL_RANGE_MAX 90.0f
-#define ARM_PITCH2_PHYSICAL_RANGE_MIN -90.0f
-#define ARM_PITCH2_PHYSICAL_RANGE_MAX 90.0f
-#define ARM_ROLL_PHYSICAL_RANGE_MIN -180.0f
+#define ARM_YAW_PHYSICAL_RANGE_MIN -97.5f
+#define ARM_YAW_PHYSICAL_RANGE_MAX 97.5f
+#define ARM_PITCH1_PHYSICAL_RANGE_MIN 4.0f
+#define ARM_PITCH1_PHYSICAL_RANGE_MAX 118.0f
+#define ARM_PITCH2_PHYSICAL_RANGE_MIN 11.0f
+#define ARM_PITCH2_PHYSICAL_RANGE_MAX 118.0f
+#define ARM_ROLL_PHYSICAL_RANGE_MIN -169.0f
 #define ARM_ROLL_PHYSICAL_RANGE_MAX 180.0f
-#define ARM_END_PITCH_PHYSICAL_RANGE_MIN -90.0f
-#define ARM_END_PITCH_PHYSICAL_RANGE_MAX 90.0f
+#define ARM_END_PITCH_PHYSICAL_RANGE_MIN -145.0f
+#define ARM_END_PITCH_PHYSICAL_RANGE_MAX 60.0f
+
 #define ARM_YAW_MOTOR_RANGE 65535
-#define ARM_PITCH1_MOTOR_RANGE 65535
+#define ARM_PITCH1_MOTOR_RANGE 20755
 #define ARM_PITCH2_MOTOR_RANGE 65535
-#define ARM_END_PITCH_MOTOR_RANGE 100000
+#define ARM_END_PITCH_MOTOR_RANGE 325993
 #define ARM_PITCH1_MOTOR_RATIO (ARM_PITCH1_MOTOR_RANGE / (ARM_PITCH1_PHYSICAL_RANGE_MAX - ARM_PITCH1_PHYSICAL_RANGE_MIN))
 #define ARM_PITCH2_MOTOR_RATIO (ARM_PITCH2_MOTOR_RANGE / (ARM_PITCH2_PHYSICAL_RANGE_MAX - ARM_PITCH2_PHYSICAL_RANGE_MIN))
 #define ARM_YAW_MOTOR_RATIO (ARM_YAW_MOTOR_RANGE / (ARM_YAW_PHYSICAL_RANGE_MAX - ARM_YAW_PHYSICAL_RANGE_MIN))
 #define ARM_END_PITCH_MOTOR_RATIO (ARM_END_PITCH_MOTOR_RANGE / (ARM_END_PITCH_PHYSICAL_RANGE_MAX - ARM_END_PITCH_PHYSICAL_RANGE_MIN))
-#define ARM_END_ROLL_MOTOR_RATIO 2469.4f
+#define ARM_END_ROLL_MOTOR_RATIO 3524.07f
 // 这里的offset都是物理的零点相对电机的零点的偏移值，电机的零点在物理的最小值
 #define ARM_YAW_MOTOR_OFFSET -ARM_YAW_PHYSICAL_RANGE_MIN * ARM_YAW_MOTOR_RATIO
 #define ARM_PITCH1_MOTOR_OFFSET -ARM_PITCH1_PHYSICAL_RANGE_MIN * ARM_PITCH1_MOTOR_RATIO
 #define ARM_PITCH2_MOTOR_OFFSET -ARM_PITCH2_PHYSICAL_RANGE_MIN * ARM_PITCH2_MOTOR_RATIO
-#define ARM_ROLL_MOTOR_OFFSET 30.0f // 但这个比较特殊，测量这个就是从电机0位置到物理0位置总共的角度
+#define ARM_ROLL_MOTOR_OFFSET 209.49f // 但这个比较特殊，测量这个就是从电机0位置到物理0位置总共的角度
 #define ARM_END_PITCH_MOTOR_OFFSET -ARM_END_PITCH_PHYSICAL_RANGE_MIN * ARM_END_PITCH_MOTOR_RATIO
 
-#define ARM_YAW_MOTOR_DIR 1
+#define ARM_YAW_MOTOR_DIR -1
 #define ARM_PITCH1_MOTOR_DIR 1
-#define ARM_PITCH2_MOTOR_DIR 1
+#define ARM_PITCH2_MOTOR_DIR -1
 #define ARM_ROLL_MOTOR_DIR 1
 #define ARM_END_PITCH_MOTOR_L_DIR -1
 #define ARM_END_PITCH_MOTOR_R_DIR 1
@@ -48,11 +49,30 @@
 #define ARM_END_ROLL_MOTOR_R_DIR -1
 
 #define ARM_YAW_INIT_ANGLE 0.0f
-#define ARM_PITCH1_INIT_ANGLE 0.0f
-#define ARM_PITCH2_INIT_ANGLE 0.0f
+#define ARM_PITCH1_INIT_ANGLE 11.0f
+#define ARM_PITCH2_INIT_ANGLE 18.0f
 #define ARM_ROLL_INIT_ANGLE 0.0f
 #define ARM_END_PITCH_INIT_ANGLE 0.0f
 #define ARM_END_ROLL_INIT_ANGLE 0.0f
+
+/*-------------------------------------LHK_SET----------------------------------------------------------*/
+#define POSIT_JOINT1_YAW_MACH 14489
+#define ARM_YAW_MOTOR_RANGE_LHK 71431
+
+#define POSIT_JOINT2_PITCH1_MACH 63310
+#define POSIT_JOINT2_PITCH1_MACH_PHY 4.0f
+#define POSIT_JOINT2_PITCH1_INIT_PHY 11.0f
+
+#define POSIT_JOINT3_PITCH2_MACH 12837
+#define POSIT_JOINT3_PITCH2_MACH_PHY 11.0f
+#define POSIT_JOINT3_PITCH2_INIT_PHY 18.0f
+
+#define POSIT_JOINT4_ROLL_OFFSET 0
+
+#define POSIT_JOINT5_PITCH_END_MACH 0 
+#define POSIT_JONIT6_ROLL_END_MACH 0
+#define POSIT_END_INIT 0
+#define POSIT_END_PHY 205.0f
 
 #define deg2rad(x) ((x) * 0.017453292519943295769236907684886)
 #define rad2deg(x) ((x) * 57.295779513082320876798154814105)
@@ -113,6 +133,7 @@ public:
 	// 定义机械臂控制命令结构体并实例化
 	struct SArmCmd {
 		bool isAutoCtrl = false; ///< 是否自动控制
+		bool isCustomCtrl = false; ///< 是否自定义控制
 		float_t set_angle_Yaw = 0.0f; ///< 机械臂关节Yaw角度设定
 		float_t set_angle_Pitch1 = 0.0f; ///< 机械臂关节Pitch1角度设定
 		float_t set_angle_Pitch2 = 0.0f; ///< 机械臂关节Pitch2角度设定
@@ -132,39 +153,61 @@ public:
 	// 初始化模块
 	EAppStatus InitModule(SModInitParam_Base &param) final;
 
+	uint8_t should_limit_yaw = 0; ///< 是否限制Yaw角度
+
 private:
 
 	// 定义机械臂Yaw关节组件类并实例化
-	class CComYaw: public CComponentBase {
+	class CComJoint: public CComponentBase {
 	public:
-		const int32_t rangeLimit = ARM_YAW_MOTOR_RANGE; ///< Yaw关节电机范围限制
-		
+		enum {Y = 0, P1 = 1, P2 = 2};
+		const int32_t rangeLimit_yaw 		= ARM_YAW_MOTOR_RANGE_LHK; ///< Yaw关节电机范围限制
+		const int32_t rangeLimit_pitch1 = ARM_PITCH1_MOTOR_RANGE; ///< Pitch1关节电机范围限制
+		const int32_t rangeLimit_pitch2 = ARM_PITCH2_MOTOR_RANGE; ///< Pitch2关节电机范围限制
+
 		// 定义Yaw关节信息结构体
 		struct SYawInfo {
-			int32_t posit = 0.0f;           ///< Yaw关节当前位置
-			bool isPositArrived = false;    ///< Yaw位置是否到达目标
-		} yawInfo;
+			int32_t posit_yaw = 0.0f;           ///< Yaw关节当前位置
+			int32_t posit_pitch1 = 0.0f;     ///< Pitch1关节当前位置
+			int32_t posit_pitch2 = 0.0f;     ///< Pitch2关
+			bool isPositArrived_yaw = false;    ///< Yaw位置是否到达目标
+			bool isPositArrived_pitch1 = false; ///< Pitch1位置是否到达
+			bool isPositArrived_pitch2 = false; ///< Pitch2位置是否到达
+		} jointInfo;
 
 		// 定义Yaw关节控制命令结构体
 		struct SYawCmd {
-			int32_t setPosit = 0.0f;        ///< Yaw关节目标位置
-		} yawCmd;
+			int32_t setPosit_yaw = 0.0f;        ///< Yaw关节目标位置
+			int32_t setPosit_pitch1 = POSIT_JOINT2_PITCH1_INIT_PHY; ///< Pitch1关节目标位置
+			int32_t setPosit_pitch2 = POSIT_JOINT3_PITCH2_INIT_PHY; ///< Pitch2关节目标位置
+		} jointCmd;
 
 		// PID控制器
-		CAlgoPid pidPosCtrl;
-		CAlgoPid pidSpdCtrl;
+		CAlgoPid pidPosCtrl_yaw;
+		CAlgoPid pidSpdCtrl_yaw;
+		CAlgoPid pidPosCtrl_pitch1;
+		CAlgoPid pidSpdCtrl_pitch1;
+		CAlgoPid pidPosCtrl_pitch2;
+		CAlgoPid pidSpdCtrl_pitch2;
 
 		// 电机数据输出缓冲区
-		std::array<int16_t, 1> mtrOutputBuffer = {0};
+		std::array<int16_t, 3> mtrOutputBuffer = {0};
 
 		// 电机实例指针
-		CDevMtr* motor = nullptr;
+		CDevMtr* motor[3] = {nullptr};
+
+		// 父类指针，用于访问其他组件
+		CModArm* parentModule = nullptr;
 
 		// 物理位置转换为电机位置
-		static int32_t PhyPositToMtrPosit(float_t phyPosit);
+		static int32_t PhyPositToMtrPosit_yaw(float_t phyPosit);
+		static int32_t PhyPositToMtrPosit_pitch1(float_t phyPosit);
+		static int32_t PhyPositToMtrPosit_pitch2(float_t phyPosit);
 
 		// 电机位置转换为物理位置
-		static float_t MtrPositToPhyPosit(int32_t mtrPosit);
+		static float_t MtrPositToPhyPosit_yaw(int32_t mtrPosit);
+		static float_t MtrPositToPhyPosit_pitch1(int32_t mtrPosit);
+		static float_t MtrPositToPhyPosit_pitch2(int32_t mtrPosit);
 
 		// 初始化组件
 		EAppStatus InitComponent(SModInitParam_Base &param) final;
@@ -173,105 +216,17 @@ private:
 		EAppStatus UpdateComponent() final;
 
 		// 输出更新函数
-		EAppStatus _UpdateOutput(float_t posit);
+		EAppStatus _UpdateOutput(float_t posit_yaw, float_t posit_pitch1, float_t posit_pitch2);
+
+		// 单独电机输出更新函数
+		EAppStatus _UpdateOutput_Yaw(float_t posit_yaw);
+		EAppStatus _UpdateOutput_Pitch1(float_t posit_pitch1);
+		EAppStatus _UpdateOutput_Pitch2(float_t posit_pitch2);
 
 		// 电机can发送节点
-		CInfCAN::CCanTxNode* mtrCanTxNode = nullptr;
+		std::array<CInfCAN::CCanTxNode*, 3> mtrCanTxNode;
 
-	} comYaw_;
-
-	// 定义机械臂Pitch1关节组件类并实例化
-	class CComPitch1: public CComponentBase {
-	public:
-		const int32_t rangeLimit = ARM_PITCH1_MOTOR_RANGE; ///< Pitch1关节电机范围限制
-		
-		// 定义Pitch1关节信息结构体
-		struct SPitch1Info {
-			int32_t posit = 0.0f;           ///< Pitch1关节当前位置
-			bool isPositArrived = false;    ///< Pitch1位置是否到达目标
-		} pitch1Info;
-
-		// 定义Pitch1关节控制命令结构体
-		struct SPitch1Cmd {
-			int32_t setPosit = 0.0f;        ///< Pitch1关节目标位置
-		} pitch1Cmd;
-
-		// PID控制器
-		CAlgoPid pidPosCtrl;
-		CAlgoPid pidSpdCtrl;
-
-		// 电机数据输出缓冲区
-		std::array<int16_t, 1> mtrOutputBuffer = {0};
-
-		// 电机实例指针
-		CDevMtr* motor = nullptr;
-
-		// 物理位置转换为电机位置
-		static int32_t PhyPositToMtrPosit(float_t phyPosit);
-
-		// 电机位置转换为物理位置
-		static float_t MtrPositToPhyPosit(int32_t mtrPosit);
-
-		// 初始化组件
-		EAppStatus InitComponent(SModInitParam_Base &param) final;
-
-		// 更新组件
-		EAppStatus UpdateComponent() final;
-
-		// 输出更新函数
-		EAppStatus _UpdateOutput(float_t posit);
-
-		// 电机can发送节点
-		CInfCAN::CCanTxNode* mtrCanTxNode = nullptr;
-
-	} comPitch1_;
-
-	// 定义机械臂Pitch2关节组件类并实例化
-	class CComPitch2: public CComponentBase {
-	public:
-		const int32_t rangeLimit = ARM_PITCH2_MOTOR_RANGE; ///< Pitch2关节电机范围限制
-
-		// 定义Pitch2关节信息结构体
-		struct SPitch1Info {
-			int32_t posit = 0.0f;           ///< Pitch2关节当前位置
-			bool isPositArrived = false;    ///< Pitch2位置是否到达目标
-		} pitch2Info;
-
-		// 定义Pitch2关节控制命令结构体
-		struct SPitch2Cmd {
-			int32_t setPosit = 0.0f;        ///< Pitch2关节目标位置
-		} pitch2Cmd;
-
-		// PID控制器
-		CAlgoPid pidPosCtrl;
-		CAlgoPid pidSpdCtrl;
-
-		// 电机数据输出缓冲区
-		std::array<int16_t, 1> mtrOutputBuffer = {0};
-
-		// 电机实例指针
-		CDevMtr* motor = nullptr;
-
-
-		// 物理位置转换为电机位置
-		static int32_t PhyPositToMtrPosit(float_t phyPosit);
-
-		// 电机位置转换为物理位置
-		static float_t MtrPositToPhyPosit(int32_t mtrPosit);
-
-		// 初始化组件
-		EAppStatus InitComponent(SModInitParam_Base &param) final;
-
-		// 更新组件
-		EAppStatus UpdateComponent() final;
-
-		// 输出更新函数
-		EAppStatus _UpdateOutput(float_t posit);
-
-		// 电机can发送节点
-		CInfCAN::CCanTxNode* mtrCanTxNode = nullptr;
-
-	} comPitch2_;
+	} comjoint_;
 
 	// 定义机械臂Roll关节组件类并实例化
 	class CComRoll: public CComponentBase {
@@ -301,12 +256,12 @@ private:
 
 		static float_t MtrAngleToPhyAngle(float_t angle) {
 			// 将电机角度转换为物理角度
-			return angle + ARM_ROLL_MOTOR_OFFSET;
+			return angle;
 		}
 
 		static float_t PhyAngleToMtrAngle(float_t angle) {
 			// 将物理角度转换为电机角度
-			return angle - ARM_ROLL_MOTOR_OFFSET;
+			return angle;
 		}
 
 		// 初始化组件

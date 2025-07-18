@@ -8,6 +8,17 @@ from PyQt5.QtWidgets import (
 from PyQt5.QtCore import Qt, QTimer
 from PyQt5.QtGui import QColor, QPainter, QBrush, QFont
 
+#define ARM_YAW_PHYSICAL_RANGE_MIN -97.5f
+#define ARM_YAW_PHYSICAL_RANGE_MAX 97.5f
+#define ARM_PITCH1_PHYSICAL_RANGE_MIN 4.0f
+#define ARM_PITCH1_PHYSICAL_RANGE_MAX 118.0f
+#define ARM_PITCH2_PHYSICAL_RANGE_MIN 11.0f
+#define ARM_PITCH2_PHYSICAL_RANGE_MAX 118.0f
+#define ARM_ROLL_PHYSICAL_RANGE_MIN -169.0f
+#define ARM_ROLL_PHYSICAL_RANGE_MAX 180.0f
+#define ARM_END_PITCH_PHYSICAL_RANGE_MIN -145.0f
+#define ARM_END_PITCH_PHYSICAL_RANGE_MAX 60.0f
+
 
 class LEDIndicator(QFrame):
 	def __init__(self, color="gray"):
@@ -43,12 +54,12 @@ class BluetoothControlPanel(QWidget):
 		
 		# 每个滑块的配置：最小值，最大值，初始值
 		self.slider_configs = {
-			"Yaw": {"min": -180, "max": 180, "init": 0},
-			"Pitch1": {"min": -90, "max": 90, "init": 0},
-			"Pitch2": {"min": -90, "max": 90, "init": 0},
-			"Roll": {"min": -90, "max": 90, "init": 0},
-			"End_Pitch": {"min": 0, "max": 100, "init": 0},
-			"End_Roll": {"min": 0, "max": 100, "init": 0}
+			"Yaw": {"min": -97.5, "max": 97.5, "init": 0},
+			"Pitch1": {"min": 4.0, "max": 118.0, "init": 15.0},
+			"Pitch2": {"min": 11.0, "max": 118.0, "init": 18.0},
+			"Roll": {"min": -169, "max": 180, "init": 0},
+			"End_Pitch": {"min": -145.0, "max": 60, "init": 0},
+			"End_Roll": {"min": 0, "max": 360, "init": 180}
 		}
 
 		main_layout = QVBoxLayout()
@@ -216,7 +227,8 @@ class BluetoothControlPanel(QWidget):
 				slider_name = self.slider_names[i]
 				cfg = self.slider_configs[slider_name]
 				val = cfg["min"] + (self.sliders[i].value() / 1000.0) * (cfg["max"] - cfg["min"])
-				values.append(f"{slider_name} = {val:.0f}")  # 发送整数值
+				val_int = int(val * 1000)  # 乘以1000后转为整数
+				values.append(f"{slider_name} = {val_int}")  # 发送整数值
 			msg = f"slider open. {', '.join(values)}\n"
 			self.serial.write(msg.encode())
 		
@@ -294,7 +306,7 @@ class BluetoothControlPanel(QWidget):
 								# 检查是否是滑块名称
 								if name in self.slider_names:
 									try:
-										float_val = float(val_str)
+										float_val = float(val_str) / 1000
 										index = self.slider_names.index(name)
 										config = self.slider_configs[name]
 										min_val = config["min"]
@@ -308,7 +320,7 @@ class BluetoothControlPanel(QWidget):
 											# 更新滑块值（阻止信号循环）
 											self.sliders[index].blockSignals(True)
 											self.sliders[index].setValue(slider_val)
-											self.slider_labels[index].setText(f"{float_val:.0f}")  # 显示整数值
+											self.slider_labels[index].setText(f"{float_val:.2f}")  # 显示整数值
 											self.sliders[index].blockSignals(False)
 									except ValueError:
 										pass

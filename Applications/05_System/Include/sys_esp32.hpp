@@ -35,12 +35,12 @@ public:
 	EAppStatus InitSystem(SSystemInitParam_Base *pStruct) final;
 
 	struct SArmInfo {
-		int Yaw;            ///< Yaw角度
-		int Pitch1;        ///< Pitch1角度
-		int Pitch2;        ///< Pitch2角度
-		int Roll;          ///< Roll角度
-		int End_Pitch;         ///< 末端Pitch角度
-		int End_Roll;       ///< 末端Roll角度
+		float_t Yaw;            ///< Yaw角度
+		float_t Pitch1;        ///< Pitch1角度
+		float_t Pitch2;        ///< Pitch2角度
+		float_t Roll;          ///< Roll角度
+		float_t End_Pitch;         ///< 末端Pitch角度
+		float_t End_Roll;       ///< 末端Roll角度
 	} BLEInfo; ///< 蓝牙模式信息
 
 	bool BLE_Mode_Open = false; ///< 是否为BLE模式

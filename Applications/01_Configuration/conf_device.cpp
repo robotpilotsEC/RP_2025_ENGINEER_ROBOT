@@ -157,8 +157,8 @@ EAppStatus InitAllDevice(){
     static CDevMtrM2006 gimbalMotor_Lift;
     CDevMtrM2006::SMtrInitParam_M2006 gimbalMotor_Lift_initparam;
     gimbalMotor_Lift_initparam.deviceID = EDeviceID::DEV_GIMBAL_MTR;
-    gimbalMotor_Lift_initparam.interfaceID = EInterfaceID::INF_CAN3;
-    gimbalMotor_Lift_initparam.djiMtrID = CDevMtrDJI::EDjiMtrID::ID_1;
+    gimbalMotor_Lift_initparam.interfaceID = EInterfaceID::INF_CAN2;
+    gimbalMotor_Lift_initparam.djiMtrID = CDevMtrDJI::EDjiMtrID::ID_5;
     gimbalMotor_Lift_initparam.useAngleToPosit = true;
     gimbalMotor_Lift_initparam.useStallMonit = true;
     gimbalMotor_Lift_initparam.stallMonitDataSrc = CDevMtr::DATA_TORQUE;
@@ -170,8 +170,8 @@ EAppStatus InitAllDevice(){
     static CDevMtrM2006 armMotor_End_L;
     CDevMtrM2006::SMtrInitParam_M2006 armMotor_End_L_initparam;
     armMotor_End_L_initparam.deviceID = EDeviceID::DEV_ARM_MTR_END_L;
-    armMotor_End_L_initparam.interfaceID = EInterfaceID::INF_CAN3;
-    armMotor_End_L_initparam.djiMtrID = CDevMtrDJI::EDjiMtrID::ID_3;
+    armMotor_End_L_initparam.interfaceID = EInterfaceID::INF_CAN2;
+    armMotor_End_L_initparam.djiMtrID = CDevMtrDJI::EDjiMtrID::ID_6;
     armMotor_End_L_initparam.useAngleToPosit = true;
     armMotor_End_L_initparam.useStallMonit = true;
     armMotor_End_L_initparam.stallThreshold = 1000.0f; // 设置堵转阈值
@@ -181,8 +181,8 @@ EAppStatus InitAllDevice(){
     static CDevMtrM2006 armMotor_End_R;
     CDevMtrM2006::SMtrInitParam_M2006 armMotor_End_R_initparam;
     armMotor_End_R_initparam.deviceID = EDeviceID::DEV_ARM_MTR_END_R;
-    armMotor_End_R_initparam.interfaceID = EInterfaceID::INF_CAN3;
-    armMotor_End_R_initparam.djiMtrID = CDevMtrDJI::EDjiMtrID::ID_4;
+    armMotor_End_R_initparam.interfaceID = EInterfaceID::INF_CAN2;
+    armMotor_End_R_initparam.djiMtrID = CDevMtrDJI::EDjiMtrID::ID_7;
     armMotor_End_R_initparam.useAngleToPosit = true;
     armMotor_End_R_initparam.useStallMonit = true;
     armMotor_End_R_initparam.stallThreshold = 1000.0f; // 设置堵转阈值
@@ -234,7 +234,7 @@ EAppStatus InitAllDevice(){
     armMotor_Roll_initparam.interfaceID = EInterfaceID::INF_CAN3;
     armMotor_Roll_initparam.MasterID = 0x30;
     armMotor_Roll_initparam.SlaveID = 0x31;
-    armMotor_Roll_initparam.Q_MAX = 12.5f;
+    armMotor_Roll_initparam.Q_MAX = 3.1416f;
     armMotor_Roll_initparam.DQ_MAX = 30.0f;
     armMotor_Roll_initparam.TAU_MAX = 10.0f;
     armMotor_Roll_initparam.useAngleToPosit = true;

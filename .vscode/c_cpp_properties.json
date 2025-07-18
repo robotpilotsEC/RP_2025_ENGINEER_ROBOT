@@ -18,7 +18,7 @@
                 "_UNICODE",
                 "STM32H7"
             ],
-            "compilerPath": "D:\\0_Environment\\mingw64\\bin\\gcc.exe",
+            "compilerPath": "F:\\mingw64\\bin\\gcc.exe",
             "intelliSenseMode": "windows-gcc-x64"
         }
     ],

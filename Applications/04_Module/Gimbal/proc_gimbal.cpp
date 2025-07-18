@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @Author: Sassinak
+ * @version: 
+ * @Date: 2025-07-16 17:10:01
+ * @LastEditors: Sassinak
+ * @LastEditTime: 2025-07-18 03:14:10
+ */
 /**
  * @file proc_gimbal.cpp
  * @author Fish_Joe (2328339747@qq.com)
@@ -49,6 +57,7 @@ void CModGimbal::StartGimbalModuleTask(void *argument) {
 				proc_waitUntil(gimbal.comLift_.componentStatus == APP_OK);
 
 				gimbal.gimbalCmd = SGimbalCmd();
+				gimbal.gimbalCmd.set_posit_lift = GIMBAL_LIFT_PHYSICAL_RANGE;
 				gimbal.gimbalInfo.isModuleAvailable = true;
 				gimbal.Module_FSMFlag_ = FSM_CTRL;
 

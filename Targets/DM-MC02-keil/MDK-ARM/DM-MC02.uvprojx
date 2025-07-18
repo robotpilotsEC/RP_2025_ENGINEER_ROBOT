@@ -10,7 +10,7 @@
       <TargetName>DM-MC02</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6210000::V6.21::ARMCLANG</pCCUsed>
+      <pCCUsed>6220000::V6.22::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -540,24 +540,9 @@
               <FilePath>..\..\..\Applications\04_Module\Arm\com_end.cpp</FilePath>
             </File>
             <File>
-              <FileName>com_pitch1.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\Applications\04_Module\Arm\com_pitch1.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>com_pitch2.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\Applications\04_Module\Arm\com_pitch2.cpp</FilePath>
-            </File>
-            <File>
               <FileName>com_roll.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\Applications\04_Module\Arm\com_roll.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>com_yaw.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\Applications\04_Module\Arm\com_yaw.cpp</FilePath>
             </File>
             <File>
               <FileName>mod_arm.cpp</FileName>
@@ -568,6 +553,11 @@
               <FileName>proc_arm.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\Applications\04_Module\Arm\proc_arm.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>com_joint.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\Applications\04_Module\Arm\com_joint.cpp</FilePath>
             </File>
           </Files>
         </Group>

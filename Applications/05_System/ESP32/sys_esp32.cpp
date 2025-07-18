@@ -1,3 +1,11 @@
+/*
+ * @Description: 
+ * @Author: Sassinak
+ * @version: 
+ * @Date: 2025-07-16 17:10:02
+ * @LastEditors: Sassinak
+ * @LastEditTime: 2025-07-18 01:06:15
+ */
 /******************************************************************************
  * @brief        
  * 
@@ -43,20 +51,20 @@ void CSystemESP32::UpdateHandler_() {
 
 	if (pESP32_->armInfo.BlueTooth_Mode != 0) {
 		BLE_Mode_Open = true;
-		BLEInfo.Yaw = pESP32_->armInfo.Yaw;
-		BLEInfo.Pitch1 = pESP32_->armInfo.Pitch1;
-		BLEInfo.Pitch2 = pESP32_->armInfo.Pitch2;
-		BLEInfo.Roll = pESP32_->armInfo.Roll;
-		BLEInfo.End_Pitch = pESP32_->armInfo.End_Pitch;
-		BLEInfo.End_Roll = pESP32_->armInfo.End_Roll;
+		BLEInfo.Yaw = static_cast<float_t>(pESP32_->armInfo.Yaw) / 1000.0f;
+		BLEInfo.Pitch1 = static_cast<float_t>(pESP32_->armInfo.Pitch1) / 1000.0f;
+		BLEInfo.Pitch2 = static_cast<float_t>(pESP32_->armInfo.Pitch2) / 1000.0f;
+		BLEInfo.Roll = static_cast<float_t>(pESP32_->armInfo.Roll) / 1000.0f;
+		BLEInfo.End_Pitch = static_cast<float_t>(pESP32_->armInfo.End_Pitch) / 1000.0f;
+		BLEInfo.End_Roll = static_cast<float_t>(pESP32_->armInfo.End_Roll) / 1000.0f;
 	} else {
 		BLE_Mode_Open = false;
-		pESP32_->armInfo.Yaw = static_cast<int>(arm->armInfo.angle_Yaw);
-		pESP32_->armInfo.Pitch1 = static_cast<int>(arm->armInfo.angle_Pitch1);
-		pESP32_->armInfo.Pitch2 = static_cast<int>(arm->armInfo.angle_Pitch2);
-		pESP32_->armInfo.Roll = static_cast<int>(arm->armInfo.angle_Roll);
-		pESP32_->armInfo.End_Pitch = static_cast<int>(arm->armInfo.angle_end_pitch);
-		pESP32_->armInfo.End_Roll = static_cast<int>(arm->armInfo.angle_end_roll);
+		pESP32_->armInfo.Yaw = static_cast<int>(arm->armInfo.angle_Yaw * 1000);
+		pESP32_->armInfo.Pitch1 = static_cast<int>(arm->armInfo.angle_Pitch1 * 1000);
+		pESP32_->armInfo.Pitch2 = static_cast<int>(arm->armInfo.angle_Pitch2 * 1000);
+		pESP32_->armInfo.Roll = static_cast<int>(arm->armInfo.angle_Roll * 1000);
+		pESP32_->armInfo.End_Pitch = static_cast<int>(arm->armInfo.angle_end_pitch * 1000);
+		pESP32_->armInfo.End_Roll = static_cast<int>(arm->armInfo.angle_end_roll * 1000);
 		pESP32_->SendPackage(CDevESP32::EPackageID::ID_Motor_Arm_Pkg);
 	}
 
