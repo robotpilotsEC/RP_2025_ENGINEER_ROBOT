@@ -141,9 +141,16 @@ EAppStatus CModArm::RestrictArmCommand_() {
 	armCmd.set_angle_Pitch1 =
 		std::clamp(armCmd.set_angle_Pitch1,
 				   ARM_PITCH1_PHYSICAL_RANGE_MIN, ARM_PITCH1_PHYSICAL_RANGE_MAX);
-	armCmd.set_angle_Pitch2 =
-		std::clamp(armCmd.set_angle_Pitch2,
-				   ARM_PITCH2_PHYSICAL_RANGE_MIN, armCmd.set_angle_Pitch1 + ARM_PITCH2_PHYSICAL_RANGE_MIN);
+	if (armCmd.set_angle_Pitch2 < ARM_PITCH2_PHYSICAL_RANGE_MIN) {
+		armCmd.set_angle_Pitch2 = ARM_PITCH2_PHYSICAL_RANGE_MIN;
+	} else {
+		armCmd.set_angle_Pitch2 =
+			std::clamp(armCmd.set_angle_Pitch2,
+				ARM_PITCH2_PHYSICAL_RANGE_MIN, 1.25f * armCmd.set_angle_Pitch1);
+	}
+	if (armCmd.set_angle_Pitch2 > ARM_PITCH2_PHYSICAL_RANGE_MAX) {
+		armCmd.set_angle_Pitch2 = ARM_PITCH2_PHYSICAL_RANGE_MAX;
+	}
 	armCmd.set_angle_Roll =
 		std::clamp(armCmd.set_angle_Roll,
 				   ARM_ROLL_PHYSICAL_RANGE_MIN, ARM_ROLL_PHYSICAL_RANGE_MAX);

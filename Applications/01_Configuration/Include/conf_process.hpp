@@ -28,6 +28,8 @@ inline int8_t wait_until_with_timeout(ConditionFunc condition, uint32_t timeout_
     TickType_t start = xTaskGetTickCount();
     TickType_t timeout_ticks = pdMS_TO_TICKS(timeout_ms);
 
+    vTaskDelay(pdMS_TO_TICKS(10)); // 等待10ms，避免CPU占用过高
+
     while (!condition()) {
         if ((xTaskGetTickCount() - start) > timeout_ticks) {
             return -1;

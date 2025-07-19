@@ -114,7 +114,7 @@ void CSystemCore::ControlFromRemote_() {
     if (remote.switch_L == MID && remote.switch_R == HIG) {
         SysRemote.SetRemoteDeadZone(10.f);
         parm_->armCmd.set_angle_Yaw += 
-            (remote.joystick_LX / 100.f) * -90.f / freq;
+            (remote.joystick_LX / 100.f) * 90.f / freq;
         parm_->armCmd.set_angle_Pitch1 +=
             (remote.joystick_LY / 100.f) * 90.f / freq;
         parm_->armCmd.set_angle_Pitch2 +=
@@ -191,12 +191,12 @@ void CSystemCore::ControlFromKeyboard_() {
             pchassis_->chassisCmd.speed_Y =
             std::clamp(pchassis_->chassisCmd.speed_Y, -100.0f, 100.0f);
         } else {
-            pchassis_->chassisCmd.speed_X += static_cast<float_t>(keyboard.key_D - keyboard.key_A) * 1.5f;
-            pchassis_->chassisCmd.speed_Y += static_cast<float_t>(keyboard.key_W - keyboard.key_S) * 1.5f;
+            pchassis_->chassisCmd.speed_X += static_cast<float_t>(keyboard.key_D - keyboard.key_A) * 1.0f;
+            pchassis_->chassisCmd.speed_Y += static_cast<float_t>(keyboard.key_W - keyboard.key_S) * 1.0f;
             pchassis_->chassisCmd.speed_X =
-            std::clamp(pchassis_->chassisCmd.speed_X, -30.0f, 30.0f);
+            std::clamp(pchassis_->chassisCmd.speed_X, -20.0f, 20.0f);
             pchassis_->chassisCmd.speed_Y =
-            std::clamp(pchassis_->chassisCmd.speed_Y, -50.0f, 50.0f);
+            std::clamp(pchassis_->chassisCmd.speed_Y, -30.0f, 30.0f);
         }
     }
     
@@ -371,19 +371,22 @@ void CSystemCore::ControlFromController_() {
                 Round(controller.angle_yaw), 0.5f);
         parm_->armCmd.set_angle_Pitch1 =
             LowPassFilter(parm_->armCmd.set_angle_Pitch1,
-                Round(controller.angle_pitch1), 0.5f);
+                Round(controller.angle_pitch1 + 20.0f), 0.5f);
         parm_->armCmd.set_angle_Pitch2 =
             LowPassFilter(parm_->armCmd.set_angle_Pitch2,
-                Round(controller.angle_pitch2), 0.5f);
+                Round(controller.angle_pitch2 + 20.0f), 0.5f);
         parm_->armCmd.set_angle_Roll =
             LowPassFilter(parm_->armCmd.set_angle_Roll,
                 Round(-controller.angle_roll), 0.5f);
-        if (controller.angle_pitch1 < 50.0f && controller.angle_pitch2 < 50.0f) {
-            std::clamp(controller.angle_pitch_end, 0.0f, 40.0f);
+        if (controller.angle_pitch1 < 38.0f) {
+            parm_->armCmd.set_angle_end_pitch = 
+                std::clamp(parm_->armCmd.set_angle_end_pitch, 0.0f, 40.0f);
         }
-        parm_->armCmd.set_angle_end_pitch =
+        else {
+            parm_->armCmd.set_angle_end_pitch =
             LowPassFilter(parm_->armCmd.set_angle_end_pitch,
                 Round(controller.angle_pitch_end), 0.5f);
+        }
         // 只有末端的roll轴是增量式控制
         parm_->armCmd.set_angle_end_roll += 80.0f*(keyboard.key_F - keyboard.key_G)/freq;
             // LowPassFilter(parm_->armCmd.set_angle_end_roll,

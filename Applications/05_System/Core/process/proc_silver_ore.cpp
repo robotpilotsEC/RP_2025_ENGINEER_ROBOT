@@ -37,13 +37,15 @@ void CSystemCore::StartSilverOreTask(void *arg) {
 	core.psubgantry_->subGantryCmd.setLiftPosit_L = SUB_GANTRY_LIFT_PHYSICAL_RANGE_L;
 	core.psubgantry_->subGantryCmd.setLiftPosit_R = SUB_GANTRY_LIFT_PHYSICAL_RANGE_R;
 	core.parm_->armCmd.set_angle_Yaw = 0.f;
-	core.parm_->armCmd.set_angle_Pitch1 = 78.556f;
-	core.parm_->armCmd.set_angle_Pitch2 = 47.594f;
-	core.parm_->armCmd.set_angle_Roll = -2.178f;
-	core.parm_->armCmd.set_angle_end_pitch = -69.355f;
+	core.parm_->armCmd.set_angle_Pitch1 = 76.390f;
+	core.parm_->armCmd.set_angle_Pitch2 = 43.207f;
+	core.parm_->armCmd.set_angle_Roll = -1.480f;
+	core.parm_->armCmd.set_angle_end_pitch = -71.815f;
 	core.parm_->armCmd.set_angle_end_roll = 0.000f;
 
 	core.psubgantry_->subGantryCmd.setPumpOn_Arm = true; ///< Set the arm pump on
+
+	proc_waitMs(250);
 
 	/* Wait for User Confirmation */
 	cnt = timeout;
@@ -65,12 +67,12 @@ void CSystemCore::StartSilverOreTask(void *arg) {
 	core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 	
 	core.parm_->armCmd.set_angle_Yaw = 0.f;
-	core.parm_->armCmd.set_angle_Pitch1 = 85.396f;
-	core.parm_->armCmd.set_angle_Pitch2 = 44.170f;
-	core.parm_->armCmd.set_angle_Roll = -2.178f;
-	core.parm_->armCmd.set_angle_end_pitch = -53.570f;
+	core.parm_->armCmd.set_angle_Pitch1 = 90.0f;
+	core.parm_->armCmd.set_angle_Pitch2 = 45.0f;
+	core.parm_->armCmd.set_angle_Roll = -1.480f;
+	core.parm_->armCmd.set_angle_end_pitch = -63.180f;
 	core.parm_->armCmd.set_angle_end_roll = 0.000f;
-	proc_waitMs(250);
+	proc_waitMs(300);
 	
 	// /* Wait for User Confirmation */
 	// cnt = timeout;

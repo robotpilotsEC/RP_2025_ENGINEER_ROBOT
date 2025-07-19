@@ -29,16 +29,16 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 
 	core.parm_->armCmd.isAutoCtrl = true;
 	core.psubgantry_->subGantryCmd.isAutoCtrl = true;
-	core.psubgantry_->subGantryCmd.isAutoCtrl = true;
+	core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 
-	core.pgimbal_->gimbalCmd.set_posit_lift = 0.0f;
+	core.pgimbal_->gimbalCmd.set_posit_lift = 100.0f;
 
-	core.parm_->armCmd.set_angle_Yaw = 0.0f;
-	core.parm_->armCmd.set_angle_Pitch1 = 0.0f;
-	core.parm_->armCmd.set_angle_Pitch2 = 0.0f;
-	core.parm_->armCmd.set_angle_Roll = 0.0f;
-	core.parm_->armCmd.set_angle_end_pitch = 0.0f;
-	core.parm_->armCmd.set_angle_end_roll = 0.0f;
+	core.parm_->armCmd.set_angle_Yaw = -0.195f;
+	core.parm_->armCmd.set_angle_Pitch1 = 24.976f;
+	core.parm_->armCmd.set_angle_Pitch2 = 51.125f;
+	core.parm_->armCmd.set_angle_Roll = 180.000f;
+	core.parm_->armCmd.set_angle_end_pitch = -145.000f;
+	core.parm_->armCmd.set_angle_end_roll = 0.000f;
 
 	while (keyboard.key_Ctrl) {
 		// 用刺雷
@@ -47,12 +47,10 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 			/*Step 1*/
 			core.psubgantry_->subGantryCmd.setLiftPosit_L = 0.0f;
 			core.psubgantry_->subGantryCmd.setLiftPosit_R = 0.0f;
-			core.psubgantry_->subGantryCmd.setStretchPosit_L = 0.0f;
-			core.psubgantry_->subGantryCmd.setStretchPosit_R = 0.0f;
+			core.psubgantry_->subGantryCmd.setStretchPosit_L = 100.0f;
+			core.psubgantry_->subGantryCmd.setStretchPosit_R = 100.0f;
 			core.psubgantry_->subGantryCmd.setPumpOn_Left = false;
 			core.psubgantry_->subGantryCmd.setPumpOn_Right = false;
-
-			core.pgimbal_->gimbalCmd.set_posit_lift = 0.0f;
 
 			proc_waitMs(250);
 			
@@ -75,8 +73,8 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 			core.psubgantry_->subGantryCmd.isAutoCtrl = true;
 			core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 
-			core.psubgantry_->subGantryCmd.setStretchPosit_L = SUB_GANTRY_STRETCH_PHYSICAL_RANGE_L;
-			core.psubgantry_->subGantryCmd.setStretchPosit_R = SUB_GANTRY_STRETCH_PHYSICAL_RANGE_R;
+			core.psubgantry_->subGantryCmd.setStretchPosit_L = 266.0f;
+			core.psubgantry_->subGantryCmd.setStretchPosit_R = 322.0f;
 			core.psubgantry_->subGantryCmd.setPumpOn_Left = true;
 			core.psubgantry_->subGantryCmd.setPumpOn_Right = true;
 			proc_waitMs(250);
@@ -100,8 +98,8 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 			core.psubgantry_->subGantryCmd.isAutoCtrl = true;
 			core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 
-			core.psubgantry_->subGantryCmd.setLiftPosit_L = SUB_GANTRY_LIFT_PHYSICAL_RANGE_L;
-			core.psubgantry_->subGantryCmd.setLiftPosit_R = SUB_GANTRY_LIFT_PHYSICAL_RANGE_R;
+			core.psubgantry_->subGantryCmd.setLiftPosit_L = 46.0f;
+			core.psubgantry_->subGantryCmd.setLiftPosit_R = 50.0f;
 			proc_waitUntilWithTimeout(
 				(core.psubgantry_->subGantryInfo.isPositArrived_Lift_L &&
 				 core.psubgantry_->subGantryInfo.isPositArrived_Lift_R),
@@ -128,12 +126,12 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 			if (cnt == 0) goto proc_exit;
 
 			/*Step 4*/
-			core.parm_->armCmd.set_angle_Yaw = 0.0f;
-			core.parm_->armCmd.set_angle_Pitch1 = 0.0f;
-			core.parm_->armCmd.set_angle_Pitch2 = 0.0f;
-			core.parm_->armCmd.set_angle_Roll = 0.0f;
-			core.parm_->armCmd.set_angle_end_pitch = 0.0f;
-			core.parm_->armCmd.set_angle_end_roll = 0.0f;
+			core.parm_->armCmd.set_angle_Yaw = -0.585f;
+			core.parm_->armCmd.set_angle_Pitch1 = 20.644f;
+			core.parm_->armCmd.set_angle_Pitch2 = 29.297f;
+			core.parm_->armCmd.set_angle_Roll = -2.178f;
+			core.parm_->armCmd.set_angle_end_pitch = -60.745f;
+			core.parm_->armCmd.set_angle_end_roll = -0.720f;
 			proc_waitMs(250);
 
 			goto proc_exit;
@@ -142,12 +140,12 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 		// 用机械臂
 		if (keyboard.mouse_R) {
 			/*Step 1*/
-			core.parm_->armCmd.set_angle_Yaw = 0.0f;
-			core.parm_->armCmd.set_angle_Pitch1 = 0.0f;
-			core.parm_->armCmd.set_angle_Pitch2 = 0.0f;
-			core.parm_->armCmd.set_angle_Roll = 0.0f;
-			core.parm_->armCmd.set_angle_end_pitch = 0.0f;
-			core.parm_->armCmd.set_angle_end_roll = 0.0f;
+			core.parm_->armCmd.set_angle_Yaw = -0.585f;
+			core.parm_->armCmd.set_angle_Pitch1 = 90.868f;
+			core.parm_->armCmd.set_angle_Pitch2 = 48.878f;
+			core.parm_->armCmd.set_angle_Roll = 180.000f;
+			core.parm_->armCmd.set_angle_end_pitch = -66.570f;
+			core.parm_->armCmd.set_angle_end_roll = -1.440f;
 
 			core.psubgantry_->subGantryCmd.setLiftPosit_L = SUB_GANTRY_LIFT_PHYSICAL_RANGE_L;
 			core.psubgantry_->subGantryCmd.setLiftPosit_R = SUB_GANTRY_LIFT_PHYSICAL_RANGE_R;
@@ -166,7 +164,7 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 			while (cnt--) {
 				if (keyboard.key_Ctrl) {
 					if (keyboard.mouse_L) {
-						core.parm_->armCmd.set_angle_Yaw = -13.5f;
+						core.parm_->armCmd.set_angle_Yaw = 13.5f;
 						break;
 					}
 					else if (keyboard.mouse_R) {
@@ -177,6 +175,8 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 				proc_waitMs(5);
 			}
 			if (cnt == 0) goto proc_exit;
+
+			proc_waitMs(250);
 
 			/* Wait for User Confirmation */
 			cnt = timeout;
@@ -202,8 +202,18 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 
 			do {
 				proc_waitMs(1);
-				core.parm_->armCmd.set_angle_Pitch2 -= 14.0 / core.freq; 
-			}while (core.parm_->armCmd.set_angle_Pitch2 > 63.55f);
+				if (core.parm_->armCmd.set_angle_Pitch1 > 78.214f) {
+					core.parm_->armCmd.set_angle_Pitch1 -= 14.0 / core.freq; 
+				}
+				if (core.parm_->armCmd.set_angle_Pitch2 > 45.240f) {
+					core.parm_->armCmd.set_angle_Pitch2 -= 14.0 / core.freq;
+				}
+				if (core.parm_->armCmd.set_angle_end_pitch > -77.0f) {
+					core.parm_->armCmd.set_angle_end_pitch -= 14.0 / core.freq;
+				}
+			}while (core.parm_->armCmd.set_angle_Pitch1 > 78.214f ||
+				core.parm_->armCmd.set_angle_Pitch2 > 45.240f ||
+				core.parm_->armCmd.set_angle_end_pitch > -77.0f);
 
 			/* Wait for User Confirmation */
 			cnt = timeout;
@@ -219,19 +229,22 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 			}
 			if (cnt == 0) goto proc_exit;
 
+			do {
+				proc_waitMs(1);
+				core.parm_->armCmd.set_angle_Roll -= 360.0f / core.freq;
+			} while (core.parm_->armCmd.set_angle_Roll > 0.f);
+
 			/*Step 3*/
 			core.parm_->armCmd.isAutoCtrl = true;
 			core.psubgantry_->subGantryCmd.isAutoCtrl = true;
 			core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 
-			core.parm_->armCmd.set_angle_Yaw = 0.0f;
-			core.parm_->armCmd.set_angle_Pitch1 = 30.2f;
-			core.parm_->armCmd.set_angle_Pitch2 = 22.0f;
+			core.parm_->armCmd.set_angle_Yaw = -0.585f;
+			core.parm_->armCmd.set_angle_Pitch1 = 40.644f;
+			core.parm_->armCmd.set_angle_Pitch2 = 59.297f;
 			core.parm_->armCmd.set_angle_Roll = 0.0f;
-			core.parm_->armCmd.set_angle_end_pitch = -90.0f;
-			core.parm_->armCmd.set_angle_end_roll = 0.0f;
-
-			core.pgimbal_->gimbalCmd.set_posit_lift = 0.0f;
+			core.parm_->armCmd.set_angle_end_pitch = -60.745f;
+			core.parm_->armCmd.set_angle_end_roll = -0.720f;
 
 			goto proc_exit;
 		}

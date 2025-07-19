@@ -41,8 +41,8 @@ EAppStatus InitAllModule() {
    armInitParam.YawSpdPidParam.kp = 0.08f;
    armInitParam.YawSpdPidParam.ki = 0.1f;
    armInitParam.YawSpdPidParam.kd = 0.0f;
-   armInitParam.YawSpdPidParam.maxIntegral = 2000.0f;
-   armInitParam.YawSpdPidParam.maxOutput = 2000.0f;
+   armInitParam.YawSpdPidParam.maxIntegral = 1000.0f;
+   armInitParam.YawSpdPidParam.maxOutput = 1000.0f;
 //    // 初始化 Pitch1PosPidParam 的成员
    armInitParam.Pitch1PosPidParam.kp = 2.8f;
    armInitParam.Pitch1PosPidParam.ki = 0.0f;
@@ -109,7 +109,7 @@ EAppStatus InitAllModule() {
     subGantryInitParam.liftPosPidParam.maxIntegral = 0.0f;
     subGantryInitParam.liftPosPidParam.maxOutput = 5000.0f;
     subGantryInitParam.liftSpdPidParam.kp = 1.0f;
-    subGantryInitParam.liftSpdPidParam.ki = 0.3f;
+    subGantryInitParam.liftSpdPidParam.ki = 0.8f;
     subGantryInitParam.liftSpdPidParam.kd = 0.0f;
     subGantryInitParam.liftSpdPidParam.maxIntegral = 5000.0f;
     subGantryInitParam.liftSpdPidParam.maxOutput = 8000.f;//8000.0f;

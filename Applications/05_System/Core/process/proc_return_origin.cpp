@@ -43,8 +43,8 @@ void CSystemCore::StartReturnOriginTask(void *arg) {
 
 	/*Set Arm*/
 	core.parm_->armCmd.set_angle_Yaw = 0.0f;
-	core.parm_->armCmd.set_angle_Pitch1 = 11.0f;
-	core.parm_->armCmd.set_angle_Pitch2 = 18.0f;
+	core.parm_->armCmd.set_angle_Pitch1 = 21.0f;
+	core.parm_->armCmd.set_angle_Pitch2 = 28.0f;
 	core.parm_->armCmd.set_angle_Roll = 0.0f;
 	core.parm_->armCmd.set_angle_end_pitch = -70.0f;
 	core.parm_->armCmd.set_angle_end_roll = 0.0f;
