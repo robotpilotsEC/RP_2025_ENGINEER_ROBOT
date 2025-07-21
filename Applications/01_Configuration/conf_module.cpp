@@ -68,7 +68,7 @@ EAppStatus InitAllModule() {
    armInitParam.Pitch2SpdPidParam.maxIntegral = 2000.0f;
    armInitParam.Pitch2SpdPidParam.maxOutput = 2000.0f;
    // 初始化 mitCtrl_Roll 的成员
-   armInitParam.MIT_Roll_kp = 15.0f;
+   armInitParam.MIT_Roll_kp = 20.0f;
    armInitParam.MIT_Roll_kd = 1.5f;
    // 初始化 endPosPidParam 的成员
    armInitParam.endPosPidParam.kp = 0.2f;

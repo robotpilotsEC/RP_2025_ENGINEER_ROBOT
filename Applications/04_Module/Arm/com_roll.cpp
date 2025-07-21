@@ -93,7 +93,7 @@ EAppStatus CModArm::CComRoll::UpdateComponent() {
 		}
 
 		case FSM_CTRL: {
-			pMtr->Control_MIT(mitCtrl.kp, mitCtrl.kd, deg2rad(rollCmd.setAngle), 0.0f, 0.0f);
+			pMtr->Control_MIT(mitCtrl.kp, mitCtrl.kd, deg2rad(next_angle), 0.0f, 0.0f);
 			return APP_OK;
 		}
 

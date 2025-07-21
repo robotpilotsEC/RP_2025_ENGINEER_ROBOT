@@ -205,7 +205,7 @@ void CSystemCore::ControlFromKeyboard_() {
     if (!keyboard.key_Ctrl
         && keyboard.key_G
         && currentAutoCtrlProcess_ == EAutoCtrlProcess::NONE) {
-        pchassis_->chassisCmd.speed_X = static_cast<float_t>(keyboard.mouse_R - keyboard.mouse_L) * 100.f;
+        pchassis_->chassisCmd.speed_W = static_cast<float_t>(keyboard.mouse_R - keyboard.mouse_L) * 100.f;
     }
 
     /******************* 云台手动控制 *******************/
