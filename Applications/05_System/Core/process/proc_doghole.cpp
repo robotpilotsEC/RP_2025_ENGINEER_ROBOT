@@ -36,9 +36,6 @@ void CSystemCore::StartDogHoleTask(void *arg) {
 	core.psubgantry_->subGantryCmd.setLiftPosit_L = 0.0f;
 	core.psubgantry_->subGantryCmd.setStretchPosit_R = 0.0f;
 	core.psubgantry_->subGantryCmd.setLiftPosit_R = 0.0f;
-
-	core.psubgantry_->subGantryCmd.setPumpOn_Left = false;
-	core.psubgantry_->subGantryCmd.setPumpOn_Right = false;
 	
 	/*Set Arm*/
 	core.parm_->armCmd.set_angle_Yaw = 0.0f;

@@ -73,7 +73,7 @@ EAppStatus CModArm::CComJoint::UpdateComponent() {
 	jointInfo.posit_pitch1 = motor[P1]->motorData[CDevMtr::DATA_POSIT] * ARM_PITCH1_MOTOR_DIR;
 	jointInfo.posit_pitch2 = motor[P2]->motorData[CDevMtr::DATA_POSIT] * ARM_PITCH2_MOTOR_DIR;
 	
-	jointInfo.isPositArrived_yaw = abs(jointInfo.posit_yaw - jointCmd.setPosit_yaw) < 1000;
+	jointInfo.isPositArrived_yaw = abs(jointInfo.posit_yaw - jointCmd.setPosit_yaw) < 700;
 	jointInfo.isPositArrived_pitch1 = abs(jointInfo.posit_pitch1 - jointCmd.setPosit_pitch1) < 700;
 	jointInfo.isPositArrived_pitch2 = abs(jointInfo.posit_pitch2 - jointCmd.setPosit_pitch2) < 700;
 
@@ -119,7 +119,7 @@ EAppStatus CModArm::CComJoint::UpdateComponent() {
 			else{
 				/*全部到位后才进入初始化 - 优先级最高*/
 				if(jointInfo.isPositArrived_pitch2 && jointInfo.isPositArrived_pitch1 && alreadySetYaw == true){
-					if(jointInfo.isPositArrived_yaw){
+					if(abs(jointInfo.posit_yaw - jointCmd.setPosit_yaw)<300){
 						motor[Y]->motorData[CDevMtr::DATA_POSIT] = 0.0f;
 						jointCmd.setPosit_yaw = 0;
 						jointCmd.setPosit_pitch1 = POSIT_JOINT2_PITCH1_INIT_PHY * 182.04f;

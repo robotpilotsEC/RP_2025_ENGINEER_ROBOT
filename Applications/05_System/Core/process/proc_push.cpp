@@ -39,7 +39,7 @@ void CSystemCore::StartPushOreTask(void *arg) {
 			core.parm_->armCmd.set_angle_Pitch1 = 67.902f;
 			core.parm_->armCmd.set_angle_Pitch2 = 64.212f;
 			core.parm_->armCmd.set_angle_Roll = -1.829f;
-			core.parm_->armCmd.set_angle_end_pitch = -105.515f;
+			core.parm_->armCmd.set_angle_end_pitch = -115.515f;
 			core.parm_->armCmd.set_angle_end_roll -= 36.640f;
 
 			proc_waitMs(250);
@@ -60,7 +60,7 @@ void CSystemCore::StartPushOreTask(void *arg) {
 
 			// core.parm_->armCmd.set_angle_Yaw = 21.35f;
 			proc_waitMs(250);
-			core.psubgantry_->subGantryCmd.setStretchPosit_L = 75.0f;
+			core.psubgantry_->subGantryCmd.setStretchPosit_L = 95.0f;
 
 			/* Wait for User Confirmation */
 			cnt = timeout;
@@ -108,11 +108,11 @@ void CSystemCore::StartPushOreTask(void *arg) {
 			core.parm_->armCmd.set_angle_Pitch1 = 62.254f;
 			core.parm_->armCmd.set_angle_Pitch2 = 72.311f;
 			core.parm_->armCmd.set_angle_Roll = -1.480f;
-			core.parm_->armCmd.set_angle_end_pitch = -107.690f;
+			core.parm_->armCmd.set_angle_end_pitch = -118.690f;
 			core.parm_->armCmd.set_angle_end_roll += 35.280f;
 
 			proc_waitMs(250);
-			core.parm_->armCmd.set_angle_Yaw = -36.075f;
+			core.parm_->armCmd.set_angle_Yaw = -52.075f;
 
 			/* Step 2 */
 			proc_waitUntilWithTimeout(
@@ -129,7 +129,7 @@ void CSystemCore::StartPushOreTask(void *arg) {
 
 			// core.parm_->armCmd.set_angle_Yaw = 21.35f;
 			proc_waitMs(250);
-			core.psubgantry_->subGantryCmd.setStretchPosit_R = 40.0f;
+			core.psubgantry_->subGantryCmd.setStretchPosit_R = 60.0f;
 
 			/* Wait for User Confirmation */
 			cnt = timeout;

@@ -53,7 +53,7 @@ EAppStatus CModArm::CComRoll::UpdateComponent() {
 
 	// 更新组件信息
 	rollInfo.angle = rad2deg(pMtr->motorPhyAngle);
-	rollInfo.isAngleArrived = (fabs(rollInfo.angle - rollCmd.setAngle) < 1.0f);
+	rollInfo.isAngleArrived = (fabs(rollInfo.angle - rollCmd.setAngle) < 3.0f);
 
 	uint8_t test1 = 0;
 	if(test1 == 1) {

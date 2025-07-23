@@ -40,7 +40,7 @@ void CSystemCore::StartPopOreTask(void *arg) {
 				core.psubgantry_->subGantryInfo.isPositArrived_Lift_L == true, 5000
 			);
 			/*Set RoboticArm*/
-			core.parm_->armCmd.set_angle_Yaw = -0.585f;
+			core.parm_->armCmd.set_angle_Yaw = -15.585f;
 			core.parm_->armCmd.set_angle_Pitch1 = 51.766f;
 			core.parm_->armCmd.set_angle_Pitch2 = 40.425f;
 			core.parm_->armCmd.set_angle_Roll = 85.770f;
@@ -122,7 +122,7 @@ void CSystemCore::StartPopOreTask(void *arg) {
 			);
 			core.parm_->armCmd.set_angle_Yaw = 14.235f;
 			core.parm_->armCmd.set_angle_Pitch1 = 49.600f;
-			core.parm_->armCmd.set_angle_Pitch2 = 34.754f;
+			core.parm_->armCmd.set_angle_Pitch2 = 36.754f;
 			core.parm_->armCmd.set_angle_Roll = -90.824f;
 			core.parm_->armCmd.set_angle_end_pitch = -110.970f;
 			core.parm_->armCmd.set_angle_end_roll = -0.720f;
@@ -141,7 +141,7 @@ void CSystemCore::StartPopOreTask(void *arg) {
 			core.psubgantry_->subGantryCmd.setPumpOn_Right = true; // 启动右气泵
 			proc_waitMs(250);
 			
-			core.parm_->armCmd.set_angle_Yaw = -17.0f;
+			core.parm_->armCmd.set_angle_Yaw = -13.0f;
 			// core.parm_->armCmd.set_angle_Pitch1 += 5.0f;
 			proc_waitMs(250);
 

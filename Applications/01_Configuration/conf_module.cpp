@@ -32,18 +32,18 @@ EAppStatus InitAllModule() {
     armInitParam.MotorTxNode_End_L = &TxNode_Can2_1FF;
     armInitParam.MotorTxNode_End_R = &TxNode_Can2_1FF;
     // 初始化 YawPosPidParam 的成员
-   armInitParam.YawPosPidParam.kp = 0.3f;
+   armInitParam.YawPosPidParam.kp = 0.4;
    armInitParam.YawPosPidParam.ki = 0.0f;
    armInitParam.YawPosPidParam.kd = 0.0f;
    armInitParam.YawPosPidParam.maxIntegral = 3000.0f;
    armInitParam.YawPosPidParam.maxOutput = 3000.0f;
    // 初始化 YawSpdPidParam 的成员
-   armInitParam.YawSpdPidParam.kp = 0.08f;
-   armInitParam.YawSpdPidParam.ki = 0.1f;
+   armInitParam.YawSpdPidParam.kp = 0.1f;
+   armInitParam.YawSpdPidParam.ki = 0.0f;
    armInitParam.YawSpdPidParam.kd = 0.0f;
    armInitParam.YawSpdPidParam.maxIntegral = 1000.0f;
-   armInitParam.YawSpdPidParam.maxOutput = 1000.0f;
-//    // 初始化 Pitch1PosPidParam 的成员
+   armInitParam.YawSpdPidParam.maxOutput = 2000.0f;
+    // 初始化 Pitch1PosPidParam 的成员
    armInitParam.Pitch1PosPidParam.kp = 2.8f;
    armInitParam.Pitch1PosPidParam.ki = 0.0f;
    armInitParam.Pitch1PosPidParam.kd = 0.0f;
@@ -55,7 +55,7 @@ EAppStatus InitAllModule() {
    armInitParam.Pitch1SpdPidParam.kd = 0.0f;
    armInitParam.Pitch1SpdPidParam.maxIntegral = 2000.0f;
    armInitParam.Pitch1SpdPidParam.maxOutput = 2000.0f;
-//    // 初始化 Pitch2PosPidParam 的成员
+   // 初始化 Pitch2PosPidParam 的成员
    armInitParam.Pitch2PosPidParam.kp = 2.3f;
    armInitParam.Pitch2PosPidParam.ki = 0.0f;
    armInitParam.Pitch2PosPidParam.kd = 0.0f;
@@ -69,7 +69,7 @@ EAppStatus InitAllModule() {
    armInitParam.Pitch2SpdPidParam.maxOutput = 2000.0f;
    // 初始化 mitCtrl_Roll 的成员
    armInitParam.MIT_Roll_kp = 20.0f;
-   armInitParam.MIT_Roll_kd = 1.5f;
+   armInitParam.MIT_Roll_kd = 1.0f;
    // 初始化 endPosPidParam 的成员
    armInitParam.endPosPidParam.kp = 0.2f;
    armInitParam.endPosPidParam.ki = 0.0f;
@@ -109,10 +109,10 @@ EAppStatus InitAllModule() {
     subGantryInitParam.liftPosPidParam.maxIntegral = 0.0f;
     subGantryInitParam.liftPosPidParam.maxOutput = 5000.0f;
     subGantryInitParam.liftSpdPidParam.kp = 1.0f;
-    subGantryInitParam.liftSpdPidParam.ki = 0.8f;
+    subGantryInitParam.liftSpdPidParam.ki = 0.5f;
     subGantryInitParam.liftSpdPidParam.kd = 0.0f;
-    subGantryInitParam.liftSpdPidParam.maxIntegral = 5000.0f;
-    subGantryInitParam.liftSpdPidParam.maxOutput = 8000.f;//8000.0f;
+    subGantryInitParam.liftSpdPidParam.maxIntegral = 4500.0f;
+    subGantryInitParam.liftSpdPidParam.maxOutput = 7000.f;//8000.0f;
     subGantryInitParam.stretchPosPidParam.kp = 0.18f;
     subGantryInitParam.stretchPosPidParam.ki = 0.0f;
     subGantryInitParam.stretchPosPidParam.kd = 0.1f;
@@ -121,7 +121,7 @@ EAppStatus InitAllModule() {
     subGantryInitParam.stretchSpdPidParam.kp = 3.0f;
     subGantryInitParam.stretchSpdPidParam.ki = 0.3f;
     subGantryInitParam.stretchSpdPidParam.kd = 0.0f;
-    subGantryInitParam.stretchSpdPidParam.maxIntegral = 5000.0f;
+    subGantryInitParam.stretchSpdPidParam.maxIntegral = 4500.0f;
     subGantryInitParam.stretchSpdPidParam.maxOutput = 8000.0f;
     // 使用初始化后的参数创建 subGantryModule 实例
     static auto subGantryModule = CModSubGantry(subGantryInitParam);
@@ -133,16 +133,16 @@ EAppStatus InitAllModule() {
     // 设置can发送节点
     gimbalInitParam.liftMotorTxNode = &TxNode_Can2_1FF;
     // 初始化 liftPosPidParam 的成员
-   gimbalInitParam.liftPosPidParam.kp = 0.1f;
+   gimbalInitParam.liftPosPidParam.kp = 0.3f;
    gimbalInitParam.liftPosPidParam.ki = 0.0f;
    gimbalInitParam.liftPosPidParam.kd = 0.3f;
-   gimbalInitParam.liftPosPidParam.maxOutput = 8000.0f;
+   gimbalInitParam.liftPosPidParam.maxOutput = 4500.0f;
    // 初始化 liftSpdPidParam 的成员
-   gimbalInitParam.liftSpdPidParam.kp = 3.0f;
-   gimbalInitParam.liftSpdPidParam.ki = 2.0f;
+   gimbalInitParam.liftSpdPidParam.kp = 2.0f;
+   gimbalInitParam.liftSpdPidParam.ki = 0.1f;
    gimbalInitParam.liftSpdPidParam.kd = 0.0f;
-   gimbalInitParam.liftSpdPidParam.maxIntegral = 1000.0f;
-   gimbalInitParam.liftSpdPidParam.maxOutput = 4500.0f;
+   gimbalInitParam.liftSpdPidParam.maxIntegral = 2000.0f;
+   gimbalInitParam.liftSpdPidParam.maxOutput = 7000.0f;
    //  使用初始化后的参数创建 gimbalModule 实例
     static auto gimbalModule = CModGimbal(gimbalInitParam);
 

@@ -141,6 +141,14 @@ void CDevMtrDM_MIT::SetZero() {
 }
 
 void CDevMtrDM_MIT::ClearError() {
+	if (deviceStatus == APP_RESET)
+		return;
+
+	std::array<uint8_t, 8> data_buf = {static_cast<uint8_t>(canTxNode_.stdId & 0xff), static_cast<uint8_t>((canTxNode_.stdId >> 8) & 0xff), 0xCC, 0x00, 0x00, 0x00, 0x00, 0x00};
+	// 填充数据帧
+	Modify_CanTxData(data_buf.data());
+	// 发送数据帧
+	canTxNode_.Transmit();
 }
 
 /**
@@ -219,6 +227,10 @@ void CDevMtrDM_MIT::HeartbeatHandler_() {
 		// 使能电机
 		EnableMotor();
 		lastEnableTime_ = HAL_GetTick();
+	}
+	if(HAL_GetTick() - lastclearErrorTime_ > 10000){
+		ClearError();
+		lastclearErrorTime_ = HAL_GetTick();
 	}
 
     return ;

@@ -45,6 +45,7 @@ protected:
 
 	// 上一次使能时间
 	uint32_t lastEnableTime_ = 0;
+	uint32_t lastclearErrorTime_ = 0;
 
 	// 电机参数
 	typedef struct

@@ -1,9 +1,6 @@
 dm-mc02/stream_buffer.o: \
   ..\..\..\Middlewares\FreeRTOS-Kernel\stream_buffer.c \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\stdint.h \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\string.h \
   ..\..\..\Middlewares\FreeRTOS-Kernel\include\FreeRTOS.h \
-  D:\0_Environment\Keil_v5\ARM\ARMCLANG\include\stddef.h \
   ..\BSP\FreeRTOSConfig.h \
   ..\..\..\Middlewares\FreeRTOS-Kernel\include\projdefs.h \
   ..\..\..\Middlewares\FreeRTOS-Kernel\include\portable.h \

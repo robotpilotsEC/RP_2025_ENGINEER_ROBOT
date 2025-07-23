@@ -267,46 +267,50 @@ void CSystemCore::ControlFromKeyboard_() {
     if (keyboard.key_Ctrl
     && parm_->armInfo.isModuleAvailable)
     {
-        if(keyboard.key_R)
+        if(keyboard.key_V)
         {
             //TODO: 这个任务最好可以用于终止proc_waituntil
             StopAutoCtrlTask_();
             StartAutoCtrlTask_(EAutoCtrlProcess::RETURN_ORIGIN);
         }
-        if(keyboard.key_Q)
+        if(keyboard.key_G)
         {
             StartAutoCtrlTask_(EAutoCtrlProcess::GOLD_ORE);
         }
-        if(keyboard.key_E)
+        if(keyboard.key_X)
         {
             StartAutoCtrlTask_(EAutoCtrlProcess::SILVER_ORE);
         }
+        if(keyboard.key_F)
+        {
+            StartAutoCtrlTask_(EAutoCtrlProcess::GROUND_ORE);
+        }
+        if(keyboard.key_R)
+        {
+            StartAutoCtrlTask_(EAutoCtrlProcess::PUSH_ORE);
+        }
+        if(keyboard.key_Q)
+        {
+            StartAutoCtrlTask_(EAutoCtrlProcess::POP_ORE);
+        }
+        // if(keyboard.key_B)
+        // {
+        //     StartAutoCtrlTask_(EAutoCtrlProcess::EXCHANGE);
+        // }
+
+    }
+    if(keyboard.key_Shift &&
+        parm_->armInfo.isModuleAvailable){
         if(keyboard.key_Z)
         {
             StartAutoCtrlTask_(EAutoCtrlProcess::RETURN_DRIVE);
         }
-        if(keyboard.key_X)
+        if(keyboard.key_C)
         {
             StartAutoCtrlTask_(EAutoCtrlProcess::DOGHOLE);
         }
-        if(keyboard.key_C)
-        {
-            StartAutoCtrlTask_(EAutoCtrlProcess::GROUND_ORE);
-        }
-        if(keyboard.key_F)
-        {
-            StartAutoCtrlTask_(EAutoCtrlProcess::PUSH_ORE);
-        }
-        if(keyboard.key_G)
-        {
-            StartAutoCtrlTask_(EAutoCtrlProcess::POP_ORE);
-        }
-        if(keyboard.key_B)
-        {
-            StartAutoCtrlTask_(EAutoCtrlProcess::EXCHANGE);
-        }
-
     }
+
 }
 
 /**
@@ -314,6 +318,7 @@ void CSystemCore::ControlFromKeyboard_() {
  */
 void CSystemCore::ControlFromController_() {
     const auto freq = 1000.f; // 系统核心频率
+    static uint16_t last_key_F,last_key_G;
 
     auto &controller = SysControllerLink.controllerInfo;
 
@@ -388,7 +393,13 @@ void CSystemCore::ControlFromController_() {
                 Round(controller.angle_pitch_end), 0.5f);
         }
         // 只有末端的roll轴是增量式控制
-        parm_->armCmd.set_angle_end_roll += 80.0f*(keyboard.key_F - keyboard.key_G)/freq;
+        parm_->armCmd.set_angle_end_roll += 110.0f*(keyboard.key_F - keyboard.key_G)/freq;
+        if( SysRemote.remoteInfo.keyboard.key_Z){
+            if(last_key_F != SysRemote.remoteInfo.keyboard.key_F)
+                parm_->armCmd.set_angle_end_roll += 30.0f;
+            if(last_key_G != SysRemote.remoteInfo.keyboard.key_G)
+                parm_->armCmd.set_angle_end_roll -= 30.0f;
+        }
             // LowPassFilter(parm_->armCmd.set_angle_end_roll,
             //     Round(controller.angle_roll_end), 0.5f);
         // if (controller.Rocker_Key == CSystemControllerLink::KEY_STATUS::PRESS &&
@@ -398,6 +409,8 @@ void CSystemCore::ControlFromController_() {
 
         // 云台抬升
         pgimbal_->gimbalCmd.set_posit_lift += static_cast<float_t>(keyboard.key_Z - keyboard.key_X) * 60.0f / freq;
+        psubgantry_->subGantryCmd.setLiftPosit_L = 88.5f;           ///<兑矿时必须保证刺雷抬到最高点
+        psubgantry_->subGantryCmd.setLiftPosit_R = 88.5f;
 
         // 气泵控制
         static uint8_t vb_count = 0;
@@ -417,8 +430,11 @@ void CSystemCore::ControlFromController_() {
         }
 
     // }
+        last_key_F = SysRemote.remoteInfo.keyboard.key_F;
+        last_key_G = SysRemote.remoteInfo.keyboard.key_G;
+    // last_rocker_key_status = controller.Rocker_Key
 
-    last_rocker_key_status = controller.Rocker_Key;
+    
 }
 
 void CSystemCore::ControlFromEsp32_() {
