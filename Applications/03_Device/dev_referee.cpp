@@ -69,6 +69,13 @@ void CDevReferee::UpdateHandler_() {
 	if (rxTimestamp_ > lastHeartbeatTime_) {
 		ResolveRxPackage_();
 	}
+
+	if (HAL_GetTick() - radar_lastUpdateTime_ > 500) {
+		if (radarPkg.message.if_dart_comming) {
+			radarPkg.message.if_dart_comming = false; // 重置状态
+			radar_lastUpdateTime_ = HAL_GetTick();
+		}
+	} 
 }
 
 /**
@@ -104,9 +111,9 @@ EAppStatus CDevReferee::ResolveRxPackage_() {
 		}
 
 		auto header = reinterpret_cast<SPkgHeader *>(&rxBuffer_[i]);
-		if (CCrcValidator::Crc8Verify(rxBuffer_.data(), header->CRC8, 4) != APP_OK) {
-			continue;
-		}
+		// if (CCrcValidator::Crc8Verify(header, header->CRC8, 4) != APP_OK) {
+		// 	continue;
+		// }
 
 		switch (header->cmdId) {
 			case ECommandID::ID_RACE_STATUS: {
@@ -161,6 +168,21 @@ EAppStatus CDevReferee::ResolveRxPackage_() {
 					break;
 				robotPerfPkg = *pkg;
 				i += sizeof(SRobotPerfPkg) - 1;
+				break;
+			}
+
+			case ECommandID::ID_ROBOT_MSG: {
+				if (i + sizeof(SRadarMsgPkg) > rxBuffer_.size())
+					break;
+				auto pkg = reinterpret_cast<SRadarMsgPkg *>(header);
+				if (pkg->transmitterID != 0x109 || pkg->messageID != EMessageID::ID_RADAR_MSG) {
+					continue; // 只处理特定的transmitterID
+				}
+				if (CCrcValidator::Crc16Verify(reinterpret_cast<uint8_t *>(pkg), pkg->CRC16, sizeof(SRadarMsgPkg) - 2) != APP_OK)
+					break;
+				radarPkg = *pkg;
+				i += sizeof(SRadarMsgPkg) - 1;
+				radar_lastUpdateTime_ = HAL_GetTick();
 				break;
 			}
 

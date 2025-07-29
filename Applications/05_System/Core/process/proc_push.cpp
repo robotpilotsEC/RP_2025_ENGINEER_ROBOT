@@ -36,14 +36,23 @@ void CSystemCore::StartPushOreTask(void *arg) {
 			core.psubgantry_->subGantryCmd.setLiftPosit_L = 0.0f;
 			proc_waitMs(250);
 
-			core.parm_->armCmd.set_angle_Pitch1 = 67.902f;
-			core.parm_->armCmd.set_angle_Pitch2 = 64.212f;
-			core.parm_->armCmd.set_angle_Roll = -1.829f;
-			core.parm_->armCmd.set_angle_end_pitch = -115.515f;
-			core.parm_->armCmd.set_angle_end_roll -= 36.640f;
+			// core.parm_->armCmd.set_angle_Pitch1 = 67.902f;
+			// core.parm_->armCmd.set_angle_Pitch2 = 64.212f;
+			// core.parm_->armCmd.set_angle_Roll = -1.829f;
+			// core.parm_->armCmd.set_angle_end_pitch = -115.515f;
+			// core.parm_->armCmd.set_angle_end_roll -= 36.640f;
+
+			// proc_waitMs(250);
+			// core.parm_->armCmd.set_angle_Yaw = 51.870f;
+
+			core.parm_->armCmd.set_angle_Pitch1 = 62.938f;
+			core.parm_->armCmd.set_angle_Pitch2 = 59.471f;
+			core.parm_->armCmd.set_angle_Roll = -3.923f;
+			core.parm_->armCmd.set_angle_end_pitch = -98.260f;
+			core.parm_->armCmd.set_angle_end_roll -= 33.120f;
 
 			proc_waitMs(250);
-			core.parm_->armCmd.set_angle_Yaw = 51.870f;
+			core.parm_->armCmd.set_angle_Yaw = 50.115f;
 
 			/* Step 2 */
 			proc_waitUntilWithTimeout(
@@ -60,7 +69,7 @@ void CSystemCore::StartPushOreTask(void *arg) {
 
 			// core.parm_->armCmd.set_angle_Yaw = 21.35f;
 			proc_waitMs(250);
-			core.psubgantry_->subGantryCmd.setStretchPosit_L = 95.0f;
+			core.psubgantry_->subGantryCmd.setStretchPosit_L = 85.0f;
 
 			/* Wait for User Confirmation */
 			cnt = timeout;
@@ -102,7 +111,7 @@ void CSystemCore::StartPushOreTask(void *arg) {
 
 			/*step 1*/
 			core.psubgantry_->subGantryCmd.setStretchPosit_R = 0.0f;
-			core.psubgantry_->subGantryCmd.setLiftPosit_R = SUB_GANTRY_LIFT_PHYSICAL_RANGE_R;
+			
 			proc_waitMs(250);
 
 			core.parm_->armCmd.set_angle_Pitch1 = 62.254f;
@@ -110,7 +119,8 @@ void CSystemCore::StartPushOreTask(void *arg) {
 			core.parm_->armCmd.set_angle_Roll = -1.480f;
 			core.parm_->armCmd.set_angle_end_pitch = -118.690f;
 			core.parm_->armCmd.set_angle_end_roll += 35.280f;
-
+			core.psubgantry_->subGantryCmd.setLiftPosit_R = SUB_GANTRY_LIFT_PHYSICAL_RANGE_R;
+			proc_waitUntilWithTimeout(core.psubgantry_->subGantryInfo.isPositArrived_Lift_R == true, 5000);
 			proc_waitMs(250);
 			core.parm_->armCmd.set_angle_Yaw = -52.075f;
 

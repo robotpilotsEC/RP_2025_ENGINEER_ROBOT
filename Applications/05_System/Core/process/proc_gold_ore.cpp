@@ -31,6 +31,11 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 	core.psubgantry_->subGantryCmd.isAutoCtrl = true;
 	core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 
+	static float_t subgantry_stretch_L = 266.0f;
+	static float_t subgantry_stretch_R = 322.0f;
+	static float_t subgantry_lift_L = 46.0f;
+	static float_t subgantry_lift_R = 50.0f;
+
 	core.pgimbal_->gimbalCmd.set_posit_lift = 100.0f;
 
 	core.parm_->armCmd.set_angle_Yaw = -0.195f;
@@ -73,8 +78,8 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 			core.psubgantry_->subGantryCmd.isAutoCtrl = true;
 			core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 
-			core.psubgantry_->subGantryCmd.setStretchPosit_L = 266.0f;
-			core.psubgantry_->subGantryCmd.setStretchPosit_R = 322.0f;
+			core.psubgantry_->subGantryCmd.setStretchPosit_L = subgantry_stretch_L;
+			core.psubgantry_->subGantryCmd.setStretchPosit_R = subgantry_stretch_R;
 			core.psubgantry_->subGantryCmd.setPumpOn_Left = true;
 			core.psubgantry_->subGantryCmd.setPumpOn_Right = true;
 			proc_waitMs(250);
@@ -98,8 +103,8 @@ void CSystemCore::StartGoldOreTask(void *arg) {
 			core.psubgantry_->subGantryCmd.isAutoCtrl = true;
 			core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 
-			core.psubgantry_->subGantryCmd.setLiftPosit_L = 46.0f;
-			core.psubgantry_->subGantryCmd.setLiftPosit_R = 50.0f;
+			core.psubgantry_->subGantryCmd.setLiftPosit_L = subgantry_lift_L;
+			core.psubgantry_->subGantryCmd.setLiftPosit_R = subgantry_lift_R;
 			proc_waitUntilWithTimeout(
 				(core.psubgantry_->subGantryInfo.isPositArrived_Lift_L &&
 				 core.psubgantry_->subGantryInfo.isPositArrived_Lift_R),

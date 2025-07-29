@@ -84,7 +84,7 @@ EAppStatus CModArm::CComRoll::UpdateComponent() {
 		}
 
 		case FSM_INIT: {
-			if (rollInfo.isAngleArrived) {
+			if (fabs(rollInfo.angle - rollCmd.setAngle) < 10.0) {
 				Component_FSMFlag_ = FSM_CTRL;
 				componentStatus = APP_OK;
 			}

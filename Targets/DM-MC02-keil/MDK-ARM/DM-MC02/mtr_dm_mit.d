@@ -83,4 +83,16 @@ dm-mc02/mtr_dm_mit.o: ..\..\..\Applications\03_Device\MTR\mtr_dm_mit.cpp \
   ..\..\..\Applications\01_Configuration\Include\conf_module.hpp \
   ..\..\..\Applications\01_Configuration\Include\conf_device.hpp \
   ..\..\..\Applications\02_Interface\Include\inf_can.hpp \
-  ..\..\..\Applications\02_Interface\Include\inf_common.hpp
+  ..\..\..\Applications\02_Interface\Include\inf_common.hpp \
+  ..\..\..\Applications\01_Configuration\Include\conf_CanTxNode.hpp \
+  ..\..\..\Applications\02_Interface\Include\Interface.hpp \
+  ..\..\..\Applications\02_Interface\Include\inf_uart.hpp \
+  ..\..\..\Applications\02_Interface\Include\inf_spi.hpp \
+  ..\..\..\Applications\02_Interface\Include\inf_usb_cdc.hpp \
+  ..\USB_DEVICE\App\usb_device.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_def.h \
+  ..\USB_DEVICE\Target\usbd_conf.h ..\USB_DEVICE\App\usbd_cdc_if.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Class\CDC\Inc\usbd_cdc.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ioreq.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_core.h \
+  ..\Middlewares\ST\STM32_USB_Device_Library\Core\Inc\usbd_ctlreq.h

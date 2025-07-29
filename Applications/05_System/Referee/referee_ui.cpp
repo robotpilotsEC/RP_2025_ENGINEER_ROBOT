@@ -89,6 +89,30 @@ void CSystemReferee::UI_InitDrawing() {
   curModeTextMsg.message.figureConfig.width = 4;            // Line Width
   strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "NONE");
 
+  /* Text - Radar Config */
+  RadarTextMsg.header = CDevReferee::SPkgHeader();
+  RadarTextMsg.header.len = sizeof(RadarTextMsg) - 9;
+  RadarTextMsg.header.cmdId = CDevReferee::ECommandID::ID_ROBOT_MSG;
+  RadarTextMsg.header.CRC8 = CCrcValidator::Crc8Calculate(reinterpret_cast<uint8_t *>(&RadarTextMsg.header), 4);
+  RadarTextMsg.transmitterID = (refereeInfo.robot.robotCamp == 2) ? 100 : 0;
+  RadarTextMsg.transmitterID += (refereeInfo.robot.robotID);
+  RadarTextMsg.receiverID = (refereeInfo.robot.robotCamp == 2) ? 0x164 : 0x100;
+  RadarTextMsg.receiverID += (refereeInfo.robot.robotID);
+  RadarTextMsg.messageID = CDevReferee::EMessageID::ID_UI_DRAW_TEXT;
+  RadarTextMsg.message.figureConfig.figureName[0] = 0;    // Frame ID
+  RadarTextMsg.message.figureConfig.figureName[1] = 0;    // Layer
+  RadarTextMsg.message.figureConfig.figureName[2] = 3;    // Figure ID
+  RadarTextMsg.message.figureConfig.operate = 1;
+  RadarTextMsg.message.figureConfig.figureType = 7;
+  RadarTextMsg.message.figureConfig.layerID = 1;
+  RadarTextMsg.message.figureConfig.details_1 = 25;       // Font Size
+  RadarTextMsg.message.figureConfig.posit_X = 960;
+  RadarTextMsg.message.figureConfig.posit_Y = 540 - 25;
+  RadarTextMsg.message.figureConfig.color = 3;
+  RadarTextMsg.message.figureConfig.details_2 = 0;        // String Length
+  RadarTextMsg.message.figureConfig.width = 4;            // Line Width
+  strcpy(reinterpret_cast<char *>(RadarTextMsg.message.text), "");
+
   /* Figure - State Config */
   stateFigureMsg.header = CDevReferee::SPkgHeader();
   stateFigureMsg.header.len = sizeof(stateFigureMsg) - 9;
@@ -188,77 +212,77 @@ void CSystemReferee::UI_InitDrawing() {
   stateFigureMsg.message.figureConfig[6].details_5 = 360 - 40;      // End Posit Y
   stateFigureMsg.message.figureConfig[6].width = 3;            // Line Width
 
-  /* Figure - Vision Config */
-  visionFigureMsg.header = CDevReferee::SPkgHeader();
-  visionFigureMsg.header.len = sizeof(visionFigureMsg) - 9;
-  visionFigureMsg.header.cmdId = CDevReferee::ECommandID::ID_ROBOT_MSG;
-  visionFigureMsg.header.CRC8 = CCrcValidator::Crc8Calculate(reinterpret_cast<uint8_t *>(&visionFigureMsg.header), 4);
-  visionFigureMsg.transmitterID = (refereeInfo.robot.robotCamp == 2) ? 100 : 0;
-  visionFigureMsg.transmitterID += (refereeInfo.robot.robotID);
-  visionFigureMsg.receiverID = (refereeInfo.robot.robotCamp == 2) ? 0x164 : 0x100;
-  visionFigureMsg.receiverID += (refereeInfo.robot.robotID);
-  visionFigureMsg.messageID = CDevReferee::EMessageID::ID_UI_DRAW_PENTA;
+  // /* Figure - Vision Config */
+  // visionFigureMsg.header = CDevReferee::SPkgHeader();
+  // visionFigureMsg.header.len = sizeof(visionFigureMsg) - 9;
+  // visionFigureMsg.header.cmdId = CDevReferee::ECommandID::ID_ROBOT_MSG;
+  // visionFigureMsg.header.CRC8 = CCrcValidator::Crc8Calculate(reinterpret_cast<uint8_t *>(&visionFigureMsg.header), 4);
+  // visionFigureMsg.transmitterID = (refereeInfo.robot.robotCamp == 2) ? 100 : 0;
+  // visionFigureMsg.transmitterID += (refereeInfo.robot.robotID);
+  // visionFigureMsg.receiverID = (refereeInfo.robot.robotCamp == 2) ? 0x164 : 0x100;
+  // visionFigureMsg.receiverID += (refereeInfo.robot.robotID);
+  // visionFigureMsg.messageID = CDevReferee::EMessageID::ID_UI_DRAW_PENTA;
 
-  visionFigureMsg.message.figureConfig[0].figureName[0] = 0;    // Frame ID
-  visionFigureMsg.message.figureConfig[0].figureName[1] = 2;    // Layer ID
-  visionFigureMsg.message.figureConfig[0].figureName[2] = 10;    // Figure ID
-  visionFigureMsg.message.figureConfig[0].operate = 1;
-  visionFigureMsg.message.figureConfig[0].figureType = 1;
-  visionFigureMsg.message.figureConfig[0].layerID = 2;
-  visionFigureMsg.message.figureConfig[0].posit_X = 960 - 400;
-  visionFigureMsg.message.figureConfig[0].posit_Y = 540 + 300;
-  visionFigureMsg.message.figureConfig[0].color = 7;
-  visionFigureMsg.message.figureConfig[0].width = 2;
-  visionFigureMsg.message.figureConfig[0].details_4 = 960 + 400;        // End Posit X
-  visionFigureMsg.message.figureConfig[0].details_5 = 540 - 300;        // End Posit Y
+  // visionFigureMsg.message.figureConfig[0].figureName[0] = 0;    // Frame ID
+  // visionFigureMsg.message.figureConfig[0].figureName[1] = 2;    // Layer ID
+  // visionFigureMsg.message.figureConfig[0].figureName[2] = 10;    // Figure ID
+  // visionFigureMsg.message.figureConfig[0].operate = 1;
+  // visionFigureMsg.message.figureConfig[0].figureType = 1;
+  // visionFigureMsg.message.figureConfig[0].layerID = 2;
+  // visionFigureMsg.message.figureConfig[0].posit_X = 960 - 400;
+  // visionFigureMsg.message.figureConfig[0].posit_Y = 540 + 300;
+  // visionFigureMsg.message.figureConfig[0].color = 7;
+  // visionFigureMsg.message.figureConfig[0].width = 2;
+  // visionFigureMsg.message.figureConfig[0].details_4 = 960 + 400;        // End Posit X
+  // visionFigureMsg.message.figureConfig[0].details_5 = 540 - 300;        // End Posit Y
 
-  visionFigureMsg.message.figureConfig[1].figureName[0] = 0;    // Frame ID
-  visionFigureMsg.message.figureConfig[1].figureName[1] = 2;    // Layer ID
-  visionFigureMsg.message.figureConfig[1].figureName[2] = 11;    // Figure ID
-  visionFigureMsg.message.figureConfig[1].operate = 1;
-  visionFigureMsg.message.figureConfig[1].figureType = 2;
-  visionFigureMsg.message.figureConfig[1].layerID = 2;
-  visionFigureMsg.message.figureConfig[1].posit_X = 960 + 100;
-  visionFigureMsg.message.figureConfig[1].posit_Y = 540 + 100,
-  visionFigureMsg.message.figureConfig[1].color = 4;
-  visionFigureMsg.message.figureConfig[1].details_3 = 6;       // Radius
-  visionFigureMsg.message.figureConfig[1].width = 8;           // Line Width
+  // visionFigureMsg.message.figureConfig[1].figureName[0] = 0;    // Frame ID
+  // visionFigureMsg.message.figureConfig[1].figureName[1] = 2;    // Layer ID
+  // visionFigureMsg.message.figureConfig[1].figureName[2] = 11;    // Figure ID
+  // visionFigureMsg.message.figureConfig[1].operate = 1;
+  // visionFigureMsg.message.figureConfig[1].figureType = 2;
+  // visionFigureMsg.message.figureConfig[1].layerID = 2;
+  // visionFigureMsg.message.figureConfig[1].posit_X = 960 + 100;
+  // visionFigureMsg.message.figureConfig[1].posit_Y = 540 + 100,
+  // visionFigureMsg.message.figureConfig[1].color = 4;
+  // visionFigureMsg.message.figureConfig[1].details_3 = 6;       // Radius
+  // visionFigureMsg.message.figureConfig[1].width = 8;           // Line Width
 
-  visionFigureMsg.message.figureConfig[2].figureName[0] = 0;    // Frame ID
-  visionFigureMsg.message.figureConfig[2].figureName[1] = 2;    // Layer ID
-  visionFigureMsg.message.figureConfig[2].figureName[2] = 12;    // Figure ID
-  visionFigureMsg.message.figureConfig[2].operate = 1;
-  visionFigureMsg.message.figureConfig[2].figureType = 2;
-  visionFigureMsg.message.figureConfig[2].layerID = 2;
-  visionFigureMsg.message.figureConfig[2].posit_X = 960 + 100;
-  visionFigureMsg.message.figureConfig[2].posit_Y = 540 - 100,
-  visionFigureMsg.message.figureConfig[2].color = 1;
-  visionFigureMsg.message.figureConfig[2].details_3 = 6;       // Radius
-  visionFigureMsg.message.figureConfig[2].width = 8;           // Line Width
+  // visionFigureMsg.message.figureConfig[2].figureName[0] = 0;    // Frame ID
+  // visionFigureMsg.message.figureConfig[2].figureName[1] = 2;    // Layer ID
+  // visionFigureMsg.message.figureConfig[2].figureName[2] = 12;    // Figure ID
+  // visionFigureMsg.message.figureConfig[2].operate = 1;
+  // visionFigureMsg.message.figureConfig[2].figureType = 2;
+  // visionFigureMsg.message.figureConfig[2].layerID = 2;
+  // visionFigureMsg.message.figureConfig[2].posit_X = 960 + 100;
+  // visionFigureMsg.message.figureConfig[2].posit_Y = 540 - 100,
+  // visionFigureMsg.message.figureConfig[2].color = 1;
+  // visionFigureMsg.message.figureConfig[2].details_3 = 6;       // Radius
+  // visionFigureMsg.message.figureConfig[2].width = 8;           // Line Width
 
-  visionFigureMsg.message.figureConfig[3].figureName[0] = 0;    // Frame ID
-  visionFigureMsg.message.figureConfig[3].figureName[1] = 2;    // Layer ID
-  visionFigureMsg.message.figureConfig[3].figureName[2] = 13;    // Figure ID
-  visionFigureMsg.message.figureConfig[3].operate = 1;
-  visionFigureMsg.message.figureConfig[3].figureType = 2;
-  visionFigureMsg.message.figureConfig[3].layerID = 2;
-  visionFigureMsg.message.figureConfig[3].posit_X = 960 - 100;
-  visionFigureMsg.message.figureConfig[3].posit_Y = 540 - 100,
-  visionFigureMsg.message.figureConfig[3].color = 2;
-  visionFigureMsg.message.figureConfig[3].details_3 = 6;       // Radius
-  visionFigureMsg.message.figureConfig[3].width = 8;           // Line Width
+  // visionFigureMsg.message.figureConfig[3].figureName[0] = 0;    // Frame ID
+  // visionFigureMsg.message.figureConfig[3].figureName[1] = 2;    // Layer ID
+  // visionFigureMsg.message.figureConfig[3].figureName[2] = 13;    // Figure ID
+  // visionFigureMsg.message.figureConfig[3].operate = 1;
+  // visionFigureMsg.message.figureConfig[3].figureType = 2;
+  // visionFigureMsg.message.figureConfig[3].layerID = 2;
+  // visionFigureMsg.message.figureConfig[3].posit_X = 960 - 100;
+  // visionFigureMsg.message.figureConfig[3].posit_Y = 540 - 100,
+  // visionFigureMsg.message.figureConfig[3].color = 2;
+  // visionFigureMsg.message.figureConfig[3].details_3 = 6;       // Radius
+  // visionFigureMsg.message.figureConfig[3].width = 8;           // Line Width
 
-  visionFigureMsg.message.figureConfig[4].figureName[0] = 0;    // Frame ID
-  visionFigureMsg.message.figureConfig[4].figureName[1] = 2;    // Layer ID
-  visionFigureMsg.message.figureConfig[4].figureName[2] = 14;    // Figure ID
-  visionFigureMsg.message.figureConfig[4].operate = 1;
-  visionFigureMsg.message.figureConfig[4].figureType = 2;
-  visionFigureMsg.message.figureConfig[4].layerID = 4;
-  visionFigureMsg.message.figureConfig[4].posit_X = 960 + 100;
-  visionFigureMsg.message.figureConfig[4].posit_Y = 540 - 100,
-  visionFigureMsg.message.figureConfig[4].color = 1;
-  visionFigureMsg.message.figureConfig[4].details_3 = 6;       // Radius
-  visionFigureMsg.message.figureConfig[4].width = 8;           // Line Width
+  // visionFigureMsg.message.figureConfig[4].figureName[0] = 0;    // Frame ID
+  // visionFigureMsg.message.figureConfig[4].figureName[1] = 2;    // Layer ID
+  // visionFigureMsg.message.figureConfig[4].figureName[2] = 14;    // Figure ID
+  // visionFigureMsg.message.figureConfig[4].operate = 1;
+  // visionFigureMsg.message.figureConfig[4].figureType = 2;
+  // visionFigureMsg.message.figureConfig[4].layerID = 4;
+  // visionFigureMsg.message.figureConfig[4].posit_X = 960 + 100;
+  // visionFigureMsg.message.figureConfig[4].posit_Y = 540 - 100,
+  // visionFigureMsg.message.figureConfig[4].color = 1;
+  // visionFigureMsg.message.figureConfig[4].details_3 = 6;       // Radius
+  // visionFigureMsg.message.figureConfig[4].width = 8;           // Line Width
 }
 
 void CSystemReferee::UI_StartStaticTextDrawing_() {
@@ -271,6 +295,7 @@ void CSystemReferee::UI_StartStaticTextDrawing_() {
 	modeTextMsg.message.figureConfig.operate = 1;
 	modeTextMsg.CRC16 = CCrcValidator::Crc16Calculate(reinterpret_cast<uint8_t *>(&modeTextMsg), sizeof(modeTextMsg) - 2);
 	pInterface_->Transmit(reinterpret_cast<uint8_t *>(&modeTextMsg), sizeof(modeTextMsg));
+
 }
 
 void CSystemReferee::UI_StartCurModeTextDrawing_() {
@@ -281,6 +306,12 @@ void CSystemReferee::UI_StartCurModeTextDrawing_() {
 	strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "NONE");
 	curModeTextMsg.CRC16 = CCrcValidator::Crc16Calculate(reinterpret_cast<uint8_t *>(&curModeTextMsg), sizeof(curModeTextMsg) - 2);
 	pInterface_->Transmit(reinterpret_cast<uint8_t *>(&curModeTextMsg), sizeof(curModeTextMsg));
+}
+
+void CSystemReferee::UI_StartRadarTextDrawing_() {
+	RadarTextMsg.message.figureConfig.operate = 1;
+	RadarTextMsg.CRC16 = CCrcValidator::Crc16Calculate(reinterpret_cast<uint8_t *>(&RadarTextMsg), sizeof(RadarTextMsg) - 2);
+	pInterface_->Transmit(reinterpret_cast<uint8_t *>(&RadarTextMsg), sizeof(RadarTextMsg));
 }
 
 void CSystemReferee::UI_StartStateFigureDrawing_() {
@@ -313,92 +344,93 @@ void CSystemReferee::UI_UpdateCurModeTextDrawing_() {
     curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3);
     curModeTextMsg.message.figureConfig.posit_Y = 780;
     strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "CUSTOM");
-    return;
   }
-	switch (SystemCore.currentAutoCtrlProcess_) {
+  else {
+    switch (SystemCore.currentAutoCtrlProcess_) {
 
-		case CSystemCore::EAutoCtrlProcess::NONE: {
-			curModeTextMsg.message.figureConfig.details_2 = 4;
-			curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 2);
-			curModeTextMsg.message.figureConfig.posit_Y = 780;
-			strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "NONE");
-			break;
-		}
+      case CSystemCore::EAutoCtrlProcess::NONE: {
+        curModeTextMsg.message.figureConfig.details_2 = 4;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 2);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "NONE");
+        break;
+      }
 
-		case CSystemCore::EAutoCtrlProcess::RETURN_ORIGIN: {
-			curModeTextMsg.message.figureConfig.details_2 = 6;
-			curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3);
-			curModeTextMsg.message.figureConfig.posit_Y = 780;
-			strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "ORIGIN");
-			break;
-		}
+      case CSystemCore::EAutoCtrlProcess::RETURN_ORIGIN: {
+        curModeTextMsg.message.figureConfig.details_2 = 6;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "ORIGIN");
+        break;
+      }
 
-		case CSystemCore::EAutoCtrlProcess::RETURN_DRIVE: {
-			curModeTextMsg.message.figureConfig.details_2 = 5;
-			curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 2.5);
-			curModeTextMsg.message.figureConfig.posit_Y = 780;
-			strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "DRIVE");
-			break;
-		}
+      case CSystemCore::EAutoCtrlProcess::RETURN_DRIVE: {
+        curModeTextMsg.message.figureConfig.details_2 = 5;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 2.5);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "DRIVE");
+        break;
+      }
 
-		case CSystemCore::EAutoCtrlProcess::GROUND_ORE: {
-			curModeTextMsg.message.figureConfig.details_2 = 6;
-			curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3);
-			curModeTextMsg.message.figureConfig.posit_Y = 780;
-			strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "GROUND");
-			break;
-		}
-
-
-		case CSystemCore::EAutoCtrlProcess::GOLD_ORE: {
-			curModeTextMsg.message.figureConfig.details_2 = 4;
-			curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 2);
-			curModeTextMsg.message.figureConfig.posit_Y = 780;
-			strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "GOLD");
-			break;
-		}
-
-		case CSystemCore::EAutoCtrlProcess::EXCHANGE: {
-			curModeTextMsg.message.figureConfig.details_2 = 11;
-      curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 5.5);
-      curModeTextMsg.message.figureConfig.posit_Y = 780;
-			strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "EXCHANGE");
-			break;
-		}
+      case CSystemCore::EAutoCtrlProcess::GROUND_ORE: {
+        curModeTextMsg.message.figureConfig.details_2 = 6;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "GROUND");
+        break;
+      }
 
 
-    case CSystemCore::EAutoCtrlProcess::DOGHOLE: {
-      curModeTextMsg.message.figureConfig.details_2 = 7;
-      curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3.5);
-      curModeTextMsg.message.figureConfig.posit_Y = 780;
-      strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "DOGHOLE");
-      break;
+      case CSystemCore::EAutoCtrlProcess::GOLD_ORE: {
+        curModeTextMsg.message.figureConfig.details_2 = 4;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 2);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "GOLD");
+        break;
+      }
+
+      case CSystemCore::EAutoCtrlProcess::EXCHANGE: {
+        curModeTextMsg.message.figureConfig.details_2 = 8;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 5.5);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "EXCHANGE");
+        break;
+      }
+
+
+      case CSystemCore::EAutoCtrlProcess::DOGHOLE: {
+        curModeTextMsg.message.figureConfig.details_2 = 7;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3.5);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "DOGHOLE");
+        break;
+      }
+
+      case CSystemCore::EAutoCtrlProcess::PUSH_ORE: {
+        curModeTextMsg.message.figureConfig.details_2 = 4;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 2);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "PUSH");
+        break;
+      }
+
+      case CSystemCore::EAutoCtrlProcess::POP_ORE: {
+        curModeTextMsg.message.figureConfig.details_2 = 3;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 1.5);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "POP");
+        break;
+      }
+
+      case CSystemCore::EAutoCtrlProcess::SILVER_ORE: {
+        curModeTextMsg.message.figureConfig.details_2 = 6;
+        curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3);
+        curModeTextMsg.message.figureConfig.posit_Y = 780;
+        strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "SILVER");
+        break;
+      }
     }
-
-		case CSystemCore::EAutoCtrlProcess::PUSH_ORE: {
-			curModeTextMsg.message.figureConfig.details_2 = 4;
-			curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 2);
-			curModeTextMsg.message.figureConfig.posit_Y = 780;
-			strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "PUSH");
-			break;
-		}
-
-		case CSystemCore::EAutoCtrlProcess::POP_ORE: {
-			curModeTextMsg.message.figureConfig.details_2 = 3;
-			curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 1.5);
-			curModeTextMsg.message.figureConfig.posit_Y = 780;
-			strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "POP");
-			break;
-		}
-
-    case CSystemCore::EAutoCtrlProcess::SILVER_ORE: {
-      curModeTextMsg.message.figureConfig.details_2 = 6;
-      curModeTextMsg.message.figureConfig.posit_X = 960 - (25 * 3);
-      curModeTextMsg.message.figureConfig.posit_Y = 780;
-      strcpy(reinterpret_cast<char *>(curModeTextMsg.message.text), "SILVER");
-      break;
-    }
-	}
+  }
 
 	curModeTextMsg.message.figureConfig.operate = 2;
 	curModeTextMsg.CRC16 = CCrcValidator::Crc16Calculate(reinterpret_cast<uint8_t *>(&curModeTextMsg), sizeof(curModeTextMsg) - 2);
@@ -465,6 +497,26 @@ void CSystemReferee::UI_UpdateVisionFigureDrawing_() {
 	pInterface_->Transmit(reinterpret_cast<uint8_t *>(&visionFigureMsg), sizeof(visionFigureMsg));
 }
 
+void CSystemReferee::UI_RADAR_WARNING_TextDrawing_() {
+  RadarTextMsg.message.figureConfig.operate = 2;
+  RadarTextMsg.message.figureConfig.details_2 = 7;
+  RadarTextMsg.message.figureConfig.posit_X = 960 - (25 * 3.5);
+  RadarTextMsg.message.figureConfig.posit_Y = 540 - 25;
+  strcpy(reinterpret_cast<char *>(RadarTextMsg.message.text), "WARNING");
+  RadarTextMsg.CRC16 = CCrcValidator::Crc16Calculate(reinterpret_cast<uint8_t *>(&RadarTextMsg), sizeof(RadarTextMsg) - 2);
+  pInterface_->Transmit(reinterpret_cast<uint8_t *>(&RadarTextMsg), sizeof(RadarTextMsg));
+}
+
+void CSystemReferee::UI_RADAR_WARNING_TextClearing_() {
+  RadarTextMsg.message.figureConfig.operate = 2;
+  RadarTextMsg.message.figureConfig.details_2 = 1;
+  RadarTextMsg.message.figureConfig.posit_X = 960 - (25 * 0.5);
+  RadarTextMsg.message.figureConfig.posit_Y = 540 - 25;
+  strcpy(reinterpret_cast<char *>(RadarTextMsg.message.text), ".");
+  RadarTextMsg.CRC16 = CCrcValidator::Crc16Calculate(reinterpret_cast<uint8_t *>(&RadarTextMsg), sizeof(RadarTextMsg) - 2);
+  pInterface_->Transmit(reinterpret_cast<uint8_t *>(&RadarTextMsg), sizeof(RadarTextMsg));
+}
+
 void CSystemReferee::StartSysRefereeUiTask(void *arg) {
 	proc_waitUntil(SysReferee.refereeInfo.robot.robotCamp != 0);
 
@@ -477,23 +529,35 @@ void CSystemReferee::StartSysRefereeUiTask(void *arg) {
 	proc_waitMs(100);
 	SysReferee.UI_StartStateFigureDrawing_();
 	proc_waitMs(100);
-	SysReferee.UI_StartVisionFigureDrawing_();
-	proc_waitMs(100);
+	// SysReferee.UI_StartVisionFigureDrawing_();
+	// proc_waitMs(100);
 
+  SysReferee.UI_StartRadarTextDrawing_();
+  proc_waitMs(100);
+  
 	// 进入UI绘制循环
 	while (true) {
 
 		SysReferee.UI_UpdateCurModeTextDrawing_();
 		proc_waitMs(100);
 
-		SysReferee.UI_UpdateVisionFigureDrawing_();
-		proc_waitMs(100);
+		// SysReferee.UI_UpdateVisionFigureDrawing_();
+		// proc_waitMs(100);
 
 		SysReferee.UI_UpdateStateFigureDrawing_();
 		proc_waitMs(100);
 
-		SysReferee.UI_UpdateVisionFigureDrawing_();
-		proc_waitMs(100);
+		// SysReferee.UI_UpdateVisionFigureDrawing_();
+
+		// proc_waitMs(100);
+
+    if (SysReferee.refereeInfo.radar.if_dart_comming == 1) {
+      SysReferee.UI_RADAR_WARNING_TextDrawing_();
+      proc_waitMs(100);
+    } else {
+      SysReferee.UI_RADAR_WARNING_TextClearing_();
+      proc_waitMs(100);
+    }
 	}
 
 	proc_return();

@@ -42,7 +42,7 @@ void CSystemCore::StartGroundOreTask(void *arg) {
 			core.parm_->armCmd.set_angle_Pitch1 = 76.390f;
 			core.parm_->armCmd.set_angle_Pitch2 = 43.207f;
 			core.parm_->armCmd.set_angle_Roll = -1.480f;
-			core.parm_->armCmd.set_angle_end_pitch = -65.815f;
+			core.parm_->armCmd.set_angle_end_pitch = -60.815f;
 			core.parm_->armCmd.set_angle_end_roll = 0.000f;
 
 			core.psubgantry_->subGantryCmd.setPumpOn_Arm = true; ///< Set the arm pump on
@@ -90,8 +90,6 @@ void CSystemCore::StartGroundOreTask(void *arg) {
 			core.parm_->armCmd.set_angle_Pitch1 = 59.f;
 			core.parm_->armCmd.set_angle_Pitch2 = 58.298f;
 			core.parm_->armCmd.set_angle_end_pitch = -98.750f;
-
-			core.use_Controller_ = true; // Enable controller usage
       
       		goto proc_exit;
 		}
@@ -107,7 +105,7 @@ void CSystemCore::StartGroundOreTask(void *arg) {
 			core.parm_->armCmd.set_angle_Pitch1 = 76.390f;
 			core.parm_->armCmd.set_angle_Pitch2 = 43.207f;
 			core.parm_->armCmd.set_angle_Roll = -1.480f;
-			core.parm_->armCmd.set_angle_end_pitch = -65.815f;
+			core.parm_->armCmd.set_angle_end_pitch = -60.815f;
 			core.parm_->armCmd.set_angle_end_roll = 0.000f;
 
 			core.psubgantry_->subGantryCmd.setPumpOn_Arm = true; ///< Set the arm pump on
@@ -137,7 +135,7 @@ void CSystemCore::StartGroundOreTask(void *arg) {
 			core.parm_->armCmd.set_angle_Pitch1 = 90.0f;
 			core.parm_->armCmd.set_angle_Pitch2 = 45.0f;
 			core.parm_->armCmd.set_angle_Roll = -1.480f;
-			core.parm_->armCmd.set_angle_end_pitch = -63.180f;
+			core.parm_->armCmd.set_angle_end_pitch = -60.180f;
 			core.parm_->armCmd.set_angle_end_roll = 0.000f;
 			proc_waitMs(300);
 
@@ -204,10 +202,10 @@ void CSystemCore::StartGroundOreTask(void *arg) {
 			core.pgimbal_->gimbalCmd.isAutoCtrl = true;
 			
 			core.parm_->armCmd.set_angle_Yaw = 0.f;
-			core.parm_->armCmd.set_angle_Pitch1 = 90.0f;
-			core.parm_->armCmd.set_angle_Pitch2 = 45.0f;
+			core.parm_->armCmd.set_angle_Pitch1 = 90.526f;
+			core.parm_->armCmd.set_angle_Pitch2 = 44.491f;
 			core.parm_->armCmd.set_angle_Roll = -1.480f;
-			core.parm_->armCmd.set_angle_end_pitch = -63.180f;
+			core.parm_->armCmd.set_angle_end_pitch = -53.980f;
 			core.parm_->armCmd.set_angle_end_roll = 0.000f;
 			proc_waitMs(300);
 
@@ -225,8 +223,6 @@ void CSystemCore::StartGroundOreTask(void *arg) {
 			core.parm_->armCmd.set_angle_Pitch1 = 59.f;
 			core.parm_->armCmd.set_angle_Pitch2 = 58.298f;
 			core.parm_->armCmd.set_angle_end_pitch = -98.750f;
-
-			core.use_Controller_ = true; // Enable controller usage
 
 			goto proc_exit;
 		}

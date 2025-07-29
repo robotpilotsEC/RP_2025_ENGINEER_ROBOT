@@ -36,7 +36,7 @@ EAppStatus CSystemReferee::InitSystem(SSystemInitParam_Base *pStruct) {
 	// 初始化裁判设备
 	systemID = param.systemID;
 	pRefereeDev_ = static_cast<CDevReferee *>(DeviceIDMap.at(param.refereeDevID));
-	pInterface_ = reinterpret_cast<CInfUART *>(InterfaceIDMap.at(EInterfaceID::INF_UART10));
+	pInterface_ = reinterpret_cast<CInfUART *>(InterfaceIDMap.at(EInterfaceID::INF_UART1));
 
 	if (systemTaskHandle != nullptr) {
 		vTaskDelete(systemTaskHandle);
@@ -64,6 +64,7 @@ void CSystemReferee::UpdateHandler_() {
 
 	UpdateRaceInfo_();
 	UpdateRobotInfo_();
+	UpdateRadarInfo_();
 }
 
 /**
@@ -116,6 +117,19 @@ EAppStatus CSystemReferee::UpdateRobotInfo_() {
 	}
 	refereeInfo.robot.robotID =
 		pRefereeDev_->robotStatusPkg.robotId % 100;
+
+	return APP_OK;
+}
+
+/**
+ * @brief 更新雷达信息
+ * 
+ * @return EAppStatus 
+ */
+EAppStatus CSystemReferee::UpdateRadarInfo_() {
+
+	refereeInfo.radar.if_dart_comming =
+		pRefereeDev_->radarPkg.message.if_dart_comming;
 
 	return APP_OK;
 }

@@ -60,8 +60,8 @@ void CSystemVision::UpdateHandler_() {
 	raceInfo.raceCamp = 2;
 	raceInfo.raceState = 1;
 
-  raceInfo.exchangeState = 1;
-    // (SystemCore.currentAutoCtrlProcess_ == CSystemCore::EAutoCtrlProcess::EXCHANGE) ? 1 : 0;
+  raceInfo.exchangeState = 
+    (SystemCore.currentAutoCtrlProcess_ == CSystemCore::EAutoCtrlProcess::EXCHANGE) || (SystemCore.use_Controller_ == true) ? 1 : 0;
 
   SysVision.pVision_->SendPackage(CDevVision::ID_RACE_INFO, raceInfo.header);
 

@@ -87,12 +87,12 @@ void CSystemCore::ControlFromRemote_() {
     enum { HIG = 1, LOW = 2, MID = 3 };
     auto &remote = SysRemote.remoteInfo.remote;
 
-    // 将模块启动
+    //将模块启动
     if (SysRemote.systemStatus == APP_OK) {
         StartRobot(true);
     }
 
-    // 用于调试，免去遥控器上电
+    //用于调试，免去遥控器上电
     // StartRobot(true, true);
 
     parm_->should_limit_yaw = 0;

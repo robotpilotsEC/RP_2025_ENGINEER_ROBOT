@@ -35,11 +35,17 @@ EAppStatus CModSubGantry::CComLift_sub::InitComponent(SModInitParam_Base &param)
     mtrCanTxNode[1] = subGantryParam.liftMotorTxNode_R;
 
     // 初始化PID控制器
-    subGantryParam.liftPosPidParam.threadNum = 2;
-    pidPosCtrl.InitPID(&subGantryParam.liftPosPidParam);
+    subGantryParam.liftPosPidParam_L.threadNum = 1;
+    pidPosCtrl_L.InitPID(&subGantryParam.liftPosPidParam_L);
 
-    subGantryParam.liftSpdPidParam.threadNum = 2;
-    pidSpdCtrl.InitPID(&subGantryParam.liftSpdPidParam);
+    subGantryParam.liftSpdPidParam_L.threadNum = 1;
+    pidSpdCtrl_L.InitPID(&subGantryParam.liftSpdPidParam_L);
+
+    subGantryParam.liftPosPidParam_R.threadNum = 1;
+    pidPosCtrl_R.InitPID(&subGantryParam.liftPosPidParam_R);
+
+    subGantryParam.liftSpdPidParam_R.threadNum = 1;
+    pidSpdCtrl_R.InitPID(&subGantryParam.liftSpdPidParam_R);
 
     // 初始化电机数据输出缓冲区
     mtrOutputBuffer.fill(0);
@@ -69,8 +75,10 @@ EAppStatus CModSubGantry::CComLift_sub::UpdateComponent() {
         case FSM_RESET: {
             // 重置状态下，电机数据输出缓冲区始终为0
             mtrOutputBuffer.fill(0);
-            pidPosCtrl.ResetPidController();
-            pidSpdCtrl.ResetPidController();
+            pidPosCtrl_L.ResetPidController();
+            pidSpdCtrl_L.ResetPidController();
+            pidPosCtrl_R.ResetPidController();
+            pidSpdCtrl_R.ResetPidController();
             return APP_OK;
         }
 
@@ -81,8 +89,10 @@ EAppStatus CModSubGantry::CComLift_sub::UpdateComponent() {
             motor[0]->motorData[CDevMtr::DATA_POSIT] = liftCmd.setPosit_L * SUB_GANTRY_LIFT_MOTOR_DIR_L;
             motor[1]->motorData[CDevMtr::DATA_POSIT] = liftCmd.setPosit_R * SUB_GANTRY_LIFT_MOTOR_DIR_R;
             mtrOutputBuffer.fill(0);
-            pidPosCtrl.ResetPidController();
-            pidSpdCtrl.ResetPidController();
+            pidPosCtrl_L.ResetPidController();
+            pidSpdCtrl_L.ResetPidController();
+            pidPosCtrl_R.ResetPidController();
+            pidSpdCtrl_R.ResetPidController();
             Component_FSMFlag_ = FSM_INIT;
             return APP_OK;
         }
@@ -93,10 +103,12 @@ EAppStatus CModSubGantry::CComLift_sub::UpdateComponent() {
                 && motor[1]->motorStatus == CDevMtr::EMotorStatus::STALL) {
                 liftCmd = SLiftCmd();
                 // 补偿超出限位的值
-                motor[0]->motorData[CDevMtr::DATA_POSIT] = -static_cast<int32_t>( 8192 * 0.1) * SUB_GANTRY_LIFT_MOTOR_DIR_L;
-                motor[1]->motorData[CDevMtr::DATA_POSIT] = -static_cast<int32_t>( 8192 * 0.1) * SUB_GANTRY_LIFT_MOTOR_DIR_R;
-                pidPosCtrl.ResetPidController();
-                pidSpdCtrl.ResetPidController();
+                motor[0]->motorData[CDevMtr::DATA_POSIT] = -static_cast<int32_t>( 8192 * 0.3) * SUB_GANTRY_LIFT_MOTOR_DIR_L;
+                motor[1]->motorData[CDevMtr::DATA_POSIT] = -static_cast<int32_t>( 8192 * 0.3) * SUB_GANTRY_LIFT_MOTOR_DIR_R;
+                pidPosCtrl_L.ResetPidController();
+                pidSpdCtrl_L.ResetPidController();
+                pidPosCtrl_R.ResetPidController();
+                pidSpdCtrl_R.ResetPidController();
                 Component_FSMFlag_ = FSM_CTRL;
                 componentStatus = APP_OK;
                 return APP_OK;
@@ -117,8 +129,10 @@ EAppStatus CModSubGantry::CComLift_sub::UpdateComponent() {
         default: {
             StopComponent();
             mtrOutputBuffer.fill(0);
-            pidPosCtrl.ResetPidController();
-            pidSpdCtrl.ResetPidController();
+            pidPosCtrl_L.ResetPidController();
+            pidSpdCtrl_L.ResetPidController();
+            pidPosCtrl_R.ResetPidController();
+            pidSpdCtrl_R.ResetPidController();
             componentStatus = APP_ERROR;
             return APP_ERROR;
         }
@@ -176,31 +190,48 @@ float_t CModSubGantry::CComLift_sub::MtrPositToPhyPosit_R(int32_t mtrPosit) {
 EAppStatus CModSubGantry::CComLift_sub::_UpdateOutput(float_t posit_L, float_t posit_R) {
 
     // 位置环
-    DataBuffer<float_t> liftPos = {
+    DataBuffer<float_t> liftPos_L = {
       static_cast<float_t>(posit_L * SUB_GANTRY_LIFT_MOTOR_DIR_L),
+    };
+
+    DataBuffer<float_t> liftPosMeasure_L = {
+      static_cast<float_t>(motor[0]->motorData[CDevMtr::DATA_POSIT]),
+    };
+
+    auto liftSpd_L =
+      pidPosCtrl_L.UpdatePidController(liftPos_L, liftPosMeasure_L);
+
+    // 速度环
+    DataBuffer<float_t> liftSpdMeasure_L = {
+      static_cast<float_t>(motor[0]->motorData[CDevMtr::DATA_SPEED]),
+    };
+
+    auto output_L =
+      pidSpdCtrl_L.UpdatePidController(liftSpd_L, liftSpdMeasure_L);
+
+    // 位置环
+    DataBuffer<float_t> liftPos_R = {
       static_cast<float_t>(posit_R * SUB_GANTRY_LIFT_MOTOR_DIR_R),
     };
 
-    DataBuffer<float_t> liftPosMeasure = {
-      static_cast<float_t>(motor[0]->motorData[CDevMtr::DATA_POSIT]),
+    DataBuffer<float_t> liftPosMeasure_R = {
       static_cast<float_t>(motor[1]->motorData[CDevMtr::DATA_POSIT]),
     };
 
-    auto liftSpd =
-      pidPosCtrl.UpdatePidController(liftPos, liftPosMeasure);
+    auto liftSpd_R =
+      pidPosCtrl_R.UpdatePidController(liftPos_R, liftPosMeasure_R);
 
     // 速度环
-    DataBuffer<float_t> liftSpdMeasure = {
-      static_cast<float_t>(motor[0]->motorData[CDevMtr::DATA_SPEED]),
+    DataBuffer<float_t> liftSpdMeasure_R = {
       static_cast<float_t>(motor[1]->motorData[CDevMtr::DATA_SPEED]),
     };
 
-    auto output =
-      pidSpdCtrl.UpdatePidController(liftSpd, liftSpdMeasure);
+    auto output_R =
+      pidSpdCtrl_R.UpdatePidController(liftSpd_R, liftSpdMeasure_R);
 
     mtrOutputBuffer = {
-      static_cast<int16_t>(output[0]),
-      static_cast<int16_t>(output[1]),
+      static_cast<int16_t>(output_L[0]),
+      static_cast<int16_t>(output_R[0]),
     };
 
     return APP_OK;

@@ -440,16 +440,6 @@
               <FilePath>..\..\..\Applications\05_System\Remote\sys_remote.cpp</FilePath>
             </File>
             <File>
-              <FileName>referee_ui.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\Applications\05_System\Referee\referee_ui.cpp</FilePath>
-            </File>
-            <File>
-              <FileName>sys_referee.cpp</FileName>
-              <FileType>8</FileType>
-              <FilePath>..\..\..\Applications\05_System\Referee\sys_referee.cpp</FilePath>
-            </File>
-            <File>
               <FileName>control.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\Applications\05_System\Core\control.cpp</FilePath>
@@ -468,6 +458,16 @@
               <FileName>sys_esp32.cpp</FileName>
               <FileType>8</FileType>
               <FilePath>..\..\..\Applications\05_System\ESP32\sys_esp32.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>referee_ui.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\Applications\05_System\Referee\referee_ui.cpp</FilePath>
+            </File>
+            <File>
+              <FileName>sys_referee.cpp</FileName>
+              <FileType>8</FileType>
+              <FilePath>..\..\..\Applications\05_System\Referee\sys_referee.cpp</FilePath>
             </File>
           </Files>
         </Group>

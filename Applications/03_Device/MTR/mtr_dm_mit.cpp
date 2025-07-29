@@ -11,6 +11,7 @@
  ******************************************************************************/
 
 #include "mtr/mtr_dm_mit.hpp"
+#include "conf_CanTxNode.hpp"
 
 namespace my_engineer
 {
@@ -144,7 +145,7 @@ void CDevMtrDM_MIT::ClearError() {
 	if (deviceStatus == APP_RESET)
 		return;
 
-	std::array<uint8_t, 8> data_buf = {static_cast<uint8_t>(canTxNode_.stdId & 0xff), static_cast<uint8_t>((canTxNode_.stdId >> 8) & 0xff), 0xCC, 0x00, 0x00, 0x00, 0x00, 0x00};
+	std::array<uint8_t, 8> data_buf = {0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xff, 0xfb};
 	// 填充数据帧
 	Modify_CanTxData(data_buf.data());
 	// 发送数据帧
@@ -228,10 +229,12 @@ void CDevMtrDM_MIT::HeartbeatHandler_() {
 		EnableMotor();
 		lastEnableTime_ = HAL_GetTick();
 	}
-	if(HAL_GetTick() - lastclearErrorTime_ > 10000){
-		ClearError();
-		lastclearErrorTime_ = HAL_GetTick();
-	}
+	if(motorData[DATA_ERR] != 0x03)
+		ClearError();	
+	// if(HAL_GetTick() - lastclearErrorTime_ > 100){
+	// 	ClearError();	
+	// 	lastclearErrorTime_ = HAL_GetTick();
+	// }
 
     return ;
 }

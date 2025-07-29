@@ -21,7 +21,7 @@
 #define SUB_GANTRY_LIFT_MOTOR_RANGE_L 342000
 #define SUB_GANTRY_LIFT_MOTOR_RANGE_R 342000
 #define SUB_GANTRY_STRETCH_MOTOR_RANGE_L 879400
-#define SUB_GANTRY_STRETCH_MOTOR_RANGE_R 1005000
+#define SUB_GANTRY_STRETCH_MOTOR_RANGE_R 1002700
 #define SUB_GANTRY_LIFT_MOTOR_RATIO_L (SUB_GANTRY_LIFT_MOTOR_RANGE_L / SUB_GANTRY_LIFT_PHYSICAL_RANGE_L)
 #define SUB_GANTRY_LIFT_MOTOR_RATIO_R (SUB_GANTRY_LIFT_MOTOR_RANGE_R / SUB_GANTRY_LIFT_PHYSICAL_RANGE_R)
 #define SUB_GANTRY_STRETCH_MOTOR_RATIO_L (SUB_GANTRY_STRETCH_MOTOR_RANGE_L / SUB_GANTRY_STRETCH_PHYSICAL_RANGE_L)
@@ -60,8 +60,10 @@ public:
 		CInfCAN::CCanTxNode *stretchMotorTxNode_L = nullptr; ///< 左伸缩电机CAN发送节点
 		CInfCAN::CCanTxNode *liftMotorTxNode_R = nullptr; ///< 右升降电机CAN发送节点
 		CInfCAN::CCanTxNode *stretchMotorTxNode_R = nullptr; ///< 右伸缩电机CAN发送节点
-		CAlgoPid::SAlgoInitParam_Pid liftPosPidParam; ///< 升降电机PID参数
-		CAlgoPid::SAlgoInitParam_Pid liftSpdPidParam; ///< 升降电机速度PID参数
+		CAlgoPid::SAlgoInitParam_Pid liftPosPidParam_L; ///< 升降电机PID参数
+		CAlgoPid::SAlgoInitParam_Pid liftSpdPidParam_L; ///< 升降电机速度PID参数
+        CAlgoPid::SAlgoInitParam_Pid liftPosPidParam_R; ///< 升降电机PID参数
+        CAlgoPid::SAlgoInitParam_Pid liftSpdPidParam_R; ///< 升降电机速度PID参数
 		CAlgoPid::SAlgoInitParam_Pid stretchPosPidParam; ///< 伸缩电机PID参数
 		CAlgoPid::SAlgoInitParam_Pid stretchSpdPidParam; ///< 伸缩电机速度PID参数
     };
@@ -167,8 +169,10 @@ private:
         std::array<CDevMtr*, 2> motor = {nullptr}; 
 
         // 定义子龙门升降PID控制器
-        CAlgoPid pidPosCtrl;
-        CAlgoPid pidSpdCtrl;
+        CAlgoPid pidPosCtrl_L;
+        CAlgoPid pidSpdCtrl_L;
+        CAlgoPid pidPosCtrl_R;
+        CAlgoPid pidSpdCtrl_R;
 
         // 电机数据输出缓冲区
         std::array<int16_t, 2> mtrOutputBuffer = {0};

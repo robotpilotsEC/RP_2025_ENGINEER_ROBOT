@@ -71,16 +71,16 @@ EAppStatus InitAllModule() {
    armInitParam.MIT_Roll_kp = 20.0f;
    armInitParam.MIT_Roll_kd = 1.0f;
    // 初始化 endPosPidParam 的成员
-   armInitParam.endPosPidParam.kp = 0.2f;
+   armInitParam.endPosPidParam.kp = 0.18f;
    armInitParam.endPosPidParam.ki = 0.0f;
    armInitParam.endPosPidParam.kd = 0.0f;
    armInitParam.endPosPidParam.maxOutput = 4000.0f;
    // 初始化 endSpdPidParam 的成员
-   armInitParam.endSpdPidParam.kp = 1.0f;
-   armInitParam.endSpdPidParam.ki = 0.5f;
+   armInitParam.endSpdPidParam.kp = 4.0f;
+   armInitParam.endSpdPidParam.ki = 0.8f;
    armInitParam.endSpdPidParam.kd = 0.0f;
    armInitParam.endSpdPidParam.maxIntegral = 4000.0f;
-   armInitParam.endSpdPidParam.maxOutput = 8000.0f;
+   armInitParam.endSpdPidParam.maxOutput = 4500.0f;
     // 使用初始化后的参数创建 armModule 实例
     static auto armModule = CModArm(armInitParam);
 
@@ -103,16 +103,26 @@ EAppStatus InitAllModule() {
     subGantryInitParam.ArmPumpPort = ArmPump_GPIO_Port;
     subGantryInitParam.ArmPumpPin = ArmPump_Pin;
     // 设置PID参数
-    subGantryInitParam.liftPosPidParam.kp = 0.3f;
-    subGantryInitParam.liftPosPidParam.ki = 0.0f;
-    subGantryInitParam.liftPosPidParam.kd = 0.1f;
-    subGantryInitParam.liftPosPidParam.maxIntegral = 0.0f;
-    subGantryInitParam.liftPosPidParam.maxOutput = 5000.0f;
-    subGantryInitParam.liftSpdPidParam.kp = 1.0f;
-    subGantryInitParam.liftSpdPidParam.ki = 0.5f;
-    subGantryInitParam.liftSpdPidParam.kd = 0.0f;
-    subGantryInitParam.liftSpdPidParam.maxIntegral = 4500.0f;
-    subGantryInitParam.liftSpdPidParam.maxOutput = 7000.f;//8000.0f;
+    subGantryInitParam.liftPosPidParam_L.kp = 0.3f;
+    subGantryInitParam.liftPosPidParam_L.ki = 0.0f;
+    subGantryInitParam.liftPosPidParam_L.kd = 0.1f;
+    subGantryInitParam.liftPosPidParam_L.maxIntegral = 0.0f;
+    subGantryInitParam.liftPosPidParam_L.maxOutput = 5000.0f;
+    subGantryInitParam.liftSpdPidParam_L.kp = 1.5f;
+    subGantryInitParam.liftSpdPidParam_L.ki = 0.5f;
+    subGantryInitParam.liftSpdPidParam_L.kd = 0.0f;
+    subGantryInitParam.liftSpdPidParam_L.maxIntegral = 4500.0f;
+    subGantryInitParam.liftSpdPidParam_L.maxOutput = 8000.f;//8000.0f;
+    subGantryInitParam.liftPosPidParam_R.kp = 0.3f;
+    subGantryInitParam.liftPosPidParam_R.ki = 0.0f;
+    subGantryInitParam.liftPosPidParam_R.kd = 0.1f;
+    subGantryInitParam.liftPosPidParam_R.maxIntegral = 0.0f;
+    subGantryInitParam.liftPosPidParam_R.maxOutput = 5000.0f;
+    subGantryInitParam.liftSpdPidParam_R.kp = 1.0f;
+    subGantryInitParam.liftSpdPidParam_R.ki = 0.5f;
+    subGantryInitParam.liftSpdPidParam_R.kd = 0.0f;
+    subGantryInitParam.liftSpdPidParam_R.maxIntegral = 4500.0f;
+    subGantryInitParam.liftSpdPidParam_R.maxOutput = 7000.f;//8000.0f;
     subGantryInitParam.stretchPosPidParam.kp = 0.18f;
     subGantryInitParam.stretchPosPidParam.ki = 0.0f;
     subGantryInitParam.stretchPosPidParam.kd = 0.1f;

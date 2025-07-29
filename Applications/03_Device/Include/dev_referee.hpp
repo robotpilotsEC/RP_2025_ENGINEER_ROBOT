@@ -60,6 +60,7 @@ public:
 		ID_UI_DRAW_PENTA = 0x0103,
 		ID_UI_DRAW_HEPTA = 0x0104,
 		ID_UI_DRAW_TEXT = 0x0110,
+		ID_RADAR_MSG = 0x0201,
 	};
 
 	enum KEY_STATUS  {RELEASE = 0, PRESS = 1, LONG_PRESS = 2,};
@@ -181,6 +182,13 @@ public:
 		uint16_t CRC16;
 	} __packed;
 
+	struct SRadarMessage {
+		uint8_t if_dart_comming = 0;
+	} __packed;
+
+	using SRadarMsgPkg = SRobotMsgPkg<SRadarMessage>;
+	SRadarMsgPkg radarPkg = { };
+
 	struct SUiDelLayerMsg {                 // MsgID: ID_UI_DEL_LAYER (0x0100)
 		uint8_t operate;                      ///< Operation (0 - Null, 1 - Delete, 2 - Add)
 		uint8_t layerID;                      ///< Layer ID (Range: 0 ~ 9)
@@ -244,6 +252,8 @@ private:
 	std::array<uint8_t, 512> rxBuffer_ = {0};
 
 	uint32_t rxTimestamp_ = 0;
+
+	uint32_t radar_lastUpdateTime_ = 0;
 
 	void UpdateHandler_() final;
 

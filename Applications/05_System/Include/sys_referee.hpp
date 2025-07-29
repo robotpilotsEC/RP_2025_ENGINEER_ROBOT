@@ -41,10 +41,15 @@ public:
 		int16_t robotID;     ///< Robot ID (0 - Unknown, 1 - 6)
 	};
 
+	struct SRadarInfo {
+		bool if_dart_comming = false; ///< 是否有飞镖来袭
+	};
+
 	struct SSysRefereeInfo {
 		time_t unixTimestamp;
 		SRaceInfo race;
 		SRobotInfo robot;
+		SRadarInfo radar;
 	} refereeInfo;
 
 	// 初始化系统
@@ -68,6 +73,8 @@ private:
 
 	CDevReferee::SRobotMsgPkg<CDevReferee::SUiDrawPentaMsg> visionFigureMsg;
 
+	CDevReferee::SRobotMsgPkg<CDevReferee::SUiDrawTextMsg> RadarTextMsg;
+
 	CDevReferee::SRobotMsgPkg<CDevReferee::SUiDrawHeptaMsg> stateFigureMsg;
 
 	CDevReferee *pRefereeDev_ = nullptr;
@@ -82,6 +89,8 @@ private:
 
 	EAppStatus UpdateRobotInfo_();
 
+	EAppStatus UpdateRadarInfo_();
+
 	EAppStatus UpdateControllerInfo_();
 
 	void UI_InitDrawing();
@@ -89,6 +98,8 @@ private:
 	void UI_StartStaticTextDrawing_();
 
 	void UI_StartCurModeTextDrawing_();
+
+	void UI_StartRadarTextDrawing_();
 
 	void UI_StartStateFigureDrawing_();
 
@@ -99,6 +110,9 @@ private:
 	void UI_UpdateStateFigureDrawing_();
 
 	void UI_UpdateVisionFigureDrawing_();
+
+	void UI_RADAR_WARNING_TextDrawing_();
+	void UI_RADAR_WARNING_TextClearing_();
 
 	static void StartSysRefereeUiTask(void *arg);
 
